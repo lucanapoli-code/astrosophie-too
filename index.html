@@ -14,7 +14,7 @@ body{font-family:'Inter',sans-serif;background:#192436;color:#b8cdd8;-webkit-fon
 
 /* ── TOKENS ── */
 :root{
-  --teal:#256c86;--tealL:#2a8aaa;--tealD:#1a4f63;
+  --teal:#ac9b7f;--tealL:#bcab8f;--tealD:#8c7b5f;
   --gold:#ac9b7f;--goldL:#bcab8f;--goldD:#8c7b5f;
   --night:#192436;--deep:#1c2840;--mid:#202c44;--sky:#283450;
   --white:#eaf4f8;--body:#8aaabb;--muted:#4a6a7a;--dim:#253545;
@@ -62,7 +62,7 @@ body{font-family:'Inter',sans-serif;background:#192436;color:#b8cdd8;-webkit-fon
   background:url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=1600&q=70') center/cover;
   opacity:.12}
 .hero-overlay{position:absolute;inset:0;
-  background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(25,36,54,0) 0%,rgba(25,36,54,.5) 60%,rgba(25,36,54,1) 100%)}
+  background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(25,36,54,.3) 0%,rgba(25,36,54,.7) 60%,rgba(25,36,54,1) 100%)}
 .hero-bottom{position:absolute;bottom:0;left:0;right:0;height:200px;
   background:linear-gradient(to bottom,transparent,var(--night))}
 .stars-wrap{position:absolute;inset:0;overflow:hidden;pointer-events:none}
@@ -1201,7 +1201,7 @@ function calcHoro(yr,mo,dy,hL,mn,lat,lon,tz){
 
 // ── ASTROSOPHIE DATEN ─────────────────────────────────────────────
 var QUADS=[
-  {id:'I',name:'Körper & Ich',latin:'Causa Materialis',col:'#2d9bb5',
+  {id:'I',name:'Körper & Ich',latin:'Causa Materialis',col:'#ac9b7f',
    areas:[{id:1,ic:'✦',t:'Dein Wesenskern',s:'AC · Persönlichkeit'},
           {id:2,ic:'💎',t:'Werte & Ressourcen',s:'Venus · was dir wichtig ist'},
           {id:3,ic:'🗣',t:'Kommunikation',s:'Merkur · wie du denkst'}]},
@@ -1440,7 +1440,7 @@ function goPage(id){
 
 function renderChallenges(){
   var c=document.getElementById('ch-list');if(!c)return;
-  var cols=['#2d9bb5','#7b6fc4','#c8a84b','#5ba89e','#c87070'];
+  var cols=['#ac9b7f','#7b6fc4','#c8a84b','#5ba89e','#c87070'];
   var html='';
   for(var i=0;i<CHALLENGES.length;i++){
     var ch=CHALLENGES[i],col=cols[i];
@@ -1534,16 +1534,16 @@ function renderPkgs(){
 
    +'<div style="border:1px solid rgba(45,155,181,.3);background:linear-gradient(135deg,rgba(45,155,181,.06),var(--deep));border-radius:16px;padding:1.4rem;margin-bottom:.65rem">'
    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.65rem">'
-   +'<div><div style="font-size:.56rem;color:#2d9bb5;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.2rem">Jährlich · Neu</div>'
+   +'<div><div style="font-size:.56rem;color:#ac9b7f;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.2rem">Jährlich · Neu</div>'
    +'<div style="font-family:var(--serif);color:var(--white);font-size:1.1rem;font-weight:600">Jahreshoroskop 2026</div>'
    +'<div style="font-size:.65rem;color:var(--muted);margin-top:.1rem">12 Monate · Dein Fluss durchs Jahr</div></div>'
-   +'<div style="font-family:var(--serif);font-size:1.8rem;font-weight:300;color:#2d9bb5">CHF 69.–</div></div>'
+   +'<div style="font-family:var(--serif);font-size:1.8rem;font-weight:300;color:#ac9b7f">CHF 69.–</div></div>'
    +'<p style="font-size:.76rem;color:var(--body);line-height:1.88;margin-bottom:.65rem">Wie die Bewegungen des Jahres 2026 dein Geburtsmuster berühren – Monat für Monat als Fluss visualisiert, mit den Themen, die jeweils stärker hervortreten.</p>'
    +'<ul style="font-size:.7rem;color:var(--muted);line-height:1.85;margin:0 0 .875rem;padding-left:1.1rem">'
    +'<li>Alle 12 Monate · echte Transit-Berechnung gegen dein Radix</li>'
    +'<li>Fluss-Visualisierung mit den stärksten Monaten des Jahres</li>'
    +'<li>Jedes Jahr neu erstellbar</li></ul>'
-   +'<button class="btn btn-fw" onclick="startPkg(&apos;jahreshoroskop&apos;)" type="button" style="background:#2d9bb5;color:#fff;border:none;border-radius:8px;font-family:var(--serif);font-size:.95rem;font-weight:600;padding:.85rem;cursor:pointer">Jahreshoroskop 2026 · CHF 69.–</button></div>'
+   +'<button class="btn btn-fw" onclick="startPkg(&apos;jahreshoroskop&apos;)" type="button" style="background:#ac9b7f;color:#fff;border:none;border-radius:8px;font-family:var(--serif);font-size:.95rem;font-weight:600;padding:.85rem;cursor:pointer">Jahreshoroskop 2026 · CHF 69.–</button></div>'
 
    +'<div style="border:1px solid rgba(200,168,75,.25);background:linear-gradient(135deg,rgba(200,168,75,.05),var(--deep));border-radius:16px;padding:1.4rem;margin-bottom:.65rem">'
    +'<div style="font-size:.56rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.65rem">Kombi-Pakete</div>'
@@ -1599,7 +1599,7 @@ function startPkg(pkg, combo){
   var btn=document.getElementById('btn-go');
   if(btn){if(pkg==='gratis'){btn.style.background='var(--teal)';btn.style.color='#fff';btn.textContent='Einblick erstellen';}
   else if(pkg==='individual'){btn.style.background='#5a4fa8';btn.style.color='#fff';btn.textContent=combo?('Weiter · '+combo.price):'Analyse erstellen · CHF 39.–';}
-  else if(pkg==='jahreshoroskop'){btn.style.background='#2d9bb5';btn.style.color='#fff';btn.textContent=combo?('Weiter · '+combo.price):'Jahreshoroskop erstellen · CHF 69.–';}
+  else if(pkg==='jahreshoroskop'){btn.style.background='#ac9b7f';btn.style.color='#fff';btn.textContent=combo?('Weiter · '+combo.price):'Jahreshoroskop erstellen · CHF 69.–';}
   else{btn.style.background='var(--gold)';btn.style.color='#060e18';btn.textContent=combo?('Weiter · '+combo.price):'Analyse erstellen · CHF 69.–';}}
   var ft=document.getElementById('form-title');if(ft)ft.textContent=titles[pkg]||'';
   var fs=document.getElementById('form-sub');if(fs)fs.textContent=subs[pkg]||'';
@@ -1870,7 +1870,7 @@ function showResult(){
     var area=displayList[i];
     var q=null;
     for(var j=0;j<QUADS.length;j++) for(var k=0;k<QUADS[j].areas.length;k++) if(QUADS[j].areas[k].id===area.id) q=QUADS[j];
-    var col = q ? q.col : '#2d9bb5'; // Fallback-Farbe (Jahreshoroskop-Petrol) wenn kein Quadrant zugeordnet ist
+    var col = q ? q.col : '#ac9b7f'; // Fallback-Farbe (Jahreshoroskop-Petrol) wenn kein Quadrant zugeordnet ist
     chsHtml+='<div class="res-ch" style="background:'+col+'10;border:1px solid '+col+'25">'
             +'<span style="color:'+col+';font-size:.7rem;font-weight:700">✓</span>'
             +'<span style="font-size:.75rem;color:'+col+'"> '+area.ic+' '+area.t+'</span>'
@@ -1976,7 +1976,7 @@ function buildPDF(chapters,fd,pkg,selQ,h){
   function mountainFullLight(highlightId){
     var w=560,h=280;
     var gold='#ac9b7f';
-    var teal='#256c86';
+    var teal='#ac9b7f';
     var svg='<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;max-width:480px;display:block;margin:0 auto;border-radius:10px" xmlns="http://www.w3.org/2000/svg">';
     svg+='<defs>'
       +'<linearGradient id="skyL'+highlightId+'" x1="0" y1="0" x2="0" y2="1">'
@@ -2000,7 +2000,7 @@ function buildPDF(chapters,fd,pkg,selQ,h){
         +'<stop offset="0%" stop-color="#5e94a8"/><stop offset="100%" stop-color="#3f7c92"/>'
       +'</linearGradient>'
       +'<linearGradient id="mainPeakL'+highlightId+'" x1="0" y1="0" x2="0" y2="1">'
-        +'<stop offset="0%" stop-color="'+teal+'"/><stop offset="60%" stop-color="#1a4f63"/><stop offset="100%" stop-color="#123a48"/>'
+        +'<stop offset="0%" stop-color="'+teal+'"/><stop offset="60%" stop-color="#8c7b5f"/><stop offset="100%" stop-color="#123a48"/>'
       +'</linearGradient>'
       +'</defs>';
     svg+='<rect x="0" y="0" width="'+w+'" height="'+h+'" fill="url(#skyL'+highlightId+')"/>';
@@ -2051,7 +2051,7 @@ function buildPDF(chapters,fd,pkg,selQ,h){
       }
     }
     function treeL(x,y,s){
-      return '<path d="M'+x+' '+(y-12*s)+' L'+(x-6*s)+' '+y+' L'+(x+6*s)+' '+y+' Z M'+x+' '+(y-8*s)+' L'+(x-4.5*s)+' '+(y+4*s)+' L'+(x+4.5*s)+' '+(y+4*s)+' Z" fill="#1a4f63" opacity=".6"/>';
+      return '<path d="M'+x+' '+(y-12*s)+' L'+(x-6*s)+' '+y+' L'+(x+6*s)+' '+y+' Z M'+x+' '+(y-8*s)+' L'+(x-4.5*s)+' '+(y+4*s)+' L'+(x+4.5*s)+' '+(y+4*s)+' Z" fill="#8c7b5f" opacity=".6"/>';
     }
     svg+=treeL(35,h-4,1.6)+treeL(60,h-2,1.2)+treeL(500,h-4,1.5)+treeL(525,h-2,1.1)+treeL(545,h-1,0.9);
     svg+='</svg>';
@@ -2220,9 +2220,9 @@ function buildPDF(chapters,fd,pkg,selQ,h){
         +'<stop offset="0%" stop-color="#0a1520"/><stop offset="100%" stop-color="#1d3a30"/>'
       +'</linearGradient>'
       +'<linearGradient id="riverglow'+highlightMonth+'" x1="0" y1="0" x2="1" y2="0">'
-        +'<stop offset="0%" stop-color="#256c86" stop-opacity=".4"/>'
+        +'<stop offset="0%" stop-color="#ac9b7f" stop-opacity=".4"/>'
         +'<stop offset="50%" stop-color="'+gold+'" stop-opacity=".7"/>'
-        +'<stop offset="100%" stop-color="#256c86" stop-opacity=".4"/>'
+        +'<stop offset="100%" stop-color="#ac9b7f" stop-opacity=".4"/>'
       +'</linearGradient>'
       +'<radialGradient id="riverrapid'+highlightMonth+'" cx="50%" cy="50%" r="50%">'
         +'<stop offset="0%" stop-color="'+gold+'" stop-opacity=".9"/><stop offset="100%" stop-color="'+gold+'" stop-opacity="0"/>'
@@ -2284,8 +2284,8 @@ function buildPDF(chapters,fd,pkg,selQ,h){
       var pb=i>0?' style="page-break-before:always"':'';
       var isOverview=(area.id===0);
       chapHtml+='<section'+pb+'>';
-      chapHtml+='<p style="font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:#2d9bb5;margin-bottom:.35rem;font-weight:600">Jahreshoroskop 2026'+(isOverview?'':' · '+area.t)+'</p>';
-      chapHtml+='<div style="display:flex;gap:.875rem;align-items:flex-start;padding:.875rem 1rem;border-radius:0 8px 8px 0;margin-bottom:1rem;border-left:3px solid #2d9bb5;background:#2d9bb510">';
+      chapHtml+='<p style="font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:#ac9b7f;margin-bottom:.35rem;font-weight:600">Jahreshoroskop 2026'+(isOverview?'':' · '+area.t)+'</p>';
+      chapHtml+='<div style="display:flex;gap:.875rem;align-items:flex-start;padding:.875rem 1rem;border-radius:0 8px 8px 0;margin-bottom:1rem;border-left:3px solid #ac9b7f;background:#ac9b7f10">';
       chapHtml+='<div style="font-size:.9rem;margin-top:.05rem">🌊</div>';
       chapHtml+='<div><h2 style="font-family:\'Cormorant Garamond\',serif;font-size:.98rem;font-weight:600;color:#192436;margin-bottom:.15rem">'+(isOverview?'Dein Fluss durchs Jahr 2026':area.t)+'</h2>'
         +'<p style="font-size:.58rem;color:#5a6a78">'+(isOverview?'Überblick · alle 12 Monate':'Monatskapitel '+area.id+' von 12')+'</p></div></div>';
@@ -2326,9 +2326,9 @@ function buildPDF(chapters,fd,pkg,selQ,h){
 
   var yearEndHtml = (pkg==='jahreshoroskop') ? `
 <section style="page-break-before:always;text-align:center">
-  <p style="font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:#2d9bb5;margin-bottom:.875rem;font-weight:600">Dezember 2026 · Das Jahr mündet</p>
+  <p style="font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:#ac9b7f;margin-bottom:.875rem;font-weight:600">Dezember 2026 · Das Jahr mündet</p>
   ${riverFlow(S.yearData,0)}
-  <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#2d9bb5;font-weight:300;margin:1.25rem 0 .75rem">Dein Fluss 2026</h2>
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#ac9b7f;font-weight:300;margin:1.25rem 0 .75rem">Dein Fluss 2026</h2>
   ${S.slogan?'<p style="font-family:\'Cormorant Garamond\',serif;font-size:1.05rem;font-style:italic;color:#192436;line-height:1.7;max-width:380px;margin:0 auto 1rem">"'+S.slogan+'"</p>':''}
   <p style="font-size:.7rem;color:#5a6a78;line-height:1.9;max-width:420px;margin:0 auto">Alle 12 Monate des Jahres hast du nun gesehen - die ruhigeren Passagen und die Stromschnellen. Ein Fluss kennt keine Sackgassen, nur Biegungen. Im nächsten Jahr erhältst du dein neues Jahreshoroskop wieder kostenlos per E-Mail.</p>
 </section>` : '';
@@ -2336,7 +2336,7 @@ function buildPDF(chapters,fd,pkg,selQ,h){
   // Inhaltsverzeichnis
   var tocHtml='';
   for(var i=0;i<areas.length;i++){
-    var qi=(pkg==='jahreshoroskop')?null:qMap[areas[i].id];var col=qi?qi.col:(pkg==='jahreshoroskop'?'#2d9bb5':'#5a6a78');
+    var qi=(pkg==='jahreshoroskop')?null:qMap[areas[i].id];var col=qi?qi.col:(pkg==='jahreshoroskop'?'#ac9b7f':'#5a6a78');
     tocHtml+='<div style="display:flex;align-items:center;gap:.5rem;padding:.3rem 0;border-bottom:1px solid rgba(25,36,54,.06)">';
     tocHtml+='<span style="font-size:.85rem">'+(pkg==='jahreshoroskop'?'🌊':areas[i].ic)+'</span>';
     tocHtml+='<span style="font-size:.63rem;color:'+col+';flex:1">'+areas[i].t+'</span>';
@@ -2379,7 +2379,7 @@ function buildPDF(chapters,fd,pkg,selQ,h){
     <p style="font-size:.76rem;color:#192436;line-height:1.85;font-style:italic">${task.a}</p>
   </div>
   <div style="border:1px solid rgba(37,108,134,.25);border-radius:10px;padding:1.1rem;margin-bottom:1.5rem;background:rgba(37,108,134,.06)">
-    <p style="font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:#2a8aaa;font-weight:600;margin-bottom:.45rem">Deine Reflexionsfrage</p>
+    <p style="font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:#bcab8f;font-weight:600;margin-bottom:.45rem">Deine Reflexionsfrage</p>
     <p style="font-family:'Cormorant Garamond',serif;font-size:.98rem;color:#192436;font-style:italic;line-height:1.65">"${task.f}"</p>
   </div>
   <div style="border-top:1px solid rgba(25,36,54,.07);padding-top:1.35rem;text-align:center">
@@ -2407,7 +2407,7 @@ function buildPDF(chapters,fd,pkg,selQ,h){
     <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:#ac9b7f;font-weight:300;margin-bottom:.7rem">Dein Schlüssel für den Weg</h2>
     <p style="font-size:.76rem;color:#2c4a5e;line-height:1.85;margin-bottom:.5rem;font-weight:300">Diese Analyse ist der Anfang - eine Landkarte. Im persönlichen 1:1 Coaching mit Luca gehst du den Weg gemeinsam, Schritt für Schritt: von der Erkenntnis ins gelebte Leben.</p>
     <p style="font-size:.7rem;color:#ac9b7f;margin-bottom:.4rem">${isInd?'CHF 39.– → CHF 291.– Aufpreis':'CHF 69.– → CHF 261.– Aufpreis'}</p>
-    <p style="font-size:.68rem;color:#2a8aaa;margin-bottom:1.5rem;font-weight:500">calendly.com/luca-calicchio-info</p>
+    <p style="font-size:.68rem;color:#bcab8f;margin-bottom:1.5rem;font-weight:500">calendly.com/luca-calicchio-info</p>
     <div style="border-top:1px solid rgba(37,108,134,.1);padding-top:1.25rem;color:#5a6a78;font-size:.6rem;line-height:2.2">
       <strong style="color:#2a4a5a">Mental &amp; Spiritual · Luca Calicchio</strong><br/>
       Campingweg 13 · 4665 Oftringen · info@luca-calicchio.com<br/>
@@ -2457,7 +2457,7 @@ section:last-child{border-bottom:none}
 </div>
 
 <div style="margin-bottom:2.5rem;text-align:center">
-  <p style="font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:${pkg==='jahreshoroskop'?'#2d9bb5':'#5a6a78'};margin-bottom:.75rem;font-weight:600">${pkg==='jahreshoroskop'?'Dein Fluss durchs Jahr 2026':'Dein Weg zum Nordstern'}</p>
+  <p style="font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:${pkg==='jahreshoroskop'?'#ac9b7f':'#5a6a78'};margin-bottom:.75rem;font-weight:600">${pkg==='jahreshoroskop'?'Dein Fluss durchs Jahr 2026':'Dein Weg zum Nordstern'}</p>
   ${pkg==='jahreshoroskop'?riverFlow(S.yearData,0):mountainFullLight(0)}
   <p style="font-size:.66rem;color:#5a6a78;line-height:1.85;margin-top:.875rem;max-width:420px;margin-left:auto;margin-right:auto">${pkg==='jahreshoroskop'?'Jeder Monat des Jahres 2026 ist eine Biegung in diesem Fluss. Dort, wo er heller leuchtet, treten bedeutsame Themen deines Geburtsmusters stärker hervor.':'Jedes der 12 Häuser deines Geburtsmusters ist eine Etappe auf deinem Weg. An der Spitze steht dein Nordstern - deine ganz persönliche Ausrichtung, die du am Ende dieses Dokuments findest.'}</p>
 </div>
