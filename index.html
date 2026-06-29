@@ -157,6 +157,15 @@ body{font-family:'Inter',sans-serif;background:#fdfaf5;color:#192436;-webkit-fon
   .coach-grid{grid-template-columns:1fr 1fr}
   .testi-grid{grid-template-columns:1fr 1fr}
 }
+
+/* FORCE LIGHT MODE - überschreibt Dark Mode auf allen Browsern */
+@media (prefers-color-scheme: dark) {
+  html { filter: none !important; }
+  body { background: #fdfaf5 !important; color: #192436 !important; }
+  .hero, .cta-navy, .footer, .nav, .testi-card { background: #192436 !important; }
+  .light { background: #fdfaf5 !important; }
+  .form-card, .result-card, .pkg-card, .coach-card { background: #ffffff !important; }
+}
 </style>
 </head>
 <body>
