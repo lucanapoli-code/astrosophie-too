@@ -58,13 +58,9 @@ body{font-family:'Inter',sans-serif;background:#192436;color:#b8cdd8;-webkit-fon
 .hero{min-height:100vh;position:relative;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
   padding:6rem 1.5rem 4rem;text-align:center}
-.hero-bg{position:absolute;inset:0;
-  
-  background:#192436}
-.hero-overlay{position:absolute;inset:0;
-  background:#192436}
-.hero-bottom{position:absolute;bottom:0;left:0;right:0;height:200px;
-  background:linear-gradient(to bottom,transparent,var(--night))}
+.hero-bg{display:none}
+.hero-overlay{display:none}
+.hero-bottom{display:none}
 .stars-wrap{position:absolute;inset:0;overflow:hidden;pointer-events:none}
 .star{position:absolute;background:#fff;border-radius:50%;animation:twinkle linear infinite}
 @keyframes twinkle{0%,100%{opacity:var(--op)}50%{opacity:calc(var(--op)*.2)}}
@@ -1420,7 +1416,7 @@ window.addEventListener('DOMContentLoaded',function(){
   if(dl){for(var c in CITIES){var o=document.createElement('option');o.value=c.charAt(0).toUpperCase()+c.slice(1);dl.appendChild(o);}}
 });
 
-function makeStar(){
+function makeStar(){return;
   var c=document.getElementById('stars');if(!c)return;
   for(var i=0;i<80;i++){
     var d=document.createElement('div');d.className='star';
