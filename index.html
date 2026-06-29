@@ -2,12 +2,14 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta name="color-scheme" content="only light">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mental & Spiritual | Luca Calicchio – Astrosophie Coaching Schweiz</title>
 <meta name="description" content="Entdecke dein Geburtsmuster. Erkenne dein Potenzial, deine Berufung und deine Lebensaufgabe durch die Astrosophie nach Luca Calicchio.">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+:root{color-scheme:only light}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{font-family:'Inter',sans-serif;background:#fdfaf5;color:#192436;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 :root{
@@ -387,7 +389,7 @@ async function startGen(){
   document.getElementById('r-sun').textContent=degInSign(sun);
   document.getElementById('r-moon').textContent=degInSign(moon);
   document.getElementById('g-result').style.display='none';
-  showStatus('<span class="gen-spinning">✦</span> KI-Analyse wird erstellt…','');
+  showStatus('<span class="gen-spinning">✦</span> Luca berechnet dein Geburtsmuster.','');
   try{
     var prompt='Du bist Luca Calicchio, Astrosophie Coach aus der Schweiz. Schreibe eine persönliche, warmherzige Kurzanalyse für '+(name||'diese Person')+' mit:\n- Aszendent: '+degInSign(asc)+'\n- Sonne: '+degInSign(sun)+'\n- Mond: '+degInSign(moon)+'\n\nSchreibe 3-4 Sätze auf Deutsch. Persönlich, tiefgründig, einladend. Zeige was diese Kombination über den Wesenskern, die Lebensaufgabe oder das emotionale Muster sagt. Lade am Ende sanft ein, mit einem der Pakete tiefer zu gehen.';
     var text=await callClaude(prompt);
