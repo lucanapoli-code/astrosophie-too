@@ -103,9 +103,9 @@ body{font-family:'Inter',sans-serif;background:url("data:image/png;base64,iVBORw
 .btn-gold{background:var(--gold);color:#192436;padding:.85rem 1.75rem;
   box-shadow:0 4px 20px rgba(200,168,75,.3)}
 .btn-gold:hover{background:var(--goldL);transform:translateY(-1px)}
-.btn-ghost{background:transparent;color:var(--teal);
-  border:1px solid rgba(37,108,134,.32);padding:.65rem 1.2rem;font-size:.8rem}
-.btn-ghost:hover{background:rgba(37,108,134,.08);border-color:var(--teal)}
+.btn-ghost{background:transparent;color:var(--gold);
+  border:1px solid rgba(172,155,127,.55);padding:.65rem 1.2rem;font-size:.8rem}
+.btn-ghost:hover{background:rgba(172,155,127,.12);border-color:var(--gold)}
 .btn-sm{padding:.48rem .9rem;font-size:.76rem}
 .btn-fw{width:100%}
 .btn-purple{background:var(--purpleD);color:#fff;padding:.85rem 1.75rem}
@@ -230,6 +230,16 @@ body{font-family:'Inter',sans-serif;background:url("data:image/png;base64,iVBORw
 /* ── FORMULAR ── */
 .card{background:var(--deep);border:1px solid rgba(37,108,134,.15);
   border-radius:var(--r2);padding:1.6rem}
+/* Formular-Seite (Paket-Auswahl/Eingabe) bewusst hell gehalten für bessere Lesbarkeit,
+   bleibt aber stimmig zur Marke: Creme-Hintergrund + Bronze-Akzente wie im PDF-Design */
+#pg-form{background:#fdfaf5}
+#pg-form .card{background:#fff;border:1px solid rgba(172,155,127,.25);box-shadow:0 4px 24px rgba(25,36,54,.08)}
+#pg-form #form-title{color:var(--night) !important}
+#pg-form #form-sub{color:var(--muted) !important}
+#pg-form label,#pg-form .fg label{color:var(--night)}
+#pg-form input,#pg-form select{background:#fdfaf5;color:var(--night);border:1px solid rgba(25,36,54,.18)}
+#pg-form .q-opt-name{color:var(--night)}
+#pg-form .q-opt-sub{color:var(--muted)}
 .fg{margin-bottom:.875rem}
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.875rem}
 @media(max-width:460px){.fr{grid-template-columns:1fr}}
@@ -354,6 +364,10 @@ textarea{min-height:62px;resize:vertical;line-height:1.6}
       <div class="hero-btns">
         <button class="btn btn-teal" onclick="startPkg('gratis')">✦ Kostenlos entdecken</button>
         <button class="btn btn-gold" onclick="startPkg('seelenkompas')">SeelenKompass · CHF 69.–</button>
+      </div>
+      <div class="hero-btns" style="margin-top:.6rem">
+        <button class="btn btn-ghost" style="font-size:.78rem;padding:.6rem 1.1rem" onclick="startPkg('individual')">Individual · CHF 39.–</button>
+        <button class="btn btn-ghost" style="font-size:.78rem;padding:.6rem 1.1rem" onclick="startPkg('jahreshoroskop')">Jahreshoroskop 2026 · CHF 69.–</button>
       </div>
       <div class="hero-trust">
         <span class="trust-item">Swiss Ephemeris Genauigkeit</span>
@@ -1789,7 +1803,7 @@ var _cdTimer=null;
 function startCountdown(nAreas){
   clearInterval(_cdTimer);
   var batches=Math.ceil(nAreas/3);
-  var totalSec=batches*7; // grobe, realistische Schätzung
+  var totalSec=batches*28; // korrigiert nach echtem Live-Test: ca. 2-3 Min bei 13 Kapiteln (5 Batches)
   var remaining=totalSec;
   var cdEl=el('gen-countdown');
   if(!cdEl)return;
