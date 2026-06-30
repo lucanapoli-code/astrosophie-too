@@ -608,6 +608,7 @@ textarea{min-height:62px;resize:vertical;line-height:1.6}
       <div style="font-size:1.6rem;color:var(--teal);margin-bottom:.65rem;opacity:.6;animation:twinkle 2s ease-in-out infinite">🧭</div>
       <h2 style="font-family:var(--serif);color:var(--white);font-size:1.3rem;font-weight:300;margin-bottom:.3rem">Luca berechnet dein Geburtsmuster</h2>
       <p id="gen-txt" style="color:var(--muted);font-size:.76rem;font-weight:300"></p>
+      <p id="gen-countdown" style="display:none;color:var(--gold);font-size:.82rem;font-weight:600;margin-top:.35rem"></p>
     </div>
     <div class="prog-wrap"><div class="prog-bar" id="prog"></div></div>
     <div id="gen-list"></div>
@@ -1774,66 +1775,135 @@ function startGen(){
   }
   el('gen-list').innerHTML=listHtml;
   el('gen-err').style.display='none';
-  var estSec=areas.length*8;
-  var estTxt=areas.length>4 ? (' · ca. '+Math.ceil(estSec/60)+' Min.') : '';
-  el('gen-txt').textContent='0 von '+areas.length+' Kapiteln · '+name+estTxt;
+  startCountdown(areas.length);
+  el('gen-txt').textContent='0 von '+areas.length+' Kapiteln · '+name;
   goPage('gen');
-  runGen(areas,0);
+  S.genChapters=new Array(areas.length);
+  runGenBatch(areas,0);
 }
 
-function runGen(areas,i){
-  if(i>=areas.length){
-    el('prog').style.width='100%';
-    var thisPdf=buildPDF(S.chapters,S.fd,S.pkg,S.selQ,S.horo);
-    S.pdfs=S.pdfs||[];
-    S.pdfs.push({pkg:S.pkg,html:thisPdf});
-    if(S.combo && S.combo.pkgs.length>1 && S.comboStep===undefined){ S.comboStep=0; }
-    if(S.combo && S.comboStep!==undefined && S.comboStep<S.combo.pkgs.length-1){
-      S.comboStep++;
-      var nextPkg=S.combo.pkgs[S.comboStep];
-      S.pkg=nextPkg;S.chapters=[];S.slogan='';
-      if(nextPkg==='jahreshoroskop' && !S.yearData){ S.yearData=calcYearTransits(2026, S.horo, S.coords.lat, S.coords.lon); }
-      var nextAreas=getAreas();
-      var listHtml='';
-      for(var k=0;k<nextAreas.length;k++){
-        listHtml+='<div class="gen-item" id="gi'+k+'">'
-                 +'<span class="gen-dot" id="gd'+k+'" style="color:var(--dim)">○</span>'
-                 +'<span style="font-size:.76rem;font-weight:300;color:var(--muted)" id="gl'+k+'">'+nextAreas[k].ic+' '+nextAreas[k].t+'</span>'
-                 +'<span style="font-size:.62rem;color:var(--gold);margin-left:auto;display:none" id="gw'+k+'"><span class="gen-spinning">⟳</span></span>'
-                 +'</div>';
+// ── COUNTDOWN ─────────────────────────────────────────────────────────────
+// Zeigt eine ehrliche, live mitlaufende Restzeit-Schätzung statt eines stummen Ladekreises.
+// Basis: ~6s pro Kapitel bei 3er-Parallelisierung (empirisch, wird nicht als Garantie verkauft).
+var _cdTimer=null;
+function startCountdown(nAreas){
+  clearInterval(_cdTimer);
+  var batches=Math.ceil(nAreas/3);
+  var totalSec=batches*7; // grobe, realistische Schätzung
+  var remaining=totalSec;
+  var cdEl=el('gen-countdown');
+  if(!cdEl)return;
+  cdEl.style.display='block';
+  function render(){
+    var m=Math.floor(remaining/60),s=remaining%60;
+    cdEl.textContent='⏱ noch ca. '+m+':'+(s<10?'0':'')+s+' Min.';
+  }
+  render();
+  _cdTimer=setInterval(function(){
+    remaining=Math.max(0,remaining-1);
+    render();
+    if(remaining<=0)clearInterval(_cdTimer);
+  },1000);
+}
+function stopCountdown(){
+  clearInterval(_cdTimer);
+  var cdEl=el('gen-countdown');
+  if(cdEl)cdEl.style.display='none';
+}
+
+// ── PARALLELE GENERIERUNG IN 3er-BATCHES ────────────────────────────────────
+// Statt streng sequentiell (1 Kapitel nach dem anderen) werden bis zu 3 Kapitel
+// gleichzeitig angefragt. Das beschleunigt grosse Pakete (SeelenKompass, Jahreshoroskop)
+// spürbar, ohne so viele Parallel-Requests zu senden, dass Rate-Limits riskiert werden.
+function runGenBatch(areas,startIdx){
+  if(startIdx>=areas.length){
+    finishGen(areas);
+    return;
+  }
+  var batchSize=3;
+  var endIdx=Math.min(startIdx+batchSize,areas.length);
+  var batchIdxs=[];
+  for(var i=startIdx;i<endIdx;i++)batchIdxs.push(i);
+
+  batchIdxs.forEach(function(i){
+    el('gd'+i).textContent='◐';el('gd'+i).style.color='var(--gold)';
+    el('gl'+i).style.color='var(--white)';
+    el('gw'+i).style.display='block';
+  });
+
+  var promises=batchIdxs.map(function(i){
+    return callClaudeRetry(areas[i].id,S.horo,S.fd,i===0,3).then(function(text){
+      return {i:i,text:text,ok:true};
+    }).catch(function(err){
+      return {i:i,err:err,ok:false};
+    });
+  });
+
+  Promise.all(promises).then(function(results){
+    var hadFail=false;
+    results.forEach(function(r){
+      var i=r.i;
+      if(!r.ok){ hadFail=true; return; }
+      var text=r.text;
+      if(i===0){
+        var sm=text.match(/SLOGAN:\s*"([^"]+)"/i);
+        if(sm){ S.slogan=sm[1]; text=text.replace(/SLOGAN:\s*"[^"]+"\s*\n?/i,'').trim(); }
       }
-      el('gen-list').innerHTML=listHtml;
-      el('gen-txt').textContent='0 von '+nextAreas.length+' Kapiteln · '+S.fd.name+' · Teil 2: Jahreshoroskop';
-      runGen(nextAreas,0);
+      S.genChapters[i]={text:text};
+      var q=null;
+      for(var j=0;j<QUADS.length;j++) for(var k=0;k<QUADS[j].areas.length;k++) if(QUADS[j].areas[k].id===areas[i].id) q=QUADS[j];
+      if(q) el('gi'+i).style.background=q.col+'0d';
+      el('gd'+i).textContent='✓';if(q) el('gd'+i).style.color=q.col;
+      el('gw'+i).style.display='none';if(q) el('gl'+i).style.color=q.col;
+    });
+    el('gen-txt').textContent=Math.min(endIdx,areas.length)+' von '+areas.length+' Kapiteln · '+S.fd.name;
+    el('prog').style.width=(endIdx/areas.length*100)+'%';
+
+    if(hadFail){
+      stopCountdown();
+      var failedIdxs=results.filter(function(r){return !r.ok;}).map(function(r){return r.i+1;});
+      var box=el('gen-err');box.style.display='block';
+      box.innerHTML='Verbindungsproblem bei Kapitel '+failedIdxs.join(', ')+'. '
+        +'<button onclick="el(\'gen-err\').style.display=\'none\';startCountdown('+(areas.length-startIdx)+');runGenBatch(window.__areas,'+startIdx+')" '
+        +'style="margin-left:.5rem;padding:.3rem .8rem;border-radius:6px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer">Erneut versuchen</button>';
+      window.__areas=areas;
       return;
     }
-    S.pdfHtml = S.pdfs.length>1 ? mergePdfs(S.pdfs) : S.pdfs[0].html;
-    showResult();return;
-  }
-  el('gen-txt').textContent=(i+1)+' von '+areas.length+' Kapiteln · '+S.fd.name;
-  el('gd'+i).textContent='◐';el('gd'+i).style.color='var(--gold)';
-  el('gl'+i).style.color='var(--white)';
-  el('gw'+i).style.display='block';
-  el('prog').style.width=(i/areas.length*100)+'%';
-  callClaudeRetry(areas[i].id,S.horo,S.fd,i===0,3).then(function(text){
-    if(i===0){
-      var sm=text.match(/SLOGAN:\s*"([^"]+)"/i);
-      if(sm){ S.slogan=sm[1]; text=text.replace(/SLOGAN:\s*"[^"]+"\s*\n?/i,'').trim(); }
-    }
-    S.chapters.push({text:text});
-    var q=null;
-    for(var j=0;j<QUADS.length;j++) for(var k=0;k<QUADS[j].areas.length;k++) if(QUADS[j].areas[k].id===areas[i].id) q=QUADS[j];
-    if(q) el('gi'+i).style.background=q.col+'0d';
-    el('gd'+i).textContent='✓';if(q) el('gd'+i).style.color=q.col;
-    el('gw'+i).style.display='none';if(q) el('gl'+i).style.color=q.col;
-    runGen(areas,i+1);
-  }).catch(function(err){
-    var box=el('gen-err');box.style.display='block';
-    box.innerHTML='Verbindungsproblem bei Kapitel '+(i+1)+' von '+areas.length+'. '
-      +'<button onclick="el(\'gen-err\').style.display=\'none\';runGen(window.__areas,'+i+')" '
-      +'style="margin-left:.5rem;padding:.3rem .8rem;border-radius:6px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer">Erneut versuchen</button>';
-    window.__areas=areas;
+    runGenBatch(areas,endIdx);
   });
+}
+
+function finishGen(areas){
+  stopCountdown();
+  el('prog').style.width='100%';
+  S.chapters=S.genChapters;
+  var thisPdf=buildPDF(S.chapters,S.fd,S.pkg,S.selQ,S.horo);
+  S.pdfs=S.pdfs||[];
+  S.pdfs.push({pkg:S.pkg,html:thisPdf});
+  if(S.combo && S.combo.pkgs.length>1 && S.comboStep===undefined){ S.comboStep=0; }
+  if(S.combo && S.comboStep!==undefined && S.comboStep<S.combo.pkgs.length-1){
+    S.comboStep++;
+    var nextPkg=S.combo.pkgs[S.comboStep];
+    S.pkg=nextPkg;S.chapters=[];S.slogan='';
+    if(nextPkg==='jahreshoroskop' && !S.yearData){ S.yearData=calcYearTransits(2026, S.horo, S.coords.lat, S.coords.lon); }
+    var nextAreas=getAreas();
+    var listHtml='';
+    for(var k=0;k<nextAreas.length;k++){
+      listHtml+='<div class="gen-item" id="gi'+k+'">'
+               +'<span class="gen-dot" id="gd'+k+'" style="color:var(--dim)">○</span>'
+               +'<span style="font-size:.76rem;font-weight:300;color:var(--muted)" id="gl'+k+'">'+nextAreas[k].ic+' '+nextAreas[k].t+'</span>'
+               +'<span style="font-size:.62rem;color:var(--gold);margin-left:auto;display:none" id="gw'+k+'"><span class="gen-spinning">⟳</span></span>'
+               +'</div>';
+    }
+    el('gen-list').innerHTML=listHtml;
+    el('gen-txt').textContent='0 von '+nextAreas.length+' Kapiteln · '+S.fd.name+' · Teil 2: Jahreshoroskop';
+    startCountdown(nextAreas.length);
+    S.genChapters=new Array(nextAreas.length);
+    runGenBatch(nextAreas,0);
+    return;
+  }
+  S.pdfHtml = S.pdfs.length>1 ? mergePdfs(S.pdfs) : S.pdfs[0].html;
+  showResult();
 }
 
 // Retry-Wrapper: bei Fehler bis zu n-1 weitere Versuche mit kurzer Pause (Netlify/API kann kurzzeitig überlastet sein)
