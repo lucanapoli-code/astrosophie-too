@@ -106,6 +106,15 @@ body{font-family:'Inter',sans-serif;background:url("data:image/png;base64,iVBORw
 .btn-ghost{background:transparent;color:var(--gold);
   border:1px solid rgba(172,155,127,.55);padding:.65rem 1.2rem;font-size:.8rem}
 .btn-ghost:hover{background:rgba(172,155,127,.12);border-color:var(--gold)}
+/* Klare Hierarchie statt vier gleichwertiger Buttons: EIN Haupt-CTA, drei sekundäre Pakete als kleine Pills darunter */
+.hero-cta-main{display:block;margin:1.6rem auto 1rem;background:var(--gold);color:var(--night);
+  border:none;border-radius:10px;padding:1rem 2rem;font-size:1rem;font-weight:700;
+  cursor:pointer;font-family:var(--sans);box-shadow:0 6px 24px rgba(172,155,127,.35);transition:all .2s}
+.hero-cta-main:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(172,155,127,.45)}
+.hero-pkg-row{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-bottom:1.6rem}
+.hero-pkg-pill{background:transparent;color:var(--gold);border:1px solid rgba(172,155,127,.4);
+  border-radius:20px;padding:.45rem 1rem;font-size:.72rem;cursor:pointer;font-family:var(--sans);transition:all .2s}
+.hero-pkg-pill:hover{background:rgba(172,155,127,.1);border-color:var(--gold)}
 .btn-sm{padding:.48rem .9rem;font-size:.76rem}
 .btn-fw{width:100%}
 .btn-purple{background:var(--purpleD);color:#fff;padding:.85rem 1.75rem}
@@ -357,22 +366,21 @@ textarea{min-height:62px;resize:vertical;line-height:1.6}
     <div class="hero-inner">
       <div class="hero-badge">Astrosophie Coaching · Schweiz</div>
       <h1 class="hero-h1">
-        Von innerer Leere<br/>zu <em>Klarheit</em> und <strong>Stabilität</strong>
+        Was verrät dein <em>Geburtsmuster</em> über deinen <strong>Weg?</strong>
       </h1>
-      <p class="hero-sub">Dein Geburtsmuster ist die Landkarte zu deinem Inneren. Erkenne dein Potenzial, deine Berufung und deine Lebensaufgabe.</p>
-      <p class="hero-quote">„Wissen wir, wie die Schöpfung funktioniert,<br/>wissen wir wie unser Leben funktioniert."</p>
-      <div class="hero-btns">
-        <button class="btn btn-teal" onclick="startPkg('gratis')">✦ Kostenlos entdecken</button>
-        <button class="btn btn-gold" onclick="startPkg('seelenkompas')">SeelenKompass · CHF 69.–</button>
+      <p class="hero-sub">Finde es in wenigen Minuten heraus – mit deiner persönlichen Astro-Analyse. Kostenlos starten, jederzeit vertiefen.</p>
+
+      <button class="hero-cta-main" onclick="startPkg('gratis')">✦ Kostenlose Analyse starten</button>
+
+      <div class="hero-pkg-row">
+        <button class="hero-pkg-pill" onclick="startPkg('individual')">Individual · CHF 39.–</button>
+        <button class="hero-pkg-pill" onclick="startPkg('seelenkompas')">SeelenKompass · CHF 69.–</button>
+        <button class="hero-pkg-pill" onclick="startPkg('jahreshoroskop')">Jahreshoroskop · CHF 69.–</button>
       </div>
-      <div class="hero-btns" style="margin-top:.6rem">
-        <button class="btn btn-ghost" style="font-size:.78rem;padding:.6rem 1.1rem" onclick="startPkg('individual')">Individual · CHF 39.–</button>
-        <button class="btn btn-ghost" style="font-size:.78rem;padding:.6rem 1.1rem" onclick="startPkg('jahreshoroskop')">Jahreshoroskop 2026 · CHF 69.–</button>
-      </div>
+
       <div class="hero-trust">
         <span class="trust-item">Swiss Ephemeris Genauigkeit</span>
         <span class="trust-item">Individuelles Seelenmuster</span>
-        <span class="trust-item">4500 Jahre alte Methode</span>
       </div>
     </div>
   </section>
@@ -2526,7 +2534,7 @@ function buildPDF(chapters,fd,pkg,selQ,h){
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{color-scheme:only light}
-body{font-family:'Inter',sans-serif;background:#fdfaf5;color:#192436;
+body{font-family:'Inter',sans-serif;background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGP8++srAwMDEwMDAwMDAwAjQgLwmDcrWAAAAABJRU5ErkJggg==") repeat #fdfaf5;color:#192436;
   padding:2rem;max-width:680px;margin:0 auto;
   -webkit-print-color-adjust:exact;print-color-adjust:exact}
 p.lead{font-family:'Cormorant Garamond',serif;font-size:.88rem;color:#192436;font-style:italic;line-height:1.8}
