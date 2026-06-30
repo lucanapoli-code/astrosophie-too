@@ -1774,7 +1774,9 @@ function startGen(){
   }
   el('gen-list').innerHTML=listHtml;
   el('gen-err').style.display='none';
-  el('gen-txt').textContent='0 von '+areas.length+' Kapiteln · '+name;
+  var estSec=areas.length*8;
+  var estTxt=areas.length>4 ? (' · ca. '+Math.ceil(estSec/60)+' Min.') : '';
+  el('gen-txt').textContent='0 von '+areas.length+' Kapiteln · '+name+estTxt;
   goPage('gen');
   runGen(areas,0);
 }
@@ -1813,7 +1815,7 @@ function runGen(areas,i){
   el('gl'+i).style.color='var(--white)';
   el('gw'+i).style.display='block';
   el('prog').style.width=(i/areas.length*100)+'%';
-  callClaude(areas[i].id,S.horo,S.fd,i===0).then(function(text){
+  callClaudeRetry(areas[i].id,S.horo,S.fd,i===0,3).then(function(text){
     if(i===0){
       var sm=text.match(/SLOGAN:\s*"([^"]+)"/i);
       if(sm){ S.slogan=sm[1]; text=text.replace(/SLOGAN:\s*"[^"]+"\s*\n?/i,'').trim(); }
@@ -1825,9 +1827,23 @@ function runGen(areas,i){
     el('gd'+i).textContent='✓';if(q) el('gd'+i).style.color=q.col;
     el('gw'+i).style.display='none';if(q) el('gl'+i).style.color=q.col;
     runGen(areas,i+1);
-  }).catch(function(){
-    var err=el('gen-err');err.style.display='block';
-    err.textContent='Verbindungsfehler. Bitte kurz warten und erneut versuchen.';
+  }).catch(function(err){
+    var box=el('gen-err');box.style.display='block';
+    box.innerHTML='Verbindungsproblem bei Kapitel '+(i+1)+' von '+areas.length+'. '
+      +'<button onclick="el(\'gen-err\').style.display=\'none\';runGen(window.__areas,'+i+')" '
+      +'style="margin-left:.5rem;padding:.3rem .8rem;border-radius:6px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer">Erneut versuchen</button>';
+    window.__areas=areas;
+  });
+}
+
+// Retry-Wrapper: bei Fehler bis zu n-1 weitere Versuche mit kurzer Pause (Netlify/API kann kurzzeitig überlastet sein)
+function callClaudeRetry(areaId,h,fd,isFirst,attemptsLeft){
+  return callClaude(areaId,h,fd,isFirst).catch(function(err){
+    if(attemptsLeft>1){
+      return new Promise(function(resolve){setTimeout(resolve,1200);})
+        .then(function(){return callClaudeRetry(areaId,h,fd,isFirst,attemptsLeft-1);});
+    }
+    throw err;
   });
 }
 
