@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="only light">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Individual-Analyse – Vorschau V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#fdfaf5;color:#192436}
+:root{
+  --navy:#192436;--gold:#ac9b7f;--goldL:#c4b396;--goldD:#8c7b5f;
+  --cream:#fdfaf5;--creamD:#f0ebe1;--muted:#6a7a8a;
+  --serif:'Cormorant Garamond',Georgia,serif;
+}
+nav{background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:.8rem 1.5rem}
+nav img{height:34px}
+.nav-btn{font-size:.62rem;padding:.4rem .85rem;background:transparent;border:1px solid rgba(172,155,127,.5);border-radius:6px;color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif}
+
+/* ── PDF PAGE ── */
+.pdf-wrap{background:#fdfaf5;max-width:640px;margin:0 auto;padding:0 0 3rem}
+
+/* COVER */
+.cover{position:relative;min-height:280px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:var(--navy)}
+.cover-bg{position:absolute;inset:0;background-image:url('https://static.wixstatic.com/media/photo-1506905925346-21bda4d32df4?w=1200&q=80/v1/fit/w_2500,h_1330,al_c/photo-1506905925346-21bda4d32df4?w=1200&q=80');background-size:cover;background-position:center top;opacity:.22}
+.cover-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(25,36,54,.3),rgba(25,36,54,.85))}
+.cover-content{position:relative;z-index:2;padding:2.5rem 2rem}
+.cover-label{font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(172,155,127,.7);display:block;margin-bottom:1.25rem}
+.cover-logo{height:44px;margin-bottom:1.25rem;display:block;margin-left:auto;margin-right:auto}
+.cover-divider{height:1px;background:rgba(172,155,127,.3);max-width:160px;margin:1rem auto}
+.cover h1{font-family:var(--serif);font-size:2rem;font-weight:300;color:#eeeae0;line-height:1.2;margin-bottom:.4rem}
+.cover h1 em{color:var(--gold);font-style:italic}
+.cover-name{font-family:var(--serif);font-size:.95rem;color:rgba(238,234,224,.55);margin-top:.3rem}
+.cover-quote{font-family:var(--serif);font-style:italic;font-size:.78rem;color:rgba(172,155,127,.55);margin-top:1.25rem;line-height:1.7}
+
+/* HOROSKOP */
+.horo{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;padding:1.5rem 1.5rem .5rem;background:#fff;border-bottom:1px solid rgba(25,36,54,.06)}
+.horo-item{text-align:center;padding:.75rem .5rem;background:var(--creamD);border-radius:10px}
+.horo-label{font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem;display:block}
+.horo-val{font-family:var(--serif);font-size:1rem;color:var(--navy);line-height:1.2}
+
+/* BERG BILD */
+.berg-wrap{position:relative;height:400px;overflow:hidden}
+.berg-img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
+.berg-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 65%,rgba(253,250,245,.95))}
+.berg-fallback{width:100%;height:400px;background:linear-gradient(135deg,var(--navy),#2a3f5c);display:flex;align-items:center;justify-content:center}
+.berg-fallback span{font-size:3rem;opacity:.3}
+
+/* KAPITEL */
+.chapter{padding:2rem 1.75rem;border-bottom:1px solid rgba(25,36,54,.06);text-align:center}
+.chapter:last-child{border-bottom:none}
+.chapter-meta{font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;display:block;text-align:center}
+.chapter h2{font-family:var(--serif);font-size:1.8rem;font-weight:300;color:var(--navy);line-height:1.15;margin-bottom:.25rem;text-align:center}
+.chapter h2 em{color:var(--gold);font-style:italic}
+.chapter-sub{font-size:.7rem;color:var(--muted);text-align:center;letter-spacing:.04em;margin-bottom:1.25rem}
+
+.chapter-body{font-size:.84rem;color:var(--muted);line-height:1.92;margin-bottom:1rem;text-align:left;hyphens:auto;display:block}
+.chapter-body strong{color:var(--navy);font-weight:600}
+
+/* Beispiel-Box */
+.example{background:var(--creamD);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:.875rem 1rem;margin:.875rem 0}
+.example-label{font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--goldD);font-weight:700;margin-bottom:.3rem;display:block;text-align:left}
+.example p{font-size:.8rem;color:var(--navy);line-height:1.75;font-style:italic;text-align:left}
+
+/* Erlöst/Unerlöst */
+.states{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin:1rem 0}
+.state{border-radius:10px;padding:.875rem}
+.state-e{background:linear-gradient(135deg,#f5f0e8,#ede8dc);border:1px solid rgba(172,155,127,.3)}
+.state-u{background:linear-gradient(135deg,#f0f2f5,#e8edf2);border:1px solid rgba(25,36,54,.1)}
+.state-label{font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.4rem;display:block;text-align:left}
+.state-e .state-label{color:var(--goldD)}
+.state-u .state-label{color:var(--navy)}
+.state p{font-size:.77rem;color:var(--muted);line-height:1.7;text-align:left}
+
+/* Zitat */
+.quote{font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--navy);border-left:2px solid var(--gold);padding:.6rem .875rem;margin:.875rem auto;line-height:1.65;text-align:left;max-width:100%}
+
+/* Keynote */
+.keynote{background:var(--navy);border-radius:10px;padding:1.25rem;margin:.875rem 0}
+.keynote-label{font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;display:block}
+.keynote h3{font-family:var(--serif);font-size:1.1rem;font-weight:300;color:#eeeae0;margin-bottom:.4rem;text-align:left}
+.keynote p{font-size:.8rem;color:rgba(238,234,224,.65);line-height:1.75;text-align:left}
+
+/* Mitnehmen */
+.mitnehmen{background:rgba(172,155,127,.1);border:1px solid rgba(172,155,127,.25);border-radius:10px;padding:1rem;margin-top:1rem}
+.mitnehmen-label{font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--goldD);margin-bottom:.35rem;display:block}
+.mitnehmen p{font-size:.8rem;color:var(--navy);line-height:1.7;text-align:left}
+
+/* Stern-Divider */
+.star-div{text-align:center;color:var(--gold);font-size:.75rem;letter-spacing:.4rem;margin:1.25rem 0;opacity:.5}
+</style>
+</head>
+<body>
+
+<nav>
+  <img src="https://static.wixstatic.com/media/23393b_31868a62bb2c4986ac74435ba3e95fae~mv2.webp/v1/fill/w_299,h_95,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/website-min.webp" alt="Mental & Spiritual">
+  <button class="nav-btn">ERSTGESPRÄCH ✦</button>
+</nav>
+
+<div class="pdf-wrap">
+
+  <!-- COVER mit Berg-Bild -->
+  <div class="cover">
+    <div class="cover-bg"></div>
+    <div class="cover-overlay"></div>
+    <div class="cover-content">
+      <span class="cover-label">Mental & Spiritual · Luca Calicchio · Astrosophie</span>
+      <img class="cover-logo" src="https://static.wixstatic.com/media/23393b_31868a62bb2c4986ac74435ba3e95fae~mv2.webp/v1/fill/w_299,h_95,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/website-min.webp" alt="Logo">
+      <div class="cover-divider"></div>
+      <h1>Dein persönliches<br><em>Seelenmuster</em></h1>
+      <p class="cover-name">Luca Calicchio · 20. Oktober 1989 · Liestal</p>
+      <div class="cover-divider"></div>
+      <p class="cover-quote">„Wissen wir, wie die Schöpfung funktioniert,<br>wissen wir wie unser Leben funktioniert."</p>
+    </div>
+  </div>
+
+  <!-- HOROSKOP-WERTE -->
+  <div class="horo">
+    <div class="horo-item">
+      <span class="horo-label">Aszendent</span>
+      <p class="horo-val">15.26°<br>Fische</p>
+    </div>
+    <div class="horo-item">
+      <span class="horo-label">Sonne</span>
+      <p class="horo-val">27.20°<br>Waage</p>
+    </div>
+    <div class="horo-item">
+      <span class="horo-label">Mond</span>
+      <p class="horo-val">15.85°<br>Krebs</p>
+    </div>
+  </div>
+
+              <!-- BERG von luca-calicchio.com -->
+  <div style="width:100%;height:420px;position:relative;overflow:hidden;background:#192436">
+    <img src="https://static.wixstatic.com/media/23393b_abe5516b5e1b49f1bef04746d8d00fdd~mv2.webp/v1/fill/w_1920,h_1080,al_c,q_90,enc_avif,quality_auto/23393b_abe5516b5e1b49f1bef04746d8d00fdd~mv2.webp"
+      style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;position:absolute;top:0;left:0"
+      alt="Berglandschaft">
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(253,250,245,.95) 100%)"></div>
+  </div>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.85rem;color:rgba(172,155,127,.6);letter-spacing:.05em">
+      „Dein Geburtsmuster ist die Landkarte zu deinem Inneren."
+    </p>
+    <div style="height:1px;background:rgba(172,155,127,.3);max-width:200px;margin:.875rem auto 0"></div>
+  </div>
+
+    <div class="quote">„Der Fische-Aszendent ist berufen, Brücken zu bauen – zwischen dem Sichtbaren und dem, was dahinterliegt. Zwischen dem Schmerz und dem Sinn."</div>
+
+    <div class="keynote" style="text-align:left">
+      <span class="keynote-label">✦ Keynote · Dein Wesenskern</span>
+      <h3>Du bist der stille Zeuge – und darin liegt deine Kraft.</h3>
+      <p>Dein Lebensthema ist nicht, lauter zu werden – sondern tiefer. Nicht, mehr zu kontrollieren – sondern mehr loszulassen. Deine grösste Stärke ist die Fähigkeit, im Chaos Stille zu finden. Diese Stille ist ansteckend. Sie heilt.</p>
+    </div>
+
+    <div class="mitnehmen" style="text-align:left">
+      <span class="mitnehmen-label">✦ Mitnehmen für deinen Weg</span>
+      <p>Übe diese Woche täglich 5 Minuten bewusstes Atmen – spüre wo du aufhörst und die Welt beginnt. Das ist deine Grenze. Lege eine Hand auf die Brust und frage dich: <em>„Gehört dieses Gefühl mir, oder habe ich es aufgenommen?"</em> Schreibe deine Antwort auf.</p>
+    </div>
+  </div>
+
+  <div class="star-div">✦ · · · ✦ · · · ✦</div>
+
+  <!-- KAPITEL 2 -->
+  <div class="chapter">
+    <span class="chapter-meta">Quadrant I · Haus 2 · Causa Materialis</span>
+    <h2>Werte &amp; <em>innerer Reichtum</em></h2>
+    <p class="chapter-sub">Widder im 2. Haus · Herrschaft Mars · Besitz & Selbstwert</p>
+
+    <p class="chapter-body" style="text-align:left">Das zweite Haus zeigt, was du als zutiefst wertvoll erlebst – nicht nur materiell, sondern in deiner Seele. Es ist das Haus des Selbstwerts, der persönlichen Ressourcen und der Frage: <strong>„Was gehört wirklich mir?"</strong> Widder hier bedeutet, dass du Sicherheit durch Eigeninitiative und direktes Handeln schöpfst – nicht durch Warten, sondern durch Anpacken.</p>
+
+    <p class="chapter-body" style="text-align:left">Diese Kombination schafft eine interessante innere Spannung: Dein feinfühliger Fische-Aszendent möchte fliessen – dein Widder im zweiten Haus möchte zupacken und besitzen. Der Ausgleich liegt in der Frage: <strong>Was ist es wert, dafür zu kämpfen?</strong> Wenn du die Antwort kennst, ist deine Energie unaufhaltbar.</p>
+
+    <div class="example" style="text-align:left">
+      <span class="example-label">🔥 Beispiel aus der Praxis</span>
+      <p>Eine Klientin mit dieser Konstellation kämpfte jahrelang darum, ihren eigenen Wert zu erkennen – sie vergab immer wieder zu schnell, zu günstig, zu viel. Im Coaching erkannte sie: Ihr Widder-Energie hatte keinen klaren Auftrag. Als sie begann, ihre eigenen Grenzen zu setzen – im Preis, in der Zeit, in der Energie – verwandelte sich die alte Erschöpfung in Lebendigkeit.</p>
+    </div>
+
+    <div class="states" style="text-align:left">
+      <div class="state state-e">
+        <span class="state-label">✦ Erlöst</span>
+        <p>Du kennst deinen Wert und verteidigst ihn ohne Aggression. Deine Energie fliesst direkt in das was dir wirklich wichtig ist. Du kannst Nein sagen – klar, warm, ohne Schuldgefühle.</p>
+      </div>
+      <div class="state state-u">
+        <span class="state-label">◯ Unerlöst</span>
+        <p>Überstürztes Handeln aus Unsicherheit heraus. Entweder du gibst zu schnell auf oder hältst zu starr fest. Selbstwert hängt an äusseren Bestätigungen – Geld, Anerkennung, Leistung.</p>
+      </div>
+    </div>
+
+    <div class="quote">„Dein Wert ist nicht verhandelbar. Er ist nicht von deiner Leistung abhängig. Er ist – weil du bist."</div>
+
+    <div class="keynote" style="text-align:left">
+      <span class="keynote-label">✦ Keynote · Dein innerer Reichtum</span>
+      <h3>Was du wirklich besitzt, kann dir niemand nehmen.</h3>
+      <p>Dein wahrer Reichtum liegt nicht im Konto, sondern in der Klarheit über das, was dir heilig ist. Wenn du weisst was das ist, wirst du aufhören, deine Zeit und Energie an das Falsche zu verschwenden. Das ist deine Befreiung.</p>
+    </div>
+
+    <div class="mitnehmen" style="text-align:left">
+      <span class="mitnehmen-label">✦ Mitnehmen für deinen Weg</span>
+      <p>Schreibe heute drei Dinge auf, die du als deinen wirklichen Wert erkennst – nicht was andere dir sagen, sondern was dich von innen trägt. Lege das Blatt irgendwo hin, wo du es täglich siehst. Lies es laut vor. Das ist kein Ritual – das ist Erinnerung.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
