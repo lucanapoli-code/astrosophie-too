@@ -572,19 +572,25 @@ section:last-child{border-bottom:none}
   <iframe id="pdf-frame" class="pdf-frame" title="Dein Seelenmuster"></iframe>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js" onerror="window._noAstro=true"></script>
-<script type="module">
-// Swiss Ephemeris WASM laden (präziseste Lösung weltweit)
-try {
-  const { SwissEphemeris, Planet, HouseSystem } = await import('https://cdn.jsdelivr.net/npm/@swisseph/browser@latest/dist/index.js');
-  window._SWE = new SwissEphemeris();
-  await window._SWE.init();
-  try { await window._SWE.loadStandardEphemeris(); } catch(e) {}
-  window._sweReady = true;
-  console.log('Swiss Ephemeris WASM geladen ✅');
-} catch(e) {
-  window._sweReady = false;
-  console.log('Swiss Ephemeris nicht verfügbar, nutze Astronomy Engine');
-}
+<script>
+// Swiss Ephemeris WASM async laden (non-blocking)
+window._sweReady = false;
+(async function(){
+  try {
+    var mod = await import('https://cdn.jsdelivr.net/npm/@swisseph/browser@latest/dist/index.js');
+    var SWE = mod.SwissEphemeris || mod.default;
+    if(SWE){
+      window._SWE = new SWE();
+      await window._SWE.init();
+      try { await window._SWE.loadStandardEphemeris(); } catch(e) {}
+      window._sweReady = true;
+      console.log('Swiss Ephemeris WASM geladen ✅');
+    }
+  } catch(e) {
+    window._sweReady = false;
+    console.log('Swiss Ephemeris nicht verfügbar, nutze Astronomy Engine');
+  }
+})();
 </script>
 <script>
 // Samsung Browser Dark Mode Hinweis
