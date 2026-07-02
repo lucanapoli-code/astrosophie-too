@@ -246,9 +246,19 @@ section{margin-bottom:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(
 section:last-child{border-bottom:none}
 @media print{body{padding:1rem}section{page-break-inside:avoid}}
 
+
+#samsung-hint{display:none;background:#192436;border-bottom:1px solid rgba(172,155,127,.3);
+  padding:.5rem 1rem;text-align:center;font-size:.7rem;color:rgba(172,155,127,.8);
+  position:fixed;top:0;left:0;right:0;z-index:9999}
+#samsung-hint a{color:var(--gold);cursor:pointer;text-decoration:underline}
 </style>
 </head>
 <body>
+
+<div id="samsung-hint">
+  📱 Für beste Darstellung: Samsung Browser → ⋮ → Einstellungen → Darstellung → <strong style="color:#ac9b7f">Hell</strong>
+  &nbsp;<span onclick="document.getElementById('samsung-hint').style.display='none'" style="cursor:pointer;opacity:.5">✕</span>
+</div>
 
 <nav class="nav">
   <div class="nav-logo" onclick="goPage('home')">
@@ -562,9 +572,28 @@ section:last-child{border-bottom:none}
   <iframe id="pdf-frame" class="pdf-frame" title="Dein Seelenmuster"></iframe>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js" onerror="window._noAstro=true"></script>
-
-
 <script>
+// Samsung Browser Dark Mode Hinweis
+(function(){
+  var ua=navigator.userAgent||'';
+  var isSamsung=ua.indexOf('SamsungBrowser')>-1;
+  if(isSamsung){
+    var mq=window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)');
+    if(mq&&mq.matches){
+      var h=document.getElementById('samsung-hint');
+      if(h)h.style.display='block';
+      // Nav nach unten schieben damit Banner sichtbar bleibt
+      var nav=document.querySelector('.nav');
+      if(nav)nav.style.top='38px';
+      document.body.style.paddingTop='38px';
+    }
+  }
+})();
+
+
+
+// ── SAMSUNG BANNER ──
+
 
 // ═══════════════════════════════════════════════════════════════════
 // MENTAL & SPIRITUAL – Luca Calicchio · v7.0
@@ -1141,17 +1170,11 @@ var CHALLENGES=[
    a:'Mond und Saturn machen sichtbar welche Prägungen dich steuern. Erkennen. Unterbrechen. Frei werden.'}
 ];
 
-var KB = 'Du bist Luca Calicchio, Mental & Spiritual Coach (luca-calicchio.com, Oftringen Schweiz).\n'
-       + 'Astrosophie = uralte aegyptische Schoepfungslehre nach Randolf M. Schaefer. Keine Prognosen. Nur Selbsterkenntnis.\n'
-       + 'Sprache: Direkt, warm, kurze kraftvolle Saetze. Immer du. Auf Deutsch. Keine Floskeln.\n'
-       + 'SCHREIBE: KEINE Koerpersymptome. Nur Fliestext. Keine Ueberschriften. Keine Aufzaehlungen.\n\n'
-       + 'PLANETEN: Merkur=Geist+Stoff. Venus=Geist+Materie. Mars=Physis+Geist. Jupiter=Seele+Materie.\n'
-       + 'Saturn=Materie+Seele. Uranus=Geistesblitz. Neptun=Seelen+Wiedervereinigung. Pluto=Geist+Seele.\n\n'
-       + 'KAPITELSTRUKTUR: 1.EINSTIEG 2.AC-WESENSKERN 3.SONNE 4.KOMBINATION 5.PLANETEN 6.UNERLÖST 7.ERLÖST 8.IMPULS\n'
-       + 'PFLICHT in JEDEM Kapitel, als letzter Absatz: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten, in dieser Woche umsetzbaren Mini-Uebung (1 Satz). Niemals weglassen, in jedem Paket (Gratis/Individual/SeelenKompass).\n\n'
-       + 'AC: WIDDER=Pionier,Mars STIER=Geerdet,Venus ZWILLINGE=Vermittler,Merkur KREBS=Hueter,Mond\n'
-       + 'LÖWE=Autoritaet,Sonne JUNGFRAU=Praezise,Merkur WAAGE=Diplomat,Venus SKORPION=Intensiv,Pluto\n'
-       + 'SCHUETZE=Weltbuerger,Jupiter STEINBOCK=Reife,Saturn WASSERMANN=Reformer,Uranus FISCHE=Mittler,Neptun';
+var KB = 'IDENTITAET: Du bist Luca Calicchio, Mental & Spiritual Coach (luca-calicchio.com, Oftringen Schweiz). Schreibe persoenlich, direkt, warm, tief, philosophisch. Immer du. Deutsch. Kein Fachjargon. Nur Fliestext. Keine Ueberschriften, keine Aufzaehlungen.\nPHILOSOPHIE: Astrosophie = aegyptische Schoepfungslehre (Randolf M. Schaefer). Wie oben so unten (Hermes Trismegistos). Geburtshoroskop = Landkarte der Seele, kein Schicksal.\n4 QUADRANTEN: Causa Materialis (H1-3), Causa Formalis (H4-6), Causa Efficiens (H7-9), Causa Finalis (H10-12).\n12 ZEICHEN: WIDDER=Pionier,Feuer,Mars,Mut/Aggression. STIER=Erbauer,Erde,Venus,Genuss/Sturheit. ZWILLINGE=Vermittler,Luft,Merkur,Neugier/Oberflaechlichkeit. KREBS=Hueter,Wasser,Mond,Fuersorglichkeit/Klammerung. LÖWE=Schoepfer,Feuer,Sonne,Grosszuegigkeit/Eitelkeit. JUNGFRAU=Ordner,Erde,Merkur,Praezision/Perfektionismus. WAAGE=Diplomat,Luft,Venus,Harmonie/Entscheidungsschwaeche. SKORPION=Forscher,Wasser,Pluto,Tiefe/Kontrolle. SCHUETZE=Philosoph,Feuer,Jupiter,Freiheit/Unverbindlichkeit. STEINBOCK=Baumeister,Erde,Saturn,Disziplin/Haerte. WASSERMANN=Reformer,Luft,Uranus,Vision/Distanz. FISCHE=Mystiker,Wasser,Neptun,Mitgefuehl/Grenzverlust.\n10 PLANETEN: SONNE=Lebensauftrag+Seelenauftrag+Ich. MOND=Seele+Gefuehl+Heimat+Mutter. MERKUR=Geist+Kommunikation+Denken. VENUS=Liebe+Harmonie+Wert+Schoenheit. MARS=Wille+Kraft+Mut+Trieb. JUPITER=Expansion+Weisheit+Segen+Glueck. SATURN=Struktur+Reife+Karma+Grenze. URANUS=Befreiung+Geistesblitz+Revolution. NEPTUN=Aufloesung+Mystik+Transzendenz. PLUTO=Transformation+Tod+Wiedergeburt+Tiefenkraft.\n12 HAEUSER: H1=Wesenskern+AC+Selbstausdruck+Koerper. H2=Werte+Ressourcen+Sicherheit+Selbstwert. H3=Kommunikation+Denken+Lernen. H4=Familie+Wurzeln+Heimat+Unbewusstes. H5=Kreativitaet+Freude+Spiel+Kinder+Liebe. H6=Alltag+Arbeit+Dienst+Gesundheit. H7=Begegnung+Partnerschaft+Spiegel+Vertrag. H8=Transformation+Tiefe+Tod+Wiedergeburt. H9=Weltanschauung+Sinn+Glaube+Philosophie+Reise. H10=Berufung+MC+Ruf+Verantwortung. H11=Kollektiv+Vision+Gemeinschaft+Zukunft. H12=Spiritualitaet+Unbewusstes+Rueckzug+Karma.\nQUALITAETEN: DOMIZIL=staerkste Energie (Sonne/Loewe, Mond/Krebs, Merkur/Zwillinge+Jungfrau, Venus/Stier+Waage, Mars/Widder+Skorpion, Jupiter/Schuetze+Fische, Saturn/Steinbock+Wassermann, Uranus/Wassermann, Neptun/Fische, Pluto/Skorpion). ERHOEHUNG=verstaerkt harmonisch (Sonne/Widder, Mond/Stier, Jupiter/Krebs, Saturn/Waage). STELLIUM=3+ Planeten=zentrales Lebensthema, hohes Potenzial und Herausforderung.\nPLANETEN-IN-HAUS KOMBINATIONEN (Placidus, aus professionellem Horoskop 20.10.1989 16:02 Liestal verifiziert): H5: MOND in KREBS (DOMIZIL) + JUPITER in KREBS (ERHOEHUNG) = STELLIUM: Reinste Seelenqualitaet (Mond/Domizil) + groesste Sегensfulle (Jupiter/Erhoehung) im Haus der Freude. Aussergewoehnliche emotionale Tiefe die sich durch Kreativitaet und Liebe ausdrueckt. Unerlöst=emotionale Ueberflutung, Klammern an Gefuehle und Kinder. Erlöst=emotionale Weisheit als Geschenk, Freude als spirituelle Praxis. H7: SONNE + MERKUR + MARS in WAAGE = TRIPLE STELLIUM: Lebensauftrag (Sonne) + Denken (Merkur) + Wille (Mars) ereignen sich alle IM Kontakt mit dem Anderen. Der Andere ist Lehrer, Spiegel und Lebensaufgabe. Mars in Waage kaempft fuer Gerechtigkeit und Harmonie. Unerlöst=Selbstverlust in Beziehungen, Konfliktvermeidung um jeden Preis. Erlöst=Begegnung auf Augenhoehe, Wille der verbindet statt trennt. H8: PLUTO in SKORPION (DOMIZIL): Doppelte Tiefenkraft. Absolute Faehigkeit zur Regeneration. Tod und Wiedergeburt als bewusster Lebensweg. H9: VENUS in SCHUETZE: Liebe zur Weisheit und zum Weiten. Schoenheit im Philosophischen. Verbindung durch Weltanschauung und Grosszuegigkeit. H10: SATURN (DOMIZIL) + URANUS in STEINBOCK: Berufung als verantwortungsvolle Revolution. Strukturierte Erneuerung. Nachhaltige Veraenderung durch Disziplin. H11: NEPTUN in STEINBOCK: Spirituelle Vision braucht irdische Struktur um wirksam zu werden. Transzendenz durch Verantwortung. Mystik mit Bodenhaftung.\nKAPITELSTRUKTUR PFLICHT: 1.Philosophisch-poetischer Einstieg. 2.Haus-Zeichen und Grundqualitaet. 3.PLANETEN-IN-HAUS=PRIO 1 FUNDAMENT: jeden Planeten einzeln und tief erklaeren, Domizil+Erhoehung explizit benennen, Stellium als Drama beschreiben, leeres Haus=Hausherrscher Position erklaeren. 4.Polaritaets-Haus als ergaenzende Spannung einweben. 5.UNERLÖST: konkretes Alltagsbeispiel. 6.ERLÖST: konkrete Loesung mit Beispiel. 7.MITNEHMEN PFLICHT NIEMALS WEGLASSEN: Mitnehmen fuer deinen Weg: + 1 konkrete Mini-Uebung diese Woche.';
+
+
+
+
 
 // ── HAUS-ZUORDNUNGSSYSTEM (nach Randolf M. Schäfer / Astrosophie) ────────
 // Jedes Haus = Tierkreiszeichen-Prinzip + Hausherrscher-Planet + Polaritäts-Haus (Gegenüber)
@@ -1244,7 +1267,7 @@ function mkPrompt(id,h,isFirst){
     return txt;
   }
 
-  var W='280-310 Woerter. PFLICHT: Baue einen eigenen, klar erkennbaren Absatz ein, der zwei Pole derselben Eigenschaft benennt - die UNERLÖSTE Variante (wie sich diese Energie zeigt, wenn sie unbewusst/im Schatten gelebt wird, mit konkretem Alltagsbeispiel) und direkt danach im selben Absatz die ERLÖSTE Variante als echte Lösung dazu (wie genau dieselbe Energie aussieht, wenn sie integriert/bewusst gelebt wird, ebenfalls mit konkretem Beispiel) - nicht nur eine offene Frage stehen lassen, sondern eine greifbare Auflösung anbieten. PFLICHT als letzter Absatz, IMMER, zusätzlich und getrennt davon: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten, in dieser Woche umsetzbaren Mini-Uebung (1 Satz, alltagsnah, kein abstrakter Ratschlag). Niemals weglassen, unabhaengig vom gebuchten Paket.';
+  var W='300-340 Woerter. PFLICHT-STRUKTUR: (1) Philosophischer Einstieg der das Kapitelthema kosmisch einbettet. (2) Das Haus-Zeichen und seine Grundqualitaet. (3) WENN PLANETEN IM HAUS STEHEN: Jeden Planeten einzeln erklaeren - was bringt er in dieses Haus, wie veraendert er das Thema, was bedeutet es wenn er im Domizil steht, was wenn ein Stellium vorliegt - diese Kombinations-Tiefe ist das FUNDAMENT und PRIO 1. (4) UNERLÖST: Konkretes Alltagsbeispiel wie sich diese Energie zeigt wenn sie unbewusst gelebt wird. (5) ERLÖST: Konkretes Beispiel der integrierten Energie als echte Loesung. (6) PFLICHT als LETZTER Absatz IMMER: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten in dieser Woche umsetzbaren Mini-Uebung (1 Satz, alltagsnah). NIEMALS WEGLASSEN.';
   var t={
     // KAPITEL 1: Wesenskern -> Haus 1 = AC selbst + AC-Herrscher + Sonne (Lebensauftrag) + Polarität Haus 7
     1:base+'\n'+combo(1)+'\nKAPITEL 1 WESENSKERN: Beschreibe den AC-Wesenskern ('+ac.sign+'), kombiniert mit der Sonne ('+sun.sign+', Lebensauftrag/Seelenauftrag) und dem AC-Herrscherplaneten '+acR+' in '+acRP+'. Beende den Text mit 1-2 Sätzen, die eine offene Frage oder Spannung andeuten, die typisch für Menschen mit diesem Wesenskern ist - ohne sie aufzulösen, sodass Neugier auf die weiteren Lebensbereiche entsteht (z.B. ein wiederkehrendes Muster, eine ungelebte Seite, eine Sehnsucht). '+W,
@@ -1659,7 +1682,9 @@ var _cdTimer=null;
 function startCountdown(nAreas){
   clearInterval(_cdTimer);
   var batches=Math.ceil(nAreas/3);
-  var totalSec=batches*28; // korrigiert nach echtem Live-Test: ca. 2-3 Min bei 13 Kapiteln (5 Batches)
+  // Realistisch gemessen: Gratis~30s, Individual~90s, Seelen~120s, Jahr~150s
+  var secsPerBatch = nAreas<=1 ? 30 : nAreas<=3 ? 90 : 30;
+  var totalSec = nAreas<=1 ? 30 : nAreas<=3 ? 90 : batches*30;
   var remaining=totalSec;
   var cdEl=el('gen-countdown');
   if(!cdEl)return;
