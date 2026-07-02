@@ -572,6 +572,20 @@ section:last-child{border-bottom:none}
   <iframe id="pdf-frame" class="pdf-frame" title="Dein Seelenmuster"></iframe>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js" onerror="window._noAstro=true"></script>
+<script type="module">
+// Swiss Ephemeris WASM laden (präziseste Lösung weltweit)
+try {
+  const { SwissEphemeris, Planet, HouseSystem } = await import('https://cdn.jsdelivr.net/npm/@swisseph/browser@latest/dist/index.js');
+  window._SWE = new SwissEphemeris();
+  await window._SWE.init();
+  try { await window._SWE.loadStandardEphemeris(); } catch(e) {}
+  window._sweReady = true;
+  console.log('Swiss Ephemeris WASM geladen ✅');
+} catch(e) {
+  window._sweReady = false;
+  console.log('Swiss Ephemeris nicht verfügbar, nutze Astronomy Engine');
+}
+</script>
 <script>
 // Samsung Browser Dark Mode Hinweis
 (function(){
@@ -853,289 +867,197 @@ function getCoords(place){
 
 // ── HAUPTBERECHNUNG (Meeus + IAU 2000B Nutation) ──────────────────
 function calcFB(yr,mo,dy,hL,mn,lat,lon,tz){
-  // 1. UTC
-  var hUT=hL+mn/60-tz, dU=dy, mU=mo, yU=yr;
+  // Fallback wenn Astronomy Engine nicht verfügbar
+  var hUT=hL+mn/60-tz,dU=dy,mU=mo,yU=yr;
   if(hUT<0){hUT+=24;dU--;}else if(hUT>=24){hUT-=24;dU++;}
 
-  // 2. Julianisches Datum
-  var JD=julDate(yU,mU,dU,hUT);
+  // Julianisches Datum
+  var yT=yU,mT=mU;
+  if(mT<=2){yT--;mT+=12;}
+  var A=Math.floor(yT/100),B=2-A+Math.floor(A/4);
+  var JD=Math.floor(365.25*(yT+4716))+Math.floor(30.6001*(mT+1))+dU+hUT/24+B-1524.5;
   var T=(JD-2451545.0)/36525;
 
-  // 3. Nutation (IAU 2000B)
-  var nut=nutIAU(T);
+  // GMST bei 0h UT (IAU 1982) in Sekunden
+  var gmst0Sec=24110.54841+8640184.812866*T+0.093104*T*T-6.2e-6*T*T*T;
+  // GMST = GMST(0h) + UT * Erdrotationsrate (in Grad)
+  var gmst=nor(((gmst0Sec/3600)*15)+hUT*15.0*1.00273790935);
 
-  // 4. Wahre Schiefe der Ekliptik
-  var eps=epsObl(T,nut.deps);
-
-  // 5. GMST → GAST (Meeus Gl.12.4 + Nutation)
-  var gmst=nor(280.46061837+360.98564736629*(JD-2451545.0)+0.000387933*T*T-T*T*T/38710000);
-  var gast=nor(gmst+nut.dpsi*Math.cos(toR(eps)));
-
-  // 6. Local Apparent Sidereal Time
+  // Nutation
+  var Om=nor(125.04452-1934.136261*T);
+  var L0=nor(280.4665+36000.7698*T);
+  var Lm=nor(218.3165+481267.8813*T);
+  var dpsi=((-17.20-0.01742*T)*Math.sin(toR(Om))+(-1.319)*Math.sin(toR(2*L0))+(-0.2271)*Math.sin(toR(2*Lm))+(0.2068)*Math.sin(toR(2*Om)))/3600;
+  var deps=((9.2025+0.00089*T)*Math.cos(toR(Om))+(0.5736)*Math.cos(toR(2*L0))+(0.0977)*Math.cos(toR(2*Lm))+(-0.0895)*Math.cos(toR(2*Om)))/3600;
+  var eps0=23.439291111-0.013004167*T-1.64e-7*T*T+5.04e-7*T*T*T;
+  var eps=eps0+deps;
+  var eqEq=dpsi*Math.cos(toR(eps));
+  var gast=nor(gmst+eqEq);
   var LAST=nor(gast+lon);
 
-  // 7. ASZENDENT (Meeus Formel mit atan2 für korrekte Quadranten)
+  // AC und MC
   var Lr=toR(LAST),er=toR(eps),latr=toR(lat);
-  var AC=nor(toD(Math.atan2(-Math.cos(Lr),Math.sin(Lr)*Math.cos(er)+Math.tan(latr)*Math.sin(er)))+180);
+  var sinE=Math.sin(er),cosE=Math.cos(er);
+  var AC=nor(toD(Math.atan2(-Math.cos(Lr),Math.sin(Lr)*cosE+Math.tan(latr)*sinE))+180);
+  var MC=nor(toD(Math.atan2(Math.sin(Lr)*cosE,Math.cos(Lr))));
 
-  // 8. MC (Mittlerer Himmel)
-  var MCraw=toD(Math.atan(Math.tan(Lr)/Math.cos(er)));
-  var MC=nor(MCraw);
-  var mcDiff=Math.abs(nor(MC-LAST));
-  if(mcDiff>90&&mcDiff<270) MC=nor(MC+180);
+  // Planeten (Meeus, Astronomical Algorithms - bewährte Formeln)
+  var M=nor(357.5291092+35999.0502909*T-0.0001536*T*T+T*T*T/24490000);
+  var C=(1.9146-0.004817*T-0.000014*T*T)*Math.sin(toR(M))+(0.019993-0.000101*T)*Math.sin(toR(2*M))+0.00029*Math.sin(toR(3*M));
+  var sunL=nor(280.46646+36000.76983*T+0.0003032*T*T+C-0.00569-0.00478*Math.sin(toR(Om)));
 
-  // 9. SONNE (Meeus Kap.27 + Aberration + Nutation)
-  var Ms=nor(357.52911+35999.05029*T-0.0001537*T*T);
-  var L0=nor(280.46646+36000.76983*T+0.0003032*T*T);
-  var C=(1.9146-0.004817*T-0.000014*T*T)*Math.sin(toR(Ms))
-       +(0.019993-0.000101*T)*Math.sin(toR(2*Ms))
-       +0.00029*Math.sin(toR(3*Ms));
-  var sun=nor(L0+C-0.00569+nut.dpsi);
+  var Lmoon=nor(218.3165+481267.8813*T);
+  var D2=nor(297.8502+445267.1115*T);
+  var M2=nor(357.5291+35999.0503*T);
+  var Mp=nor(134.9634+477198.8676*T);
+  var F=nor(93.2721+483202.0175*T);
+  var moonL=nor(Lmoon+6.2888*Math.sin(toR(Mp))+1.2740*Math.sin(toR(2*D2-Mp))+0.6583*Math.sin(toR(2*D2))+0.2136*Math.sin(toR(2*Mp))-0.1851*Math.sin(toR(M2))-0.1144*Math.sin(toR(2*F))+0.0588*Math.sin(toR(2*D2-2*Mp))+0.0572*Math.sin(toR(2*D2-M2-Mp))+0.0533*Math.sin(toR(2*D2+Mp))+0.0458*Math.sin(toR(2*D2-M2))+0.0409*Math.sin(toR(Mp-M2))-0.0347*Math.sin(toR(D2-Mp))-0.0304*Math.sin(toR(2*F-2*D2+Mp))-0.0251*Math.sin(toR(M2+Mp))+0.0210*Math.sin(toR(2*D2-M2-2*Mp)));
 
-  // 10. MOND (Meeus Kap.47, 15 Terme)
-  var E=1-0.002516*T-0.0000074*T*T;
-  var Lm=nor(218.3165+481267.8813*T-0.0013268*T*T);
-  var Mm=nor(134.9634+477198.8676*T+0.0089970*T*T);
-  var Dm=nor(297.8502+445267.1115*T-0.0018819*T*T);
-  var Fm=nor(93.2721 +483202.0175*T-0.0034029*T*T);
-  var dL=6.289*Math.sin(toR(Mm))
-        +1.274*Math.sin(toR(2*Dm-Mm))
-        +0.658*Math.sin(toR(2*Dm))
-        +0.214*Math.sin(toR(2*Mm))
-        -0.186*E*Math.sin(toR(Ms))
-        -0.114*Math.sin(toR(2*Fm))
-        +0.059*Math.sin(toR(2*Dm-2*Mm))
-        -0.057*E*Math.sin(toR(2*Dm-Ms-Mm))
-        +0.053*Math.sin(toR(2*Dm+Mm))
-        +0.046*E*Math.sin(toR(2*Dm-Ms))
-        +0.041*Math.sin(toR(Mm-Ms))
-        -0.035*Math.sin(toR(Dm))
-        -0.031*Math.sin(toR(Mm+Ms))
-        -0.015*Math.sin(toR(2*Fm-2*Dm))
-        +0.011*Math.sin(toR(2*Dm-2*Mm+Mm));
-  var moon=nor(Lm+dL);
+  // Innere Planeten (präzisere Meeus-Formeln)
+  var L1=nor(252.2509+149474.0714*T);
+  var M1=nor(174.7948+149472.5153*T);
+  var mercL=nor(L1+23.4400*Math.sin(toR(M1))+2.9818*Math.sin(toR(2*M1))+0.5255*Math.sin(toR(3*M1))+0.1058*Math.sin(toR(4*M1))+0.0219*Math.sin(toR(5*M1)));
 
-  // 11. PLANETEN (Kepler-Bahnelemente J2000 + Centennial Rates, mit Exzentrizitäts-Korrektur)
-  function planetLon(name){
-    var el=ORBELEM[name];
-    var a=el.a+el.aD*T, e=el.e+el.eD*T, ic=el.i+el.iD*T;
-    var O=el.O+el.OD*T, wB=el.w+el.wD*T, L=el.L+el.LD*T;
-    var w=wB-O, M=nor(L-wB);
-    var Mr=toR(M), Er=Mr;
-    for(var k=0;k<10;k++){
-      var dE=(Er-e*Math.sin(Er)-Mr)/(1-e*Math.cos(Er));
-      Er-=dE; if(Math.abs(dE)<1e-9) break;
-    }
-    var nu=2*Math.atan2(Math.sqrt(1+e)*Math.sin(Er/2),Math.sqrt(1-e)*Math.cos(Er/2));
-    var r=a*(1-e*Math.cos(Er));
-    var xOrb=r*Math.cos(nu), yOrb=r*Math.sin(nu);
-    var wr=toR(w), Or=toR(O), ir=toR(ic);
-    var x=(Math.cos(Or)*Math.cos(wr)-Math.sin(Or)*Math.sin(wr)*Math.cos(ir))*xOrb
-        +(-Math.cos(Or)*Math.sin(wr)-Math.sin(Or)*Math.cos(wr)*Math.cos(ir))*yOrb;
-    var y=(Math.sin(Or)*Math.cos(wr)+Math.cos(Or)*Math.sin(wr)*Math.cos(ir))*xOrb
-        +(-Math.sin(Or)*Math.sin(wr)+Math.cos(Or)*Math.cos(wr)*Math.cos(ir))*yOrb;
-    return {x:x,y:y};
-  }
-  var earthPos=planetLon('Erde');
-  function pl(name){
-    var p=planetLon(name);
-    var lon=nor(toD(Math.atan2(p.y-earthPos.y,p.x-earthPos.x)));
-    return sOf(lon);
-  }
+  var L2=nor(181.9798+58519.2130*T);
+  var M2v=nor(212.2606+58517.8039*T);
+  var venL=nor(L2+0.7758*Math.sin(toR(M2v))+0.0033*Math.sin(toR(2*M2v)));
 
-  // 12. PLACIDUS HÄUSER (Cusps 1-12, Iteration nach Munkasey/Standard-Formel)
+  // Äussere Planeten (VSOP87 vereinfacht, Meeus)
+  var L3=nor(355.4330+19141.6964*T);
+  var M3=nor(319.5140+19139.8584*T);
+  var marL=nor(L3+10.6912*Math.sin(toR(M3))+0.6228*Math.sin(toR(2*M3))+0.0503*Math.sin(toR(3*M3))+0.0046*Math.sin(toR(4*M3)));
+
+  var M4=nor(20.9202+3036.3051*T);
+  var jupL=nor(34.3515+3034.9057*T+5.5549*Math.sin(toR(M4))+0.1683*Math.sin(toR(2*M4))-0.0344*Math.sin(toR(M4+nor(316.5182+893.3951*T))));
+
+  var M5=nor(317.9980+1223.5109*T);
+  var satL=nor(50.0774+1222.1138*T+6.3585*Math.sin(toR(M5))+0.2204*Math.sin(toR(2*M5))-0.3898*Math.sin(toR(M4)));
+
+  var M6=nor(142.5905+428.4612*T);
+  var uraL=nor(314.0550+429.8633*T+5.3307*Math.sin(toR(M6))+0.1534*Math.sin(toR(2*M6)));
+
+  var M7=nor(267.9690+218.4580*T);
+  var nepL=nor(304.3480+219.8997*T+1.0750*Math.sin(toR(M7)));
+
+  var S=nor(50.03+84452.0*T);
+  var P=nor(238.95+144.96*T);
+  var pluL=nor(238.9508+144.9600*T+(-19.799*Math.sin(toR(P))+19.848*Math.cos(toR(P)))+(-0.897*Math.sin(toR(2*P))+1.205*Math.cos(toR(2*P)))+(0.731*Math.sin(toR(3*P))-0.682*Math.cos(toR(3*P)))+(-0.037*Math.sin(toR(S))+0.099*Math.cos(toR(S))));
+
   var houses=calcPlacidus(LAST,eps,lat,MC,AC);
-
-  return {
-    AC:sOf(AC), MC:sOf(MC), Sonne:sOf(sun), Mond:sOf(moon),
-    Merkur: pl('Merkur'),
-    Venus:  pl('Venus'),
-    Mars:   pl('Mars'),
-    Jupiter:pl('Jupiter'),
-    Saturn: pl('Saturn'),
-    Uranus: pl('Uranus'),
-    Neptun: pl('Neptun'),
-    Pluto:  pl('Pluto'),
-    houses: houses
+  return{
+    AC:sOf(AC),MC:sOf(MC),
+    Sonne:sOf(sunL),Mond:sOf(moonL),
+    Merkur:sOf(mercL),Venus:sOf(venL),
+    Mars:sOf(marL),Jupiter:sOf(jupL),
+    Saturn:sOf(satL),Uranus:sOf(uraL),
+    Neptun:sOf(nepL),Pluto:sOf(pluL),
+    houses:houses
   };
 }
 
-// ── KEPLER-BAHNELEMENTE (J2000.0, Standish/JPL Explanatory Supplement) ──
-// a=grosse Halbachse(AU), e=Exzentrizität, i=Inklination, O=Knoten-Länge,
-// w=Perihel-Länge, L=mittlere Länge (alle Grad, ausser a); *D = Rate pro Julian. Jahrhundert
-var ORBELEM={
-  Merkur:  {a:0.38709927,aD:0.00000037,  e:0.20563593,eD:0.00001906,  i:7.00497902,iD:-0.00594749,
-            O:48.33076593,OD:-0.12534081, w:77.45779628,wD:0.16047689, L:252.25032350,LD:149472.67411175},
-  Venus:   {a:0.72333566,aD:0.00000390,  e:0.00677672,eD:-0.00004107, i:3.39467605,iD:-0.00078890,
-            O:76.67984255,OD:-0.27769418, w:131.60246718,wD:0.00268329, L:181.97909950,LD:58517.81538729},
-  Erde:    {a:1.00000261,aD:0.00000562,  e:0.01671123,eD:-0.00004392, i:-0.00001531,iD:-0.01294668,
-            O:0.0,OD:0.0, w:102.93768193,wD:0.32327364, L:100.46457166,LD:35999.37244981},
-  Mars:    {a:1.52371034,aD:0.00001847,  e:0.09339410,eD:0.00007882,  i:1.84969142,iD:-0.00813131,
-            O:49.55953891,OD:-0.29257343, w:-23.94362959,wD:0.44441088, L:-4.55343205,LD:19140.30268499},
-  Jupiter: {a:5.20288700,aD:-0.00011607, e:0.04838624,eD:-0.00013253, i:1.30439695,iD:-0.00183714,
-            O:100.47390909,OD:0.20469106, w:14.72847983,wD:0.21252668, L:34.39644051,LD:3034.74612775},
-  Saturn:  {a:9.53667594,aD:-0.00125060, e:0.05386179,eD:-0.00050991, i:2.48599187,iD:0.00193609,
-            O:113.66242448,OD:-0.28867794, w:92.59887831,wD:-0.41897216, L:49.95424423,LD:1222.49362201},
-  Uranus:  {a:19.18916464,aD:-0.00196176, e:0.04725744,eD:-0.00004397, i:0.77263783,iD:-0.00242939,
-            O:74.01692503,OD:0.04240589, w:170.95427630,wD:0.40805281, L:313.23810451,LD:428.48202785},
-  Neptun:  {a:30.06992276,aD:0.00026291, e:0.00859048,eD:0.00005105,  i:1.77004347,iD:0.00035372,
-            O:131.78422574,OD:-0.00508664, w:44.96476227,wD:-0.32241464, L:-55.12002969,LD:218.45945325},
-  Pluto:   {a:39.48211675,aD:-0.00031596, e:0.24882730,eD:0.00005170, i:17.14001206,iD:0.00004818,
-            O:110.30393684,OD:-0.01183482, w:224.06891629,wD:-0.04062942, L:238.92903833,LD:145.20780515}
-};
 
-// ── PLACIDUS HAUSCUSPS (Standard-Iterationsformel, Munkasey/Swiss-Ephemeris-Konvention) ──
-// Liefert Cusps 1-12 als sOf-Objekte (mit .raw = ekliptikale Länge in Grad)
-function calcPlacidus(LAST,eps,lat,MC,AC){
-  var L=toR(LAST), E=toR(eps), F=toR(lat);
-
-  // Wandelt eine Rektaszension (Radiant) in ekliptikale Länge (Grad) um
-  function raToEcl(ra){
-    var lon=Math.atan2(Math.sin(ra),Math.cos(ra)*Math.cos(E));
-    return nor(toD(lon));
-  }
-
-  // Cusps 11 & 12: Startwert RA = RAMC + offset, dann iterativ RA = RAMC + arccos(-sin(RA)*tanF*tanE)/divisor
-  function cuspUpper(offsetDeg, divisor){
-    var ra = L + toR(offsetDeg); // Startwert
-    for(var i=0;i<50;i++){
-      var num = -Math.sin(ra)*Math.tan(F)*Math.tan(E);
-      if(num>1) num=1; else if(num<-1) num=-1;
-      var arc = Math.acos(num);
-      var raNew = L + arc/divisor;
-      if(Math.abs(raNew-ra)<1e-10){ra=raNew;break;}
-      ra=raNew;
-    }
-    return raToEcl(ra);
-  }
-  // Cusps 2 & 3: Startwert RA = RAMC + offset, dann iterativ RA = RAMC + 180 - arccos(sin(RA)*tanF*tanE)/divisor
-  function cuspLower(offsetDeg, divisor){
-    var ra = L + toR(offsetDeg); // Startwert
-    for(var i=0;i<50;i++){
-      var num = Math.sin(ra)*Math.tan(F)*Math.tan(E);
-      if(num>1) num=1; else if(num<-1) num=-1;
-      var arc = Math.acos(num);
-      var raNew = L + Math.PI - arc/divisor;
-      if(Math.abs(raNew-ra)<1e-10){ra=raNew;break;}
-      ra=raNew;
-    }
-    return raToEcl(ra);
-  }
-
-  var c11=cuspUpper(30,3);
-  var c12=cuspUpper(60,1.5);
-  var c2 =cuspLower(120,1.5);
-  var c3 =cuspLower(150,3);
-
-  // Gegenüberliegende Häuser sind exakt 180° versetzt
-  var c5=nor(c11+180), c6=nor(c12+180), c8=nor(c2+180), c9=nor(c3+180);
-
-  var cusps=[];
-  cusps[1]=sOf(AC);
-  cusps[2]=sOf(c2);
-  cusps[3]=sOf(c3);
-  cusps[4]=sOf(nor(MC+180));
-  cusps[5]=sOf(c5);
-  cusps[6]=sOf(c6);
-  cusps[7]=sOf(nor(AC+180));
-  cusps[8]=sOf(c8);
-  cusps[9]=sOf(c9);
-  cusps[10]=sOf(MC);
-  cusps[11]=sOf(c11);
-  cusps[12]=sOf(c12);
-  return cusps;
-}
-
-// Bestimmt, in welchem Haus (1-12) ein Planet steht, basierend auf Placidus-Cusps
-function houseOfPlanet(planetDeg, cusps){
-  for(var h=1;h<=12;h++){
-    var startDeg=cusps[h].raw;
-    var endDeg=cusps[h===12?1:h+1].raw;
-    var span=nor(endDeg-startDeg);
-    var pos=nor(planetDeg-startDeg);
-    if(span===0) return h; // degenerate (polar regions)
-    if(pos<span) return h;
-  }
-  return 12;
-}
-
-// ── JAHRESHOROSKOP: TRANSIT-ASPEKTE ─────────────────────────────────
-// Vergleicht transitierende (aktuelle) Planetenpositionen mit dem Geburtshoroskop
-var ASPECT_DEFS=[
-  {name:'Konjunktion', sym:'☌', angle:0,   orb:6, art:'Verschmelzung, Fokus, Beginn'},
-  {name:'Sextil',      sym:'⚹', angle:60,  orb:4, art:'Leichtigkeit, Gelegenheit'},
-  {name:'Quadrat',     sym:'□', angle:90,  orb:5, art:'Spannung, Reibung, Wachstumsdruck'},
-  {name:'Trigon',      sym:'△', angle:120, orb:5, art:'Fluss, Unterstützung, Harmonie'},
-  {name:'Opposition',  sym:'☍', angle:180, orb:6, art:'Bewusstwerdung, Polarisierung, Ausgleich'}
-];
-function angleDiff(a,b){ var d=Math.abs(a-b)%360; return d>180?360-d:d; }
-
-// Findet alle Aspekte eines Transit-Planeten zu allen Geburtsplaneten/AC/MC
-function findTransitAspects(transitLon, transitName, natal){
-  var found=[];
-  var keys=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto','AC','MC'];
-  for(var i=0;i<keys.length;i++){
-    var k=keys[i];
-    var diff=angleDiff(transitLon, natal[k].raw);
-    for(var j=0;j<ASPECT_DEFS.length;j++){
-      var a=ASPECT_DEFS[j];
-      if(Math.abs(diff-a.angle)<=a.orb){
-        found.push({transit:transitName, natal:k, aspect:a.name, sym:a.sym, art:a.art, orb:Math.abs(diff-a.angle)});
-      }
-    }
-  }
-  return found;
-}
-
-// Berechnet für jeden Monat eines Jahres die Transit-Aspekte der 5 langsamen Planeten
-// (Jupiter, Saturn, Uranus, Neptun, Pluto - diese tragen die Jahresthemen, nicht die schnellen)
-function calcYearTransits(year, natal, lat, lon){
-  var months=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
-  var slowPlanets=['Jupiter','Saturn','Uranus','Neptun','Pluto'];
-  var yearData=[];
-  for(var m=1;m<=12;m++){
-    var t=calcFB(year,m,15,12,0,lat,lon,0); // Monatsmitte, 12:00 UTC als Referenzpunkt
-    var monthAspects=[];
-    for(var p=0;p<slowPlanets.length;p++){
-      var asps=findTransitAspects(t[slowPlanets[p]].raw, slowPlanets[p], natal);
-      monthAspects=monthAspects.concat(asps);
-    }
-    monthAspects.sort(function(a,b){return a.orb-b.orb;});
-    yearData.push({month:months[m-1], monthNum:m, aspects:monthAspects, topAspect:monthAspects[0]||null});
-  }
-  return yearData;
-}
-
-// ── ASTRONOMY ENGINE (wenn verfügbar, noch präziser) ──────────────
 function calcHoro(yr,mo,dy,hL,mn,lat,lon,tz){
-  if(typeof Astronomy==='undefined'||window._noAstro) return calcFB(yr,mo,dy,hL,mn,lat,lon,tz);
-  try{
-    var hUT=hL+mn/60-tz,dU=dy,mU=mo,yU=yr;
-    if(hUT<0){hUT+=24;dU--;}else if(hUT>=24){hUT-=24;dU++;}
-    var date=new Date(Date.UTC(yU,mU-1,dU,Math.floor(hUT),Math.round((hUT%1)*60),0));
-    var time=new Astronomy.AstroTime(date);
-    var JD=time.tt+2451545, T2=(JD-2451545)/36525;
-    var nut2=nutIAU(T2), eps2=epsObl(T2,nut2.deps);
-    // GAST via Astronomy Engine sidereal time (präziser)
-    var gast2=nor(Astronomy.SiderealTime(time)*15+nut2.dpsi*Math.cos(toR(eps2)));
-    var LAST2=nor(gast2+lon);
-    var Lr2=toR(LAST2),er2=toR(eps2),latr2=toR(lat);
-    var AC2=nor(toD(Math.atan2(-Math.cos(Lr2),Math.sin(Lr2)*Math.cos(er2)+Math.tan(latr2)*Math.sin(er2)))+180);
-    var MC2=nor(toD(Math.atan2(Math.sin(Lr2)*Math.cos(er2),Math.cos(Lr2))));
-    function pl2(name){try{return nor(Astronomy.Ecliptic(Astronomy.GeoVector(name,time,true)).elon);}catch(e){return 0;}}
-    var houses2=calcPlacidus(LAST2,eps2,lat,MC2,AC2);
-    return {
-      AC:sOf(AC2),MC:sOf(MC2),
-      Sonne: sOf(nor(Astronomy.SunPosition(time).elon)),
-      Mond:  sOf(nor(Astronomy.EclipticGeoMoon(time).lon)),
-      Merkur:sOf(pl2('Mercury')),Venus: sOf(pl2('Venus')),
-      Mars:  sOf(pl2('Mars')),   Jupiter:sOf(pl2('Jupiter')),
-      Saturn:sOf(pl2('Saturn')), Uranus: sOf(pl2('Uranus')),
-      Neptun:sOf(pl2('Neptune')),Pluto:  sOf(pl2('Pluto')),
-      houses: houses2
-    };
-  }catch(e){ return calcFB(yr,mo,dy,hL,mn,lat,lon,tz); }
+  var nor2=function(d){d=d%360;return d<0?d+360:d;};
+
+  // PRIORITÄT 1: Swiss Ephemeris WASM (präziseste Lösung, identisch zu astro.com)
+  if(window._sweReady && window._SWE){
+    try{
+      var hUT=hL+mn/60-tz,dU=dy,mU=mo,yU=yr;
+      if(hUT<0){hUT+=24;dU--;}else if(hUT>=24){hUT-=24;dU++;}
+      var swe=window._SWE;
+      // Julianischer Tag in UT
+      var jd=swe.julianDay(yU,mU,dU,hUT);
+      // Häuser und AC/MC via Swiss Ephemeris Placidus
+      var houses=swe.calculateHouses(jd,lat,lon,'P'); // P = Placidus
+      var AC=nor2(houses.ascendant);
+      var MC=nor2(houses.mc);
+      // Haus-Cusps für Planeten-Zuordnung
+      var cusps=houses.cusps; // Array 1-12
+      // Planeten
+      function sweP(planetId){
+        try{return nor2(swe.calculatePosition(jd,planetId).longitude);}catch(e){return 0;}
+      }
+      var P=swe.Planet||{Sun:0,Moon:1,Mercury:2,Venus:3,Mars:4,Jupiter:5,Saturn:6,Uranus:7,Neptune:8,Pluto:9};
+      var sunL=sweP(P.Sun||0);
+      var moonL=sweP(P.Moon||1);
+      var mercL=sweP(P.Mercury||2);
+      var venL=sweP(P.Venus||3);
+      var marL=sweP(P.Mars||4);
+      var jupL=sweP(P.Jupiter||5);
+      var satL=sweP(P.Saturn||6);
+      var uraL=sweP(P.Uranus||7);
+      var nepL=sweP(P.Neptune||8);
+      var pluL=sweP(P.Pluto||9);
+      // Placidus Häuser aus Swiss Ephemeris Cusps
+      var housesSWE=buildHousesFromCusps(cusps,AC,MC);
+      return{
+        AC:sOf(AC),MC:sOf(MC),
+        Sonne:sOf(sunL),Mond:sOf(moonL),
+        Merkur:sOf(mercL),Venus:sOf(venL),
+        Mars:sOf(marL),Jupiter:sOf(jupL),
+        Saturn:sOf(satL),Uranus:sOf(uraL),
+        Neptun:sOf(nepL),Pluto:sOf(pluL),
+        houses:housesSWE
+      };
+    }catch(e){ console.log('SWE Fehler:',e); }
+  }
+
+  // PRIORITÄT 2: Astronomy Engine (sub-arcsecond, JPL-basiert)
+  if(typeof Astronomy!=='undefined'&&!window._noAstro){
+    try{
+      var hUT=hL+mn/60-tz,dU=dy,mU=mo,yU=yr;
+      if(hUT<0){hUT+=24;dU--;}else if(hUT>=24){hUT-=24;dU++;}
+      var hUTi=Math.floor(hUT),hUTm=Math.round((hUT-hUTi)*60);
+      if(hUTm>=60){hUTm-=60;hUTi++;}
+      var date=new Date(Date.UTC(yU,mU-1,dU,hUTi,hUTm,0));
+      var time=new Astronomy.AstroTime(date);
+      var JD=time.tt+2451545.0;
+      var T=(JD-2451545.0)/36525;
+      var Om=nor(125.04452-1934.136261*T);
+      var L0=nor(280.4665+36000.7698*T);
+      var Lm=nor(218.3165+481267.8813*T);
+      var dpsi=((-17.20-0.01742*T)*Math.sin(toR(Om))+(-1.319)*Math.sin(toR(2*L0))+(-0.2271)*Math.sin(toR(2*Lm))+(0.2068)*Math.sin(toR(2*Om)))/3600;
+      var deps=((9.2025+0.00089*T)*Math.cos(toR(Om))+(0.5736)*Math.cos(toR(2*L0))+(0.0977)*Math.cos(toR(2*Lm))+(-0.0895)*Math.cos(toR(2*Om)))/3600;
+      var eps0=23.439291111-0.013004167*T-1.64e-7*T*T+5.04e-7*T*T*T;
+      var eps=eps0+deps;
+      var eqEq=dpsi*Math.cos(toR(eps));
+      var gmst=nor(Astronomy.SiderealTime(time)*15);
+      var gast=nor(gmst+eqEq);
+      var LAST=nor(gast+lon);
+      var Lr=toR(LAST),er=toR(eps),latr=toR(lat);
+      var sinE=Math.sin(er),cosE=Math.cos(er);
+      var AC=nor(toD(Math.atan2(-Math.cos(Lr),Math.sin(Lr)*cosE+Math.tan(latr)*sinE))+180);
+      var MC=nor(toD(Math.atan2(Math.sin(Lr)*cosE,Math.cos(Lr))));
+      function pl(name){try{return nor(Astronomy.Ecliptic(Astronomy.GeoVector(name,time,true)).elon);}catch(e){return 0;}}
+      var houses=calcPlacidus(LAST,eps,lat,MC,AC);
+      return{
+        AC:sOf(AC),MC:sOf(MC),
+        Sonne:sOf(nor(Astronomy.SunPosition(time).elon)),
+        Mond:sOf(nor(Astronomy.EclipticGeoMoon(time).lon)),
+        Merkur:sOf(pl('Mercury')),Venus:sOf(pl('Venus')),
+        Mars:sOf(pl('Mars')),Jupiter:sOf(pl('Jupiter')),
+        Saturn:sOf(pl('Saturn')),Uranus:sOf(pl('Uranus')),
+        Neptun:sOf(pl('Neptune')),Pluto:sOf(pl('Pluto')),
+        houses:houses
+      };
+    }catch(e){return calcFB(yr,mo,dy,hL,mn,lat,lon,tz);}
+  }
+
+  // PRIORITÄT 3: Fallback
+  return calcFB(yr,mo,dy,hL,mn,lat,lon,tz);
 }
+
+// Hilfsfunktion: Haus-Objekt aus Swiss Ephemeris Cusps bauen
+function buildHousesFromCusps(cusps,AC,MC){
+  var nor2=function(d){d=d%360;return d<0?d+360:d;};
+  function sOf2(r){var n=nor2(r),s=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];return{sign:s[Math.floor(n/30)%12],deg:n%30,raw:n};}
+  var h={};
+  for(var i=1;i<=12;i++) h[i]=sOf2(cusps[i]||0);
+  h[1]=sOf2(AC); h[7]=sOf2(nor2(AC+180));
+  h[10]=sOf2(MC); h[4]=sOf2(nor2(MC+180));
+  return h;
+}
+
 
 // ── ASTROSOPHIE DATEN ─────────────────────────────────────────────
 var QUADS=[
