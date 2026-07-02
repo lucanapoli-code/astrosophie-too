@@ -534,6 +534,8 @@ section:last-child{border-bottom:none}
       <p id="gen-txt" style="color:var(--muted);font-size:.76rem;font-weight:300"></p>
     </div>
     <div class="prog-wrap"><div class="prog-bar" id="prog"></div></div>
+    <div id="gen-countdown" style="display:none;text-align:center;margin:.875rem 0;
+      font-size:.78rem;color:var(--muted);font-style:italic"></div>
     <div id="gen-list"></div>
     <div id="gen-err" class="err-box" style="display:none"></div>
   </div>
@@ -586,24 +588,17 @@ section:last-child{border-bottom:none}
 </div>
 <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js" onerror="window._noAstro=true"></script>
 <script>
-// Swiss Ephemeris WASM async laden (non-blocking)
+// Swiss Ephemeris WASM - non-blocking, kein Fehler möglich
 window._sweReady = false;
-(async function(){
-  try {
-    var mod = await import('https://cdn.jsdelivr.net/npm/@swisseph/browser@latest/dist/index.js');
-    var SWE = mod.SwissEphemeris || mod.default;
-    if(SWE){
-      window._SWE = new SWE();
-      await window._SWE.init();
-      try { await window._SWE.loadStandardEphemeris(); } catch(e) {}
-      window._sweReady = true;
-      console.log('Swiss Ephemeris WASM geladen ✅');
-    }
-  } catch(e) {
-    window._sweReady = false;
-    console.log('Swiss Ephemeris nicht verfügbar, nutze Astronomy Engine');
-  }
-})();
+window._SWE = null;
+setTimeout(function(){
+  try{
+    var s=document.createElement('script');
+    s.type='module';
+    s.textContent='(async()=>{try{var m=await import("https://cdn.jsdelivr.net/npm/@swisseph/browser@latest/dist/index.js");var S=m.SwissEphemeris||m.default;if(S){window._SWE=new S();await window._SWE.init();window._sweReady=true;}}catch(e){}})();';
+    document.head.appendChild(s);
+  }catch(e){}
+},100);
 </script>
 <script>
 // Samsung Browser Dark Mode Hinweis
@@ -1300,6 +1295,18 @@ function makeStar(){
     var sz=(Math.random()*1.8+0.2)+'px';
     d.style.cssText='width:'+sz+';height:'+sz+';top:'+Math.random()*100+'%;left:'+Math.random()*100+'%;--op:'+(Math.random()*0.18+0.03)+';--dur:'+(Math.random()*4+3)+'s';
     c.appendChild(d);
+  }
+}
+
+function toggleFaq(el){
+  var a=el.nextElementSibling;
+  var span=el.querySelector('span:last-child');
+  if(a.style.maxHeight&&a.style.maxHeight!=='0px'){
+    a.style.maxHeight='0px';a.style.opacity='0';
+    if(span)span.textContent='+';
+  }else{
+    a.style.maxHeight=a.scrollHeight+'px';a.style.opacity='1';
+    if(span)span.textContent='−';
   }
 }
 
