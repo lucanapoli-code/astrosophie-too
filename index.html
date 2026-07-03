@@ -5,7 +5,7 @@
 <meta name="color-scheme" content="only light">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mental & Spiritual | Luca Calicchio – Astrosophie Coaching Schweiz</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -588,7 +588,23 @@ section:last-child{border-bottom:none}
   </div>
   <iframe id="pdf-frame" class="pdf-frame" title="Dein Seelenmuster"></iframe>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js" onerror="window._noAstro=true"></script>
+<script>
+// Astronomy Engine laden
+(function(){
+  var s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.js';
+  s.crossOrigin = 'anonymous';
+  s.onerror = function(){
+    // Fallback auf ältere Version
+    var s2 = document.createElement('script');
+    s2.src = 'https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js';
+    s2.crossOrigin = 'anonymous';
+    s2.onerror = function(){ window._noAstro = true; };
+    document.head.appendChild(s2);
+  };
+  document.head.appendChild(s);
+})();
+</script>
 <script>
 window._sweReady=false;
 window._SWE=null;
