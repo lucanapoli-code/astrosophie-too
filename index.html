@@ -366,19 +366,21 @@ section:last-child{border-bottom:none}
   <div class="sec" style="padding-top:1.75rem">
     <div class="testi-grid">
       <div class="testi">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">„Die Analyse hat mich tief getroffen. Ich verstehe jetzt, warum ich immer wieder in dieselben Muster gerate."</p>
-        <p class="testi-name">S.M. · Zürich · SeelenKompass</p>
+        <div class="testi-stars"><!-- Video Testimonials - Platzhalter bis echte Videos vorhanden -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:1rem">
+      <div style="background:#1a2535;border-radius:12px;aspect-ratio:9/16;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;border:1px solid rgba(172,155,127,.15)">
+        <div style="width:44px;height:44px;border-radius:50%;background:rgba(172,155,127,.2);border:1.5px solid rgba(172,155,127,.5);display:flex;align-items:center;justify-content:center">
+          <svg width="14" height="14" viewBox="0 0 14 14"><polygon points="4,2 12,7 4,12" fill="#ac9b7f"/></svg>
+        </div>
+        <p style="font-size:.6rem;color:rgba(172,155,127,.5);letter-spacing:.08em;text-transform:uppercase">Video ansehen</p>
       </div>
-      <div class="testi">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">„Wie präzise das war – das hat nichts mit Horoskopen aus der Zeitung zu tun. Eine völlig andere Ebene."</p>
-        <p class="testi-name">T.B. · Basel · Individual-Analyse</p>
+      <div style="background:#1a2535;border-radius:12px;aspect-ratio:9/16;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;border:1px solid rgba(172,155,127,.15)">
+        <div style="width:44px;height:44px;border-radius:50%;background:rgba(172,155,127,.2);border:1.5px solid rgba(172,155,127,.5);display:flex;align-items:center;justify-content:center">
+          <svg width="14" height="14" viewBox="0 0 14 14"><polygon points="4,2 12,7 4,12" fill="#ac9b7f"/></svg>
+        </div>
+        <p style="font-size:.6rem;color:rgba(172,155,127,.5);letter-spacing:.08em;text-transform:uppercase">Video ansehen</p>
       </div>
-      <div class="testi">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">„Meine Berufsfrage – jahrelang offen. Nach dem Coaching mit Luca war sie beantwortet."</p>
-        <p class="testi-name">A.K. · Bern · 1:1 Coaching</p>
+    </div></p>
       </div>
     </div>
   </div>
@@ -1290,7 +1292,10 @@ function mkYearPrompt(id, h, isFirst, yearData){
 window.addEventListener('DOMContentLoaded',function(){
   var logo=document.getElementById('nav-logo');
   if(logo) logo.onerror=function(){logo.style.display='none';var fb=document.getElementById('nav-logo-text');if(fb)fb.style.display='block';};
-  makeStar();renderChallenges();renderQuads();renderPkgs();
+  try{makeStar();}catch(e){console.error('makeStar:',e);}
+  try{renderChallenges();}catch(e){console.error('renderChallenges:',e);}
+  try{renderQuads();}catch(e){console.error('renderQuads:',e);}
+  try{renderPkgs();}catch(e){console.error('renderPkgs:',e);}
   var dl=document.getElementById('city-dl');
   if(dl){for(var c in CITIES){var o=document.createElement('option');o.value=c.charAt(0).toUpperCase()+c.slice(1);dl.appendChild(o);}}
 });
@@ -1341,7 +1346,7 @@ function renderChallenges(){
          +'<div id="chbody'+i+'" style="overflow:hidden;max-height:0;transition:max-height .35s ease,opacity .3s;opacity:0">'
          +'<div style="border-top:1px solid '+col+'22;margin-top:.55rem;padding-top:.875rem">'
          +'<p style="font-family:var(--serif);font-size:.87rem;color:'+col+';font-style:italic;line-height:1.85;margin-bottom:.875rem">'+ch.a+'</p>'
-         +'<button onclick="event.stopPropagation();startPkg(\'gratis\')" type="button" style="background:'+col+';color:#fff;border:none;padding:.5rem 1.2rem;border-radius:6px;font-family:var(--serif);font-size:.78rem;font-weight:600;cursor:pointer;width:100%">Jetzt meinen Wesenskern entdecken</button>'
+         +'<button onclick="event.stopPropagation();startPkg('gratis')" type="button" style="background:'+col+';color:#fff;border:none;padding:.5rem 1.2rem;border-radius:6px;font-family:var(--serif);font-size:.78rem;font-weight:600;cursor:pointer;width:100%">Jetzt meinen Wesenskern entdecken</button>'
          +'</div></div></div>';
   }
   c.innerHTML=html;
@@ -1435,7 +1440,7 @@ function startPkg(pkg, combo){
     var html='';
     for(var i=0;i<QUADS.length;i++){
       var q=QUADS[i];
-      html+='<div class="q-opt" id="qo'+q.id+'" onclick="pickQ(\''+q.id+'\')">'
+      html+='<div class="q-opt" id="qo'+q.id+'" onclick="pickQ(''+q.id+'')">'
            +'<div style="flex:1"><div class="q-opt-name">'+q.id+'. '+q.name+'</div>'
            +'<div class="q-opt-sub">'+q.areas.map(function(a){return a.t;}).join(' · ')+'</div></div>'
            +'<span id="qck'+q.id+'" style="display:none;color:'+q.col+';font-weight:700">✓</span></div>';
@@ -1653,7 +1658,7 @@ function runGenBatch(areas,startIdx){
       var failedIdxs=results.filter(function(r){return !r.ok;}).map(function(r){return r.i+1;});
       var box=el('gen-err');box.style.display='block';
       box.innerHTML='Verbindungsproblem bei Kapitel '+failedIdxs.join(', ')+'. '
-        +'<button onclick="el(\'gen-err\').style.display=\'none\';startCountdown('+(areas.length-startIdx)+');runGenBatch(window.__areas,'+startIdx+')" '
+        +'<button onclick="el('gen-err').style.display='none';startCountdown('+(areas.length-startIdx)+');runGenBatch(window.__areas,'+startIdx+')" '
         +'style="margin-left:.5rem;padding:.3rem .8rem;border-radius:6px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer">Erneut versuchen</button>';
       window.__areas=areas;
       return;
@@ -1858,17 +1863,17 @@ function showResult(){
     up='<div style="display:grid;gap:.5rem">'
       +'<div style="background:rgba(123,111,196,.07);border:1px solid rgba(123,111,196,.25);border-radius:var(--r2);padding:.875rem;text-align:center">'
       +'<p style="font-family:var(--serif);color:var(--purple);font-size:.9rem;margin-bottom:.2rem;font-weight:600">Einen Quadrant vertiefen · CHF 39.–</p>'
-      +'<button class="btn btn-sm" style="background:var(--purpleD);color:#fff;margin-top:.4rem;border-radius:var(--r);border:none;font-family:var(--serif);font-weight:600;cursor:pointer;padding:.48rem 1rem" onclick="startPkg(\'individual\')">Individual-Analyse starten →</button>'
+      +'<button class="btn btn-sm" style="background:var(--purpleD);color:#fff;margin-top:.4rem;border-radius:var(--r);border:none;font-family:var(--serif);font-weight:600;cursor:pointer;padding:.48rem 1rem" onclick="startPkg('individual')">Individual-Analyse starten →</button>'
       +'</div>'
       +'<div style="background:rgba(200,168,75,.05);border:1px solid rgba(200,168,75,.25);border-radius:var(--r2);padding:.875rem;text-align:center">'
       +'<p style="font-family:var(--serif);color:var(--gold);font-size:.9rem;margin-bottom:.2rem;font-weight:600">Alle 12 Lebensbereiche · CHF 69.–</p>'
-      +'<button class="btn btn-gold btn-sm" style="color:#192436;margin-top:.4rem" onclick="startPkg(\'seelenkompas\')">SeelenKompass sichern →</button>'
+      +'<button class="btn btn-gold btn-sm" style="color:#192436;margin-top:.4rem" onclick="startPkg('seelenkompas')">SeelenKompass sichern →</button>'
       +'</div></div>';
   } else if(S.pkg==='individual'){
     up='<div style="display:grid;gap:.5rem">'
       +'<div style="background:rgba(200,168,75,.05);border:1px solid rgba(200,168,75,.25);border-radius:var(--r2);padding:.875rem;text-align:center">'
       +'<p style="font-family:var(--serif);color:var(--gold);font-size:.9rem;margin-bottom:.2rem;font-weight:600">Upgrade: Alle 12 Lebensbereiche · nur CHF 30.– mehr</p>'
-      +'<button class="btn btn-gold btn-sm" style="color:#192436;margin-top:.4rem" onclick="startPkg(\'seelenkompas\')">SeelenKompass upgraden →</button>'
+      +'<button class="btn btn-gold btn-sm" style="color:#192436;margin-top:.4rem" onclick="startPkg('seelenkompas')">SeelenKompass upgraden →</button>'
       +'</div>'
       +'<div style="background:rgba(37,108,134,.07);border:1px solid rgba(37,108,134,.22);border-radius:var(--r2);padding:.875rem;text-align:center">'
       +'<p style="font-family:var(--serif);color:var(--teal);font-size:.9rem;margin-bottom:.2rem;font-weight:600">1:1 Coaching mit Luca · CHF 291.– Aufpreis</p>'
