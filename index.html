@@ -590,23 +590,8 @@ section:last-child{border-bottom:none}
 </div>
 <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js" onerror="window._noAstro=true"></script>
 <script>
-window._sweReady=false;window._SWE=null;
-(function(){
-  try{
-    var s=document.createElement('script');
-    s.type='module';
-    s.innerHTML='(async()=>{try{'
-      +'var m=await import("https://cdn.jsdelivr.net/npm/@swisseph/browser@2.10.3/dist/swisseph.js");'
-      +'if(m&&(m.default||m.SwissEphemeris)){'
-      +'var C=m.SwissEphemeris||m.default;'
-      +'window._SWE=new C();'
-      +'await window._SWE.init();'
-      +'window._sweReady=true;'
-      +'console.log("Swiss Ephemeris OK");'
-      +'}}catch(e){console.log("SWE nicht verfuegbar:",e.message);}})();';
-    document.head.appendChild(s);
-  }catch(e){}
-})();
+window._sweReady=false;
+window._SWE=null;
 </script>
 <script>
 // Samsung Browser Dark Mode Hinweis
@@ -1346,10 +1331,13 @@ function renderChallenges(){
          +'<div id="chbody'+i+'" style="overflow:hidden;max-height:0;transition:max-height .35s ease,opacity .3s;opacity:0">'
          +'<div style="border-top:1px solid '+col+'22;margin-top:.55rem;padding-top:.875rem">'
          +'<p style="font-family:var(--serif);font-size:.87rem;color:'+col+';font-style:italic;line-height:1.85;margin-bottom:.875rem">'+ch.a+'</p>'
-         +'<button onclick="event.stopPropagation();startPkg('gratis')" type="button" style="background:'+col+';color:#fff;border:none;padding:.5rem 1.2rem;border-radius:6px;font-family:var(--serif);font-size:.78rem;font-weight:600;cursor:pointer;width:100%">Jetzt meinen Wesenskern entdecken</button>'
+         +'<button data-gratis="1" type="button" style="background:'+col+';color:#fff;border:none;padding:.5rem 1.2rem;border-radius:6px;font-family:var(--serif);font-size:.78rem;font-weight:600;cursor:pointer;width:100%">Jetzt meinen Wesenskern entdecken</button>'
          +'</div></div></div>';
   }
   c.innerHTML=html;
+  c.addEventListener('click',function(e){
+    if(e.target.closest('[data-gratis]')){e.stopPropagation();startPkg('gratis');}
+  });
 }
 
 function toggleCh(i){
@@ -1437,15 +1425,21 @@ function startPkg(pkg, combo){
   var qc=document.getElementById('q-chooser');
   if(pkg==='individual'){
     if(qc)qc.style.display='block';
-    var html='';
-    for(var i=0;i<QUADS.length;i++){
-      var q=QUADS[i];
-      html+='<div class="q-opt" id="qo'+q.id+'" onclick="pickQ(''+q.id+'')">'
-           +'<div style="flex:1"><div class="q-opt-name">'+q.id+'. '+q.name+'</div>'
-           +'<div class="q-opt-sub">'+q.areas.map(function(a){return a.t;}).join(' · ')+'</div></div>'
-           +'<span id="qck'+q.id+'" style="display:none;color:'+q.col+';font-weight:700">✓</span></div>';
+    var qo=document.getElementById('q-opts');
+    if(qo){
+      qo.innerHTML='';
+      for(var qi=0;qi<QUADS.length;qi++){
+        (function(q){
+          var d=document.createElement('div');
+          d.className='q-opt';d.id='qo'+q.id;
+          d.innerHTML='<div style="flex:1"><div class="q-opt-name">'+q.id+'. '+q.name+'</div>'
+            +'<div class="q-opt-sub">'+q.areas.map(function(a){return a.t;}).join(' · ')+'</div></div>'
+            +'<span id="qck'+q.id+'" style="display:none;color:'+q.col+';font-weight:700">✓</span>';
+          d.addEventListener('click',function(){pickQ(q.id);});
+          qo.appendChild(d);
+        })(QUADS[qi]);
+      }
     }
-    var qo=document.getElementById('q-opts');if(qo)qo.innerHTML=html;
   }else{if(qc)qc.style.display='none';}
   var pn=document.getElementById('pay-note');
   if(pn){
@@ -1658,7 +1652,7 @@ function runGenBatch(areas,startIdx){
       var failedIdxs=results.filter(function(r){return !r.ok;}).map(function(r){return r.i+1;});
       var box=el('gen-err');box.style.display='block';
       box.innerHTML='Verbindungsproblem bei Kapitel '+failedIdxs.join(', ')+'. '
-        +'<button onclick="el('gen-err').style.display='none';startCountdown('+(areas.length-startIdx)+');runGenBatch(window.__areas,'+startIdx+')" '
+        +'<button '
         +'style="margin-left:.5rem;padding:.3rem .8rem;border-radius:6px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer">Erneut versuchen</button>';
       window.__areas=areas;
       return;
@@ -1863,17 +1857,17 @@ function showResult(){
     up='<div style="display:grid;gap:.5rem">'
       +'<div style="background:rgba(123,111,196,.07);border:1px solid rgba(123,111,196,.25);border-radius:var(--r2);padding:.875rem;text-align:center">'
       +'<p style="font-family:var(--serif);color:var(--purple);font-size:.9rem;margin-bottom:.2rem;font-weight:600">Einen Quadrant vertiefen · CHF 39.–</p>'
-      +'<button class="btn btn-sm" style="background:var(--purpleD);color:#fff;margin-top:.4rem;border-radius:var(--r);border:none;font-family:var(--serif);font-weight:600;cursor:pointer;padding:.48rem 1rem" onclick="startPkg('individual')">Individual-Analyse starten →</button>'
+      +'<button class="btn btn-sm" style="background:var(--purpleD);color:#fff;margin-top:.4rem;border-radius:var(--r);border:none;font-family:var(--serif);font-weight:600;cursor:pointer;padding:.48rem 1rem" starten →</button>'
       +'</div>'
       +'<div style="background:rgba(200,168,75,.05);border:1px solid rgba(200,168,75,.25);border-radius:var(--r2);padding:.875rem;text-align:center">'
       +'<p style="font-family:var(--serif);color:var(--gold);font-size:.9rem;margin-bottom:.2rem;font-weight:600">Alle 12 Lebensbereiche · CHF 69.–</p>'
-      +'<button class="btn btn-gold btn-sm" style="color:#192436;margin-top:.4rem" onclick="startPkg('seelenkompas')">SeelenKompass sichern →</button>'
+      +'<button class="btn btn-gold btn-sm" style="color:#192436;margin-top:.4rem" sichern →</button>'
       +'</div></div>';
   } else if(S.pkg==='individual'){
     up='<div style="display:grid;gap:.5rem">'
       +'<div style="background:rgba(200,168,75,.05);border:1px solid rgba(200,168,75,.25);border-radius:var(--r2);padding:.875rem;text-align:center">'
       +'<p style="font-family:var(--serif);color:var(--gold);font-size:.9rem;margin-bottom:.2rem;font-weight:600">Upgrade: Alle 12 Lebensbereiche · nur CHF 30.– mehr</p>'
-      +'<button class="btn btn-gold btn-sm" style="color:#192436;margin-top:.4rem" onclick="startPkg('seelenkompas')">SeelenKompass upgraden →</button>'
+      +'<button class="btn btn-gold btn-sm" style="color:#192436;margin-top:.4rem" upgraden →</button>'
       +'</div>'
       +'<div style="background:rgba(37,108,134,.07);border:1px solid rgba(37,108,134,.22);border-radius:var(--r2);padding:.875rem;text-align:center">'
       +'<p style="font-family:var(--serif);color:var(--teal);font-size:.9rem;margin-bottom:.2rem;font-weight:600">1:1 Coaching mit Luca · CHF 291.– Aufpreis</p>'
