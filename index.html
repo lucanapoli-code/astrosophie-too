@@ -1391,30 +1391,31 @@ function renderQuads(){
 }
 
 function renderPkgs(){
-  var c=document.getElementById('pkg-grid-home')||document.getElementById('pkg-grid');if(!c)return;
-  var pkgs=[
-    {id:'gratis',      name:'Gratis-Analyse',    sub:'1 Lebensbereich · Dein Wesenskern',    price:'Gratis',  priceN:'0',    bg:'var(--navy)',     col:'var(--gold)'},
-    {id:'individual',  name:'Individual-Analyse', sub:'1 Quadrant · 3 Lebensbereiche',        price:'CHF 39.–',priceN:'39',   bg:'#1a1535',        col:'#9b8fc4'},
-    {id:'seelenkompas',name:'SeelenKompass',      sub:'4 Quadranten · 12 Lebensbereiche',     price:'CHF 69.–',priceN:'69',   bg:'#0d1f24',        col:'#4a9aaa'},
-    {id:'jahreshoroskop',name:'Jahreshoroskop 2026',sub:'12 Monate · Dein kosmischer Fahrplan',price:'CHF 69.–',priceN:'69', bg:'#0f1f12',        col:'#6a9e6a'}
-  ];
+  var c=document.getElementById('pkg-grid-home')||document.getElementById('pkg-grid');
+  if(!c)return;
   c.innerHTML='';
+  var pkgs=[
+    {id:'gratis',name:'Gratis-Analyse',sub:'1 Lebensbereich · Dein Wesenskern',price:'Gratis',bg:'var(--navy)',col:'var(--gold)'},
+    {id:'individual',name:'Individual-Analyse',sub:'1 Quadrant · 3 Lebensbereiche',price:'CHF 39.–',bg:'#1a1535',col:'#9b8fc4'},
+    {id:'seelenkompas',name:'SeelenKompass',sub:'4 Quadranten · 12 Lebensbereiche',price:'CHF 69.–',bg:'#0d1f24',col:'#4a9aaa'},
+    {id:'jahreshoroskop',name:'Jahreshoroskop 2026',sub:'12 Monate · Dein kosmischer Fahrplan',price:'CHF 69.–',bg:'#0f1f12',col:'#6a9e6a'}
+  ];
   pkgs.forEach(function(p){
-    var div=document.createElement('div');
-    div.style.cssText='border:1px solid rgba(172,155,127,.2);background:'+p.bg+';border-radius:16px;padding:1.4rem;margin-bottom:.65rem;cursor:pointer';
-    div.innerHTML='<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.65rem">'
+    var d=document.createElement('div');
+    d.style.cssText='border:1px solid rgba(172,155,127,.2);background:'+p.bg+';border-radius:16px;padding:1.4rem;margin-bottom:.65rem';
+    var b=document.createElement('button');
+    b.type='button';
+    b.style.cssText='width:100%;padding:.7rem;border:none;border-radius:8px;background:'+p.col+';color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;margin-top:.65rem';
+    b.textContent='Jetzt starten →';
+    b.setAttribute('data-pkg',p.id);
+    b.onclick=function(){startPkg(this.getAttribute('data-pkg'));};
+    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem">'
       +'<div><div style="font-family:var(--serif);color:#eeeae0;font-size:1.05rem;font-weight:600">'+p.name+'</div>'
       +'<div style="font-size:.65rem;color:rgba(238,234,224,.5);margin-top:.2rem">'+p.sub+'</div></div>'
-      +'<div style="font-family:var(--serif);font-size:1.4rem;font-weight:300;color:'+p.col+'">'+p.price+'</div></div>'
-      +'<button type="button" data-pkg="'+p.id+'" style="width:100%;padding:.7rem;border:none;border-radius:8px;background:'+p.col+';color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--sans)">Jetzt starten →</button>';
-    div.querySelector('button').addEventListener('click',function(e){
-      e.stopPropagation();
-      startPkg(this.getAttribute('data-pkg'));
-    });
-    div.addEventListener('click',function(){
-      startPkg(this.querySelector('button').getAttribute('data-pkg'));
-    });
-    c.appendChild(div);
+      +'<div style="font-family:var(--serif);font-size:1.4rem;font-weight:300;color:'+p.col+'">'+p.price+'</div></div>';
+    d.appendChild(b);
+    d.onclick=function(e){if(e.target!==b)b.click();};
+    c.appendChild(d);
   });
 }
 
