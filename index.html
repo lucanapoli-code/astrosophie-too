@@ -901,6 +901,18 @@ function getCoords(place){
 }
 
 // ── HAUPTBERECHNUNG (Meeus + IAU 2000B Nutation) ──────────────────
+function houseOfPlanet(planetRaw, cusps){
+  var nor2=function(d){d=d%360;return d<0?d+360:d;};
+  for(var h=1;h<=12;h++){
+    var s=cusps[h].raw;
+    var e=cusps[h===12?1:h+1].raw;
+    var span=nor2(e-s);
+    var pos=nor2(planetRaw-s);
+    if(pos<span) return h;
+  }
+  return 1;
+}
+
 function calcFB(yr,mo,dy,hL,mn,lat,lon,tz){
   // Fallback wenn Astronomy Engine nicht verfügbar
   var hUT=hL+mn/60-tz,dU=dy,mU=mo,yU=yr;
@@ -1127,7 +1139,10 @@ var CHALLENGES=[
    a:'Mond und Saturn machen sichtbar welche Prägungen dich steuern. Erkennen. Unterbrechen. Frei werden.'}
 ];
 
-var KB = 'IDENTITAET: Du bist Luca Calicchio, Mental & Spiritual Coach (luca-calicchio.com, Oftringen Schweiz). Schreibe persoenlich, direkt, warm, tief, philosophisch. Immer du. Deutsch. Kein Fachjargon. Nur Fliestext. Keine Ueberschriften, keine Aufzaehlungen.\nPHILOSOPHIE: Astrosophie = aegyptische Schoepfungslehre (Randolf M. Schaefer). Mensch = Mikrokosmos des Universums. Wie oben so unten, wie innen so aussen (Hermes Trismegistos). Geburtshoroskop = Landkarte der Seele, kein Schicksal. Ziel: Selbsterkenntnis.\n4 QUADRANTEN: Causa Materialis (Koerper, H1-3), Causa Formalis (Seele, H4-6), Causa Efficiens (Geist, H7-9), Causa Finalis (Sein, H10-12).\n12 ZEICHEN: WIDDER=Pionier,Feuer,Mars,Mut/Aggression. STIER=Erbauer,Erde,Venus,Bestaendigkeit/Sturheit. ZWILLINGE=Vermittler,Luft,Merkur,Neugier/Oberflaechlichkeit. KREBS=Hueter,Wasser,Mond,Fuersorglichkeit/Klammerung. LÖWE=Schoepfer,Feuer,Sonne,Grosszuegigkeit/Eitelkeit. JUNGFRAU=Ordner,Erde,Merkur,Praezision/Perfektionismus. WAAGE=Diplomat,Luft,Venus,Harmonie/Entscheidungsschwaeche. SKORPION=Forscher,Wasser,Pluto,Transformation/Kontrolle. SCHUETZE=Philosoph,Feuer,Jupiter,Freiheit/Unverbindlichkeit. STEINBOCK=Baumeister,Erde,Saturn,Disziplin/Haerte. WASSERMANN=Reformer,Luft,Uranus,Vision/Distanz. FISCHE=Mystiker,Wasser,Neptun,Mitgefuehl/Grenzverlust.\n10 PLANETEN: SONNE=Lebensauftrag+Seelenauftrag+bewusstes Ich+Vater. MOND=Seele+Gefuehl+innere Heimat+Mutter+Unbewusstes. MERKUR=Geist+Kommunikation+Denken+Wahrnehmung. VENUS=Liebe+Harmonie+Schoenheit+Wert+Verbindung. MARS=Wille+Kraft+Mut+Trieb+Durchsetzung. JUPITER=Expansion+Weisheit+Segen+Glueck+Gnade. SATURN=Struktur+Reife+Karma+Grenze+Verantwortung. URANUS=Befreiung+Geistesblitz+Revolution+Originalitaet. NEPTUN=Aufloesung+Mystik+Mitgefuehl+Transzendenz+Spiritualitaet. PLUTO=Transformation+Tod+Wiedergeburt+Tiefe+Macht.\n12 HAEUSER: H1=Wesenskern+AC+Koerper+Selbstausdruck+Auftreten. H2=Werte+Ressourcen+Besitz+Sicherheit+Selbstwert. H3=Kommunikation+Denken+Lernen+Geschwister+nahe Umgebung. H4=Familie+Wurzeln+innere Heimat+Unbewusstes+Mutter. H5=Kreativitaet+Freude+Spiel+Kinder+Liebe+Selbstausdruck. H6=Alltag+Arbeit+Dienst+Gesundheit+Routinen. H7=Begegnung+Partnerschaft+Spiegel+Vertrag+der Andere. H8=Transformation+Tiefe+Tod+Wiedergeburt+Fremdressourcen. H9=Weltanschauung+Sinn+Glaube+Philosophie+Reise+Hochschule. H10=Berufung+MC+Ruf+oeffentliches Wirken+Vater+Gesellschaft. H11=Kollektiv+Vision+Gemeinschaft+Freunde+Zukunft+Hoffnung. H12=Spiritualitaet+Unbewusstes+Rueckzug+Karma+Transzendenz.\nQUALITAETEN: DOMIZIL=Planet im eigenen Zeichen=staerkste reinste Energie (Sonne/Loewe, Mond/Krebs, Merkur/Zwillinge+Jungfrau, Venus/Stier+Waage, Mars/Widder+Skorpion, Jupiter/Schuetze+Fische, Saturn/Steinbock+Wassermann, Uranus/Wassermann, Neptun/Fische, Pluto/Skorpion). ERHOEHUNG=verstaerkt harmonisch (Sonne/Widder, Mond/Stier, Jupiter/Krebs, Saturn/Waage). EXIL=gegenueberliegendes Zeichen=lernt durch Reibung. STELLIUM=3+ Planeten in einem Haus=zentrales Lebensthema=hohes Potenzial und Herausforderung.\nPLANETEN-IN-HAUS KOMBINATIONEN (Placidus-verifiziert aus professionellem Horoskop): H5: MOND in KREBS (DOMIZIL) + JUPITER in KREBS (ERHOEHUNG) = STELLIUM: Reinste Seelenqualitaet + groesste Sегensfulle im Haus der Freude und Kreativitaet. Aussergewoehnliche emotionale Tiefe. Unerlöst=Klammerung+Ueberflutung. Erlöst=emotionale Weisheit als Geschenk. H7: SONNE + MERKUR + MARS in WAAGE = TRIPLE STELLIUM: Lebensauftrag+Denken+Wille ereignen sich alle IM Kontakt. Der Andere ist Lehrer Spiegel Lebensaufgabe. Mars kaempft fuer Gerechtigkeit. Unerlöst=Selbstverlust+Konfliktvermeidung. Erlöst=Begegnung auf Augenhoehe. H8: PLUTO in SKORPION (DOMIZIL): Doppelte Tiefenkraft. Absolute Regenerationskraft. Tod und Wiedergeburt als bewusster Lebensweg. H9: VENUS in SCHUETZE: Liebe zur Weisheit. Schoenheit im Philosophischen. Freiheit in Verbindung. H10: SATURN (DOMIZIL) + URANUS in STEINBOCK: Verantwortungsvolle Revolution. Nachhaltige Erneuerung. Struktur die befreit. H11: NEPTUN in STEINBOCK: Spirituelle Vision braucht Struktur. Mystik mit Bodenhaftung. Transzendenz durch Verantwortung.\nPOLARITAETEN (immer einweben): H1-H7, H2-H8, H3-H9, H4-H10, H5-H11, H6-H12.\nKAPITELSTRUKTUR PFLICHT (immer vollstaendig): 1.Philosophisch-poetischer Einstieg der das Thema kosmisch einbettet (2-3 Saetze). 2.Haus-Zeichen Grundqualitaet erklaeren. 3.PLANETEN-IN-HAUS=PRIO 1 FUNDAMENT: Jeden Planeten einzeln und tief erklaeren, Domizil+Erhoehung explizit benennen, Stellium als zentrales Drama beschreiben, leeres Haus=Hausherrscher und seine Position erklaeren. 4.Polaritaets-Haus als ergaenzende Spannung einweben. 5.UNERLÖST mit konkretem Alltagsbeispiel (wie zeigt sich diese Energie unbewusst). 6.ERLÖST als echte Loesung mit konkretem Beispiel. 7.MITNEHMEN PFLICHT NIEMALS WEGLASSEN: Mitnehmen fuer deinen Weg: + 1 konkrete alltagsnahe Mini-Uebung diese Woche.';
+var KB = 'IDENTITAET UND SPRACHE: Du bist Luca Calicchio, Mental & Spiritual Coach, Astrosophie-Experte (luca-calicchio.com, Oftringen Schweiz). Du sprichst persoenlich, direkt, warm, tief, philosophisch. Immer du. Deutsch. Keine Fremdwoerter. Nur Fliestext. Keine Aufzaehlungen. Keine Koerpersymptome.\nDEINE EIGENE SPRACHE (so sprichst du mit Klienten): Das Geburtsmuster ist die Landkarte zu deinem Inneren. Die Planeten sind Grundkraefte die in dir schlummern. Wissen wir wie die Schoepfung funktioniert wissen wir wie unser Leben funktioniert. Du kannst bewusster ehrlicher und klarer mit dir umgehen. Du wirst erkennen wo dein Potenzial verborgen ist. Die Triniataet: Koerper Geist und Seele in Einklang bringen. Du hast immer die Wahl neu zu waehlen und deinen Stern neu auszurichten. Das Geburtsmuster zeigt wie sich die archetypischen Kraefte zu einem bestimmten Moment von einem bestimmten Ort heraus gruppieren. Haeuser sind die Buehnen des Lebens. Planeten sind die Schauspieler. Zeichen ist die Kleidung die der Schauspieler traegt.\nWEITERE KERNBEGRIFFE (so sprichst du): Seelenmuster ist gleichbedeutend mit Geburtsmuster. Das Geburtsmuster ist der seelische Fingerabdruck. Das Horoskop ist dein Lehrplan fuer dieses Leben. Deine Seele hat sich genau diesen Moment ausgesucht um in die Wirklichkeit zu treten. Es wird sichtbar was in dir schlummert und gelebt werden will. Du lernst zu verstehen warum die Dinge so passiert sind und was dein Anteil daran ist. In Verbindung zu deinem Geburtsmuster kommen heisst in Verbindung zu dir selbst kommen. Das Geburtsmuster zeigt wo deine Seele herkommt wo sie hin will und was sie mit dir in diesem Leben vorhat. Urkraefte wirken im Universum und im Menschen gleichermassen. Kein Schema F sondern Raum fuer das was du wirklich brauchst.\nPHILOSOPHISCHES FUNDAMENT: Astrosophie ist die alte Wissenschaft einer Kosmologie — die Schoepfungslehre der alten Aegypter deren Weisheit vor ueber 4500 Jahren weiter gereicht gelernt und praktiziert wurde. Sie beschreibt die Gesetze der Schoepfung und des menschlichen Lebens. Grundprinzip: Wie oben so unten wie innen so aussen (Hermes Trismegistos). Der Mensch ist ein Mikrokosmos des Universums. Das Geburtshoroskop ist keine Prognose sondern eine Landkarte der Seele. Ziel: Selbsterkenntnis Bewusstwerdung Entfaltung innerer Potenziale. Archetypische Kombinationslehre nach Randolf Schaefer: Zeichen + Planet + Haus = eine gemeinsame Qualitaet.\n4 QUADRANTEN: Causa Materialis (Koerper H1-3) · Causa Formalis (Seele H4-6) · Causa Efficiens (Geist H7-9) · Causa Finalis (Sein H10-12).\n12 ZEICHEN MIT ARCHETYPEN: WIDDER=Pionier Feuer Mars · Mut und Direktheit · Unerlöst: Aggression Ungeduld · Erlöst: befreiender Mut. STIER=Erbauer Erde Venus · Bestaendigkeit Genuss · Unerlöst: Sturheit Festhalten · Erlöst: naehrender Reichtum. ZWILLINGE=Vermittler Luft Merkur · Neugier Verbindung · Unerlöst: Oberflaechlichkeit · Erlöst: brueckenbauende Intelligenz. KREBS=Hueter Wasser Mond · Tiefe Fuersorglichkeit · Unerlöst: Klammerung Vergangenheit · Erlöst: naehrende Heimat. LÖWE=Schoepfer Feuer Sonne · Grosszuegigkeit Ausdruck · Unerlöst: Eitelkeit Geltungssucht · Erlöst: ermuetigendes Leuchten. JUNGFRAU=Ordner Erde Merkur · Praezision Dienst · Unerlöst: Perfektionismus Selbstkritik · Erlöst: heilende Praezision. WAAGE=Diplomat Luft Venus · Harmonie Begegnung · Unerlöst: Entscheidungsschwaeche Selbstverleugnung · Erlöst: verbindende Schoenheit. SKORPION=Forscher Wasser Pluto · Tiefe Transformation · Unerlöst: Kontrolle Zerstoerung · Erlöst: regenerative Tiefenkraft. SCHUETZE=Philosoph Feuer Jupiter · Freiheit Sinn · Unerlöst: Unverbindlichkeit Flucht · Erlöst: befreiende Weisheit. STEINBOCK=Baumeister Erde Saturn · Reife Struktur · Unerlöst: Haerte Machtstreben · Erlöst: tragende Struktur. WASSERMANN=Reformer Luft Uranus · Vision Befreiung · Unerlöst: Distanz Rebellion · Erlöst: erhebende Freiheit. FISCHE=Mystiker Wasser Neptun · Mitgefuehl Aufloesung · Unerlöst: Selbstverlust Illusion · Erlöst: heilendes Mitgefuehl.\n10 PLANETEN - GRUNDKRAEFTE: SONNE=Lebensauftrag Seelenauftrag bewusstes Ich Vater. MOND=Seele Gefuehl innere Heimat Mutter Unbewusstes. MERKUR=Geist Kommunikation Denken Wahrnehmung Verbindung. VENUS=Liebe Harmonie Schoenheit Wert Verbindung. MARS=Wille Kraft Mut Trieb Durchsetzung. JUPITER=Expansion Weisheit Segen Gnade Fuelle. SATURN=Struktur Reife Karma Grenze Verantwortung. URANUS=Befreiung Geistesblitz Revolution Originalitaet. NEPTUN=Aufloesung Mystik Mitgefuehl Transzendenz Spiritualitaet. PLUTO=Transformation Tod Wiedergeburt Tiefe Macht.\n12 HAEUSER - BÜHNEN DES LEBENS: H1=Wesenskern Koerper Aszendent Selbstausdruck wie ich ankomme. H2=Werte Ressourcen Besitz Selbstwert was mir heilig ist. H3=Kommunikation Denken Lernen nahe Umgebung wie ich spreche und denke. H4=Familie Wurzeln innere Heimat Unbewusstes emotionaler Ursprung. H5=Kreativitaet Freude Spiel Kinder Liebe Selbstausdruck wo ich leuchte. H6=Alltag Arbeit Dienst Gesundheit Routinen wie ich meinen Tag lebe. H7=Begegnung Partnerschaft Spiegel Vertrag der Andere als Lehrer. H8=Transformation Tiefe Tod Wiedergeburt was mich wandelt. H9=Weltanschauung Sinn Glaube Philosophie Reise was ich glaube. H10=Berufung MC oeffentliches Wirken Ruf was ich der Welt gebe. H11=Kollektiv Vision Gemeinschaft Freunde was ich fuer die Welt will. H12=Spiritualitaet Unbewusstes Rueckzug Karma das Verborgene in mir.\nQUALITAETEN: DOMIZIL=Planet im eigenen Zeichen staerkste reinste Energie fliesst ungefiltert. ERHOEHUNG=verstaerkt harmonisch (Sonne/Widder Mond/Stier Jupiter/Krebs Saturn/Waage). EXIL=lernt durch Reibung und Spannung. STELLIUM=3+ Planeten in einem Haus = zentrales Lebensthema hohes Potenzial und Herausforderung.\nPLANETEN IN HAEUSERN - KOMBINATIONEN (Prio 1 Fundament): Sonne H7: Lebensauftrag im Kontakt der Andere ist Lehrer und Spiegel. Mond H5 Domizil Krebs: Seele in reinster Freude Kreativitaet als spirituelle Praxis. Jupiter H5 Erhoehung Krebs: groesste Fuelle im Haus der Freude seltene Gabe. Mond+Jupiter H5 Stellium: aussergewoehnliche emotionale Tiefe und schoepferische Kraft. Merkur H7: Denken braucht Dialog im Gespraech entstehen Durchbrueche. Mars H7 Waage: kaempft fuer Gerechtigkeit und Harmonie sozialer Wille. Sonne+Merkur+Mars H7 Triple Stellium: alles ereignet sich im Kontakt Begegnung ist Lebensauftrag. Pluto H8 Domizil Skorpion: absolute Regenerationskraft Tod und Wiedergeburt als Lebensweg. Venus H9 Schuetze: Liebe zur Weisheit Schoenheit im Philosophischen. Saturn H10 Domizil Steinbock: Berufung mit Fundament baut fuer Generationen. Uranus H10: revolutionaere Berufung Erneuerer mit Struktur. Neptun H11: spirituelle Vision fuer die Gemeinschaft muss geerdet werden.\nKAPITELSTRUKTUR PFLICHT (immer vollstaendig): 1.EINSTIEG: Philosophisch-poetischer Einstieg der das Hausthema kosmisch einbettet. Nutze Lucas Sprache: Landkarte Grundkraefte Buehne Schauspieler. 2.HAUSTHEMA: Grundqualitaet der Buehne (Haus) und des Zeichens erklaeren. 3.PLANETEN IN DER BUEHNE (PRIO 1): Jeden Planeten einzeln und tief erklaeren. Domizil und Erhoehung explizit als Staerke benennen. Stellium als zentrales Lebensthema beschreiben. Leeres Haus: Hausherrscher und seine Position erklaeren. 4.POLARITAET: Gegenueberliegendes Haus als ergaenzende Spannung einweben. 5.UNERLÖST: Konkretes Alltagsbeispiel wie diese Kraft unbewusst gelebt wird. 6.ERLÖST: Konkretes Beispiel der integrierten Kraft als echte Loesung. 7.MITNEHMEN (PFLICHT NIEMALS WEGLASSEN): Mitnehmen fuer deinen Weg: + 1 konkrete Mini-Uebung diese Woche.';
+
+
+
 
 
 
@@ -1164,31 +1179,98 @@ function signOfHouse(acSign,houseNum){
 // ── MKPROMPT: erzeugt für jedes Kapitel die korrekte archetypische Kombination ──
 function mkPrompt(id,h,isFirst){
   var ac=h.AC,sun=h.Sonne,moon=h.Mond,mc=h.MC;
-  var ruler={Widder:'Mars',Stier:'Venus',Zwillinge:'Merkur',Krebs:'Mond',Löwe:'Sonne',
-    Jungfrau:'Merkur',Waage:'Venus',Skorpion:'Pluto',Schütze:'Jupiter',
-    Steinbock:'Saturn',Wassermann:'Uranus',Fische:'Neptun'};
-  var acR=ruler[ac.sign]||'?', acRP=h[acR]?h[acR].sign+' '+h[acR].deg.toFixed(0)+'°':'?';
+  var ruler={};
+  ruler['Widder']='Mars';ruler['Stier']='Venus';ruler['Zwillinge']='Merkur';
+  ruler['Krebs']='Mond';ruler['Löwe']='Sonne';ruler['Jungfrau']='Merkur';
+  ruler['Waage']='Venus';ruler['Skorpion']='Pluto';ruler['Schütze']='Jupiter';
+  ruler['Steinbock']='Saturn';ruler['Wassermann']='Uranus';ruler['Fische']='Neptun';
+  var acR=ruler[ac.sign]||'?';
+  var acRP=h[acR]?h[acR].sign+' '+h[acR].deg.toFixed(0)+'°':'?';
   var horo='';
   var keys=['AC','MC','Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
-  for(var i=0;i<keys.length;i++) horo+=keys[i]+':'+h[keys[i]].sign+' '+h[keys[i]].deg.toFixed(0)+'° ';
-  var base='HOROSKOP: '+horo.trim()+'\nAC:'+ac.sign+' Sonne:'+sun.sign+' Mond:'+moon.sign+' MC:'+mc.sign+'\nAC-Herrscherplanet: '+acR+' steht in '+acRP;
-
-  // Cusps (Placidus). Fallback auf Ganzzeichen falls aus irgendeinem Grund nicht vorhanden.
+  for(var ki=0;ki<keys.length;ki++) horo+=keys[ki]+':'+h[keys[ki]].sign+' '+h[keys[ki]].deg.toFixed(0)+'° ';
+  var base='HOROSKOP: '+horo.trim()+'\nAC:'+ac.sign+' Sonne:'+sun.sign+' Mond:'+moon.sign+' MC:'+mc.sign+'\nAC-Herrscherplanet: '+acR+' in '+acRP;
   var cusps=h.houses;
   if(!cusps){
-    cusps=[];
+    cusps={};
     var acIdx=ZODIAC_ORDER.indexOf(ac.sign);
-    for(var n=1;n<=12;n++){
-      var sgn=ZODIAC_ORDER[(acIdx+n-1+12)%12];
-      cusps[n]={sign:sgn,raw:((acIdx+n-1)%12)*30};
+    for(var cn=1;cn<=12;cn++){
+      var csgn=ZODIAC_ORDER[(acIdx+cn-1+12)%12];
+      cusps[cn]={sign:csgn,raw:((acIdx+cn-1)%12)*30};
     }
   }
+  var nor2=function(d){d=d%360;return d<0?d+360:d;};
+  function hop2(pRaw){
+    for(var hn=1;hn<=12;hn++){
+      if(!cusps[hn])continue;
+      var cs=cusps[hn].raw;
+      var ce=cusps[hn===12?1:hn+1]?cusps[hn===12?1:hn+1].raw:cs+30;
+      if(nor2(pRaw-cs)<nor2(ce-cs))return hn;
+    }
+    return 1;
+  }
+  var domizil={};
+  domizil['Sonne']='Löwe';domizil['Mond']='Krebs';domizil['Merkur']='Zwillinge';
+  domizil['Venus']='Waage';domizil['Mars']='Widder';domizil['Jupiter']='Schütze';
+  domizil['Saturn']='Steinbock';domizil['Uranus']='Wassermann';domizil['Neptun']='Fische';
+  domizil['Pluto']='Skorpion';
+  var erhoehung={};
+  erhoehung['Sonne']='Widder';erhoehung['Mond']='Stier';erhoehung['Jupiter']='Krebs';
+  erhoehung['Saturn']='Waage';erhoehung['Mars']='Steinbock';
+  var allPK=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+  var houseMap={};
+  for(var pi=0;pi<allPK.length;pi++){
+    var pk=allPK[pi];
+    if(h[pk]&&h[pk].raw!==undefined){
+      var hn2=hop2(h[pk].raw);
+      if(!houseMap[hn2])houseMap[hn2]=[];
+      houseMap[hn2].push(pk);
+    }
+  }
+  function hDesc(n){
+    var d='H'+n;
+    if(cusps[n])d+='('+cusps[n].sign+')';
+    var pl=houseMap[n]||[];
+    if(pl.length>0){
+      var pinfo=pl.map(function(pk){
+        var planet=h[pk];
+        var info=pk+' '+planet.sign+' '+planet.deg.toFixed(1)+'°';
+        if(domizil[pk]===planet.sign)info+='DOMIZIL';
+        else if(erhoehung[pk]===planet.sign)info+='ERHOEHUNG';
+        return info;
+      }).join('+');
+      if(pl.length>=3)d+='TRIPLE-STELLIUM:'+pinfo;
+      else if(pl.length===2)d+='STELLIUM:'+pinfo;
+      else d+=':'+pinfo;
+    }else{
+      var hR=cusps[n]?ruler[cusps[n].sign]:'?';
+      var hRP=hR&&h[hR]?hR+'-'+h[hR].sign:'leer';
+      d+='leer,Herrscher:'+hRP;
+    }
+    return d;
+  }
+  var area=null;var q=null;
+  for(var qi=0;qi<QUADS.length;qi++){
+    for(var ai=0;ai<QUADS[qi].areas.length;ai++){
+      if(QUADS[qi].areas[ai].id===id){area=QUADS[qi].areas[ai];q=QUADS[qi];break;}
+    }
+    if(area)break;
+  }
+  if(!area){area={t:'Seelenmuster',n:1,pol:7};q={name:'Wesenskern'};}
+  var hausNr=area.n||1;
+  var polHaus=area.pol||7;
+  var allHouse='';
+  for(var hn3=1;hn3<=12;hn3++)allHouse+=hDesc(hn3)+'|';
+  var W='300-350 Woerter. Schreibe in Lucas Sprache: Das Geburtsmuster als Landkarte zu deinem Inneren. Planeten als Grundkraefte die in dir schlummern. Haeuser als Buehnen des Lebens. PFLICHT-STRUKTUR: (1) Philosophisch-poetischer Einstieg. (2) Hausthema und Zeichen als Buehne erklaeren. (3) PLANETEN IN DER BUEHNE = PRIO 1: Jeden Planeten einzeln tief erklaeren, Domizil/Erhoehung als staerkste Position benennen, Stellium als zentrales Lebensthema beschreiben, leeres Haus = Hausherrscher und Position erklaeren. (4) Polaritaets-Haus als ergaenzende Spannung einweben. (5) UNERLÖST: konkretes Alltagsbeispiel. (6) ERLÖST: echte Loesung mit konkretem Beispiel. (7) MITNEHMEN PFLICHT NIEMALS WEGLASSEN: Mitnehmen fuer deinen Weg: + 1 alltagsnahe Mini-Uebung diese Woche.';;
+  var ctx='';
+  if(S&&S.fd){ctx='KUNDE: '+S.fd.name+'\nGeburt: '+S.fd.date+' · '+S.fd.time+' · '+S.fd.place;}
+  if(S&&S.fd&&S.fd.q)ctx+='\nFrage: '+S.fd.q;
+  var prompt=KB+'\n\n'+ctx+'\n\n'+base+'\n\nALLE HÄUSER:\n'+allHouse+'\n\nFOKUS: '+hDesc(hausNr)+'\n\nPOLARITÄT: '+hDesc(polHaus)+'\n\nQUADRANT: '+q.name+'\n\nANWEISUNG: '+W;
+  if(isFirst)prompt='SLOGAN: 1 kraftvoller Satz der den AC verkoerpert\n\n'+prompt;
+  return prompt;
+}
 
-  var allPlanetKeys=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
-
-  // Hilfsfunktion: für Haus N (1-12), ermittle das Cusp-Zeichen, den Hausherrscher (= Herrscher des Cusp-Zeichens),
-  // dessen aktuelle Position, sowie welche Planeten tatsächlich in diesem Haus stehen (Placidus)
-  function houseInfo(n){
+function houseInfo(n){
     var cuspSign=cusps[n].sign;
     var hRuler=ruler[cuspSign];
     var hRulerPos=h[hRuler]?h[hRuler].sign+' '+h[hRuler].deg.toFixed(1)+'°':'?';
@@ -1224,51 +1306,6 @@ function mkPrompt(id,h,isFirst){
     txt+='Polaritäts-Haus '+hi.pol+' (Cusp-Zeichen '+hi.polSign+', Herrscher '+hi.polRuler+' in '+hi.polRulerPos+') zeigt die Ergänzung/Spannung dazu.';
     return txt;
   }
-
-  var W='300-340 Woerter. PFLICHT-STRUKTUR: (1) Philosophischer Einstieg der das Kapitelthema kosmisch einbettet. (2) Das Haus-Zeichen und seine Grundqualitaet. (3) WENN PLANETEN IM HAUS STEHEN: Jeden Planeten einzeln erklaeren - was bringt er in dieses Haus, wie veraendert er das Thema, was bedeutet es wenn er im Domizil steht, was wenn ein Stellium vorliegt - diese Kombinations-Tiefe ist das FUNDAMENT und PRIO 1. (4) UNERLÖST: Konkretes Alltagsbeispiel wie sich diese Energie zeigt wenn sie unbewusst gelebt wird. (5) ERLÖST: Konkretes Beispiel der integrierten Energie als echte Loesung. (6) PFLICHT als LETZTER Absatz IMMER: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten in dieser Woche umsetzbaren Mini-Uebung (1 Satz, alltagsnah). NIEMALS WEGLASSEN.';
-  var t={
-    // KAPITEL 1: Wesenskern -> Haus 1 = AC selbst + AC-Herrscher + Sonne (Lebensauftrag) + Polarität Haus 7
-    1:base+'\n'+combo(1)+'\nKAPITEL 1 WESENSKERN: Beschreibe den AC-Wesenskern ('+ac.sign+'), kombiniert mit der Sonne ('+sun.sign+', Lebensauftrag/Seelenauftrag) und dem AC-Herrscherplaneten '+acR+' in '+acRP+'. Beende den Text mit 1-2 Sätzen, die eine offene Frage oder Spannung andeuten, die typisch für Menschen mit diesem Wesenskern ist - ohne sie aufzulösen, sodass Neugier auf die weiteren Lebensbereiche entsteht (z.B. ein wiederkehrendes Muster, eine ungelebte Seite, eine Sehnsucht). '+W,
-
-    // KAPITEL 2: Werte & Ressourcen -> Haus 2 + dessen Herrscher + Polarität Haus 8 (Transformation von Werten)
-    2:base+'\n'+combo(2)+'\nKAPITEL 2 WERTE & RESSOURCEN: Gehe auf Haus 2 ein - welche Werte und Sicherheiten dem Menschen wichtig sind, basierend auf dem Hausherrscher und seiner Stellung, sowie die Polarität zu Haus 8 (was los- oder eingetauscht werden muss, um zu wachsen). '+W,
-
-    // KAPITEL 3: Kommunikation -> Haus 3 + Merkur-Bezug + Polarität Haus 9 (Sinnsuche)
-    3:base+'\n'+combo(3)+'\nKAPITEL 3 KOMMUNIKATION & DENKEN: Beschreibe, wie dieser Mensch denkt, kommuniziert und lernt, basierend auf Haus 3 und seinem Herrscher, in Polarität zu Haus 9 (Sinn, Weltanschauung als Erweiterung des Denkens). '+W,
-
-    // KAPITEL 4: Familie/Wurzeln -> Haus 4 + Mond + Polarität Haus 10 (Berufung als Gegenpol zur Familie)
-    4:base+'\n'+combo(4)+'\nKAPITEL 4 FAMILIE & WURZELN: Beschreibe die emotionalen Wurzeln, Familienmuster und das Bedürfnis nach Geborgenheit (Haus 4, Mond '+moon.sign+'), in Polarität zu Haus 10/MC ('+mc.sign+', die berufliche/öffentliche Verantwortung als Gegenpol zur privaten Geborgenheit). Zeige die Wechselwirkung zwischen Familienmythos und Lebensberufung auf. '+W,
-
-    // KAPITEL 5: Kreativität & Freude -> Haus 5 + Sonne + Polarität Haus 11 (Kollektiv)
-    5:base+'\n'+combo(5)+'\nKAPITEL 5 KREATIVITAET & SELBSTAUSDRUCK: Beschreibe Haus 5 (kreativer Selbstausdruck, Freude, Lebendigkeit - nutze den Hausherrscher von Haus 5 und seine Stellung aus der HAUS-5-Zeile oben; falls Haus 5 im Löwe steht, ist die Sonne '+sun.sign+' zusätzlich zentral), in Polarität zu Haus 11 (wie diese persönliche Kreativität ins Kollektiv/in Gemeinschaft eingebracht werden kann). '+W,
-
-    // KAPITEL 6: Energie & Alltag -> Haus 6 + Merkur/Mars + Polarität Haus 12 (Hingabe, Erschöpfung)
-    6:base+'\n'+combo(6)+'\nKAPITEL 6 ENERGIE & ALLTAG: Beschreibe Haus 6 (Energie, Alltag, Arbeit, Dienst - nutze den Hausherrscher von Haus 6 und seine Stellung aus der HAUS-6-Zeile oben), in Polarität zu Haus 12 (Erschöpfung, Rückzug, Regeneration - die Balance zwischen Tun und Loslassen). '+W,
-
-    // KAPITEL 7: Beziehungen -> Haus 7 + Venus + Polarität Haus 1 (eigene Identität in Beziehung)
-    7:base+'\n'+combo(7)+'\nKAPITEL 7 BEZIEHUNGEN: Beschreibe Haus 7 (Begegnung, Partnerschaft, der "Spiegel" - nutze den Hausherrscher von Haus 7 und seine Stellung aus der HAUS-7-Zeile oben), in Polarität zu Haus 1/AC ('+ac.sign+', die eigene Identität, die in Beziehungen bewahrt werden muss). '+W,
-
-    // KAPITEL 8: Transformation -> Haus 8 + Pluto + Polarität Haus 2 (was bleibt, was geht)
-    8:base+'\n'+combo(8)+'\nKAPITEL 8 TRANSFORMATION: Beschreibe Haus 8 (Tod und Wiedergeburt, Tiefe, Wandlung - nutze den Hausherrscher von Haus 8 und seine Stellung aus der HAUS-8-Zeile oben; falls Haus 8 im Skorpion steht, ist Pluto '+h.Pluto.sign+' zusätzlich zentral), in Polarität zu Haus 2 (welche materiellen/seelischen Werte loszulassen sind, damit Transformation geschehen kann). '+W,
-
-    // KAPITEL 9: Weltanschauung -> Haus 9 + Jupiter + Polarität Haus 3 (Wissen vs. Weisheit)
-    9:base+'\n'+combo(9)+'\nKAPITEL 9 WELTANSCHAUUNG & SINN: Beschreibe Haus 9 (Sinnsuche, Glaube, Expansion des Horizonts - nutze den Hausherrscher von Haus 9 und seine Stellung aus der HAUS-9-Zeile oben), in Polarität zu Haus 3 (wie aus Wissen/Information echte Weisheit und Lebenssinn wird). '+W,
-
-    // KAPITEL 10: Berufung -> Haus 10/MC + Saturn + Sonne (Lebensauftrag) + Polarität Haus 4 (Familie als Ursprung)
-    10:base+'\n'+combo(10)+'\nKAPITEL 10 BERUFUNG: Beschreibe die berufliche/öffentliche Bestimmung anhand MC ('+mc.sign+', die Zielidee/Finalität), Saturn ('+h.Saturn.sign+', Verantwortung und Struktur) und der Sonne ('+sun.sign+', Lebensauftrag), in Polarität zu Haus 4 (wie die familiären Wurzeln die berufliche Berufung geprägt haben oder noch prägen). Beziehe konkret ein, welcher Planet das MC-Zeichen beherrscht und wo dieser Planet im Horoskop steht. '+W,
-
-    // KAPITEL 11: Kollektiv -> Haus 11 + Uranus + Polarität Haus 5 (eigene Kreativität fürs Kollektiv)
-    11:base+'\n'+combo(11)+'\nKAPITEL 11 KOLLEKTIV & VISION: Beschreibe Haus 11 (Gemeinschaft, Zukunftsvision, soziales Engagement - nutze den Hausherrscher von Haus 11 und seine Stellung aus der HAUS-11-Zeile oben), in Polarität zu Haus 5 (wie die persönliche Kreativität/der Selbstausdruck zur Vision für die Gemeinschaft wird). '+W,
-
-    // KAPITEL 12: Spirituelle Tiefe / Nordstern -> Haus 12 + Neptun + Polarität Haus 6 (Dienst als gelebte Spiritualität)
-    12:base+'\n'+combo(12)+'\nKAPITEL 12 SPIRITUELLE TIEFE & NORDSTERN: Beschreibe Haus 12 (Unbewusstes, Hingabe, spirituelle Verbindung - nutze den Hausherrscher von Haus 12 und seine Stellung aus der HAUS-12-Zeile oben; falls Haus 12 im Fische steht, ist Neptun '+h.Neptun.sign+' zusätzlich zentral), in Polarität zu Haus 6 (wie sich Spiritualität im Alltag/Dienst konkret manifestieren kann). A:TIEFE (150 Woerter) - PFLICHT darin: unerlöste Variante dieser Energie (mit Beispiel) UND direkt danach die erlöste Lösung dazu (mit Beispiel). B:NORDSTERN - ein abschließender Impuls als persönlicher Leitstern (80 Woerter). PFLICHT als letzter Satz von B:NORDSTERN, IMMER: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten, in dieser Woche umsetzbaren Mini-Uebung (1 Satz). Niemals weglassen.'
-  };
-  var prompt=t[id]||'';
-  if(isFirst && prompt){
-    prompt='Beginne deine GESAMTE Antwort mit exakt einer Zeile im Format SLOGAN: "..." - ein kurzer, poetischer, persönlicher Leitsatz (max. 12 Woerter), der diesen Menschen in seinem '+ac.sign+'-Wesenskern auf den Punkt bringt (z.B. SLOGAN: "Du bist die ruhige Kraft, die andere durch den Sturm trägt."). Danach, ab einer neuen Zeile, fahre mit folgendem Kapitel fort:\n'+prompt;
-  }
-  return prompt;
-}
 
 // ── JAHRESHOROSKOP: PROMPT-GENERIERUNG ──────────────────────────────
 // id=0 -> Jahres-Überblick (alle 12 Monate zusammengefasst), id=1-12 -> einzelner Monat
@@ -1409,19 +1446,15 @@ function renderPkgs(){
   ];
   pkgs.forEach(function(p){
     var d=document.createElement('div');
-    d.style.cssText='border:1px solid rgba(172,155,127,.2);background:'+p.bg+';border-radius:16px;padding:1.4rem;margin-bottom:.65rem';
-    var b=document.createElement('button');
-    b.type='button';
-    b.style.cssText='width:100%;padding:.7rem;border:none;border-radius:8px;background:'+p.col+';color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;margin-top:.65rem';
-    b.textContent='Jetzt starten →';
-    b.setAttribute('data-pkg',p.id);
-    b.onclick=function(){startPkg(this.getAttribute('data-pkg'));};
-    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem">'
-      +'<div><div style="font-family:var(--serif);color:#eeeae0;font-size:1.05rem;font-weight:600">'+p.name+'</div>'
-      +'<div style="font-size:.65rem;color:rgba(238,234,224,.5);margin-top:.2rem">'+p.sub+'</div></div>'
-      +'<div style="font-family:var(--serif);font-size:1.4rem;font-weight:300;color:'+p.col+'">'+p.price+'</div></div>';
-    d.appendChild(b);
-    d.onclick=function(e){if(e.target!==b)b.click();};
+    d.style.cssText='border:1px solid rgba(172,155,127,.2);background:'+p.bg+';border-radius:16px;padding:1.25rem;margin-bottom:.65rem;cursor:pointer';
+    d.innerHTML=
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">'
+        +'<div style="font-family:var(--serif);color:#eeeae0;font-size:1.05rem;font-weight:600">'+p.name+'</div>'
+        +'<div style="font-family:var(--serif);font-size:1.1rem;font-weight:600;color:'+p.col+';white-space:nowrap;margin-left:.75rem">'+p.price+'</div>'
+      +'</div>'
+      +'<div style="font-size:.65rem;color:rgba(238,234,224,.45);margin-bottom:.875rem">'+p.sub+'</div>'
+      +'<button type="button" data-pkg="'+p.id+'" style="width:100%;padding:.65rem;border:none;border-radius:8px;background:'+p.col+';color:#fff;font-size:.8rem;font-weight:700;cursor:pointer;font-family:var(--sans)">Jetzt starten →</button>';
+    d.querySelector('button').onclick=function(){startPkg(this.getAttribute('data-pkg'));};
     c.appendChild(d);
   });
 }
