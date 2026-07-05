@@ -1439,21 +1439,24 @@ function renderPkgs(){
   if(!c)return;
   c.innerHTML='';
   var pkgs=[
-    {id:'gratis',name:'Gratis-Analyse',sub:'1 Lebensbereich · Dein Wesenskern',price:'Gratis',bg:'var(--navy)',col:'var(--gold)'},
-    {id:'individual',name:'Individual-Analyse',sub:'1 Quadrant · 3 Lebensbereiche',price:'CHF 39.–',bg:'#1a1535',col:'#9b8fc4'},
-    {id:'seelenkompas',name:'SeelenKompass',sub:'4 Quadranten · 12 Lebensbereiche',price:'CHF 69.–',bg:'#0d1f24',col:'#4a9aaa'},
-    {id:'jahreshoroskop',name:'Jahreshoroskop 2026',sub:'12 Monate · Dein kosmischer Fahrplan',price:'CHF 69.–',bg:'#0f1f12',col:'#6a9e6a'}
+    {id:'gratis',name:'Gratis-Analyse',sub:'1 Lebensbereich · Dein Wesenskern',price:'Gratis',badge:'Kostenlos',bg:'var(--navy)',col:'var(--gold)'},
+    {id:'individual',name:'Individual-Analyse',sub:'1 Quadrant · 3 Lebensbereiche',price:'CHF 39.–',badge:'',bg:'#1a1535',col:'#9b8fc4'},
+    {id:'seelenkompas',name:'SeelenKompass',sub:'4 Quadranten · 12 Lebensbereiche',price:'CHF 69.–',badge:'Beliebt',bg:'#0d1f24',col:'#4a9aaa'},
+    {id:'jahreshoroskop',name:'Jahreshoroskop 2026',sub:'12 Monate · Dein kosmischer Fahrplan',price:'CHF 69.–',badge:'',bg:'#0f1f12',col:'#6a9e6a'}
   ];
   pkgs.forEach(function(p){
     var d=document.createElement('div');
-    d.style.cssText='border:1px solid rgba(172,155,127,.2);background:'+p.bg+';border-radius:16px;padding:1.25rem;margin-bottom:.65rem;cursor:pointer';
-    d.innerHTML=
-      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">'
-        +'<div style="font-family:var(--serif);color:#eeeae0;font-size:1.05rem;font-weight:600">'+p.name+'</div>'
-        +'<div style="font-family:var(--serif);font-size:1.1rem;font-weight:600;color:'+p.col+';white-space:nowrap;margin-left:.75rem">'+p.price+'</div>'
+    d.style.cssText='border:1px solid rgba(172,155,127,.2);background:'+p.bg+';border-radius:16px;padding:1.25rem;margin-bottom:.65rem;cursor:pointer;position:relative;overflow:hidden';
+    var badge=p.badge?'<div style="position:absolute;top:.6rem;right:.6rem;background:'+p.col+';color:#fff;font-size:.5rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .5rem;border-radius:20px">'+p.badge+'</div>':'';
+    d.innerHTML=badge
+      +'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.4rem">'
+        +'<div style="font-family:var(--serif);color:#eeeae0;font-size:1.05rem;font-weight:600;padding-right:2rem">'+p.name+'</div>'
       +'</div>'
-      +'<div style="font-size:.65rem;color:rgba(238,234,224,.45);margin-bottom:.875rem">'+p.sub+'</div>'
-      +'<button type="button" data-pkg="'+p.id+'" style="width:100%;padding:.65rem;border:none;border-radius:8px;background:'+p.col+';color:#fff;font-size:.8rem;font-weight:700;cursor:pointer;font-family:var(--sans)">Jetzt starten →</button>';
+      +'<div style="font-size:.63rem;color:rgba(238,234,224,.45);margin-bottom:.75rem;line-height:1.5">'+p.sub+'</div>'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem">'
+        +'<div style="font-family:var(--serif);font-size:1.25rem;font-weight:600;color:'+p.col+';border:1.5px solid '+p.col+';border-radius:8px;padding:.3rem .75rem;background:rgba(0,0,0,.2)">'+p.price+'</div>'
+        +'<button type="button" data-pkg="'+p.id+'" style="flex:1;padding:.6rem;border:none;border-radius:8px;background:'+p.col+';color:#fff;font-size:.78rem;font-weight:700;cursor:pointer;font-family:var(--sans)">Jetzt starten →</button>'
+      +'</div>';
     d.querySelector('button').onclick=function(){startPkg(this.getAttribute('data-pkg'));};
     c.appendChild(d);
   });
