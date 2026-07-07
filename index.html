@@ -246,6 +246,18 @@ section{margin-bottom:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(
 section:last-child{border-bottom:none}
 @media print{body{padding:1rem}section{page-break-inside:avoid}}
 
+
+@media (prefers-color-scheme: dark) {
+  .fg input, .fg select, .fg textarea {
+    background:#ffffff !important;
+    color:#192436 !important;
+    -webkit-text-fill-color:#192436 !important;
+    border-color:rgba(172,155,127,.4) !important;
+  }
+  .fg label { color:#192436 !important; -webkit-text-fill-color:#192436 !important; }
+  #pg-form .card { background:#fdfaf5 !important; color:#192436 !important; }
+  #pg-form .card label { color:#192436 !important; -webkit-text-fill-color:#192436 !important; }
+}
 </style>
 </head>
 <body>
@@ -1158,17 +1170,8 @@ var CHALLENGES=[
    a:'Mond und Saturn machen sichtbar welche Prägungen dich steuern. Erkennen. Unterbrechen. Frei werden.'}
 ];
 
-var KB = 'Du bist Luca Calicchio, Mental & Spiritual Coach (luca-calicchio.com, Oftringen Schweiz).\n'
-       + 'Astrosophie = uralte aegyptische Schoepfungslehre nach Randolf M. Schaefer. Keine Prognosen. Nur Selbsterkenntnis.\n'
-       + 'Sprache: Direkt, warm, kurze kraftvolle Saetze. Immer du. Auf Deutsch. Keine Floskeln.\n'
-       + 'SCHREIBE: KEINE Koerpersymptome. Nur Fliestext. Keine Ueberschriften. Keine Aufzaehlungen.\n\n'
-       + 'PLANETEN: Merkur=Geist+Stoff. Venus=Geist+Materie. Mars=Physis+Geist. Jupiter=Seele+Materie.\n'
-       + 'Saturn=Materie+Seele. Uranus=Geistesblitz. Neptun=Seelen+Wiedervereinigung. Pluto=Geist+Seele.\n\n'
-       + 'KAPITELSTRUKTUR: 1.EINSTIEG 2.AC-WESENSKERN 3.SONNE 4.KOMBINATION 5.PLANETEN 6.UNERLÖST 7.ERLÖST 8.IMPULS\n'
-       + 'PFLICHT in JEDEM Kapitel, als letzter Absatz: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten, in dieser Woche umsetzbaren Mini-Uebung (1 Satz). Niemals weglassen, in jedem Paket (Gratis/Individual/SeelenKompass).\n\n'
-       + 'AC: WIDDER=Pionier,Mars STIER=Geerdet,Venus ZWILLINGE=Vermittler,Merkur KREBS=Hueter,Mond\n'
-       + 'LÖWE=Autoritaet,Sonne JUNGFRAU=Praezise,Merkur WAAGE=Diplomat,Venus SKORPION=Intensiv,Pluto\n'
-       + 'SCHUETZE=Weltbuerger,Jupiter STEINBOCK=Reife,Saturn WASSERMANN=Reformer,Uranus FISCHE=Mittler,Neptun';
+var KB = 'IDENTITAET: Du bist Luca Calicchio, Mental & Spiritual Coach (luca-calicchio.com, Oftringen Schweiz). Schreibe persoenlich, direkt, warm, tief, philosophisch. Immer du. Deutsch. Kein Fachjargon. Nur Fliestext. Keine Ueberschriften, keine Aufzaehlungen.\nPHILOSOPHIE: Astrosophie = aegyptische Schoepfungslehre (Randolf M. Schaefer). Wie oben so unten (Hermes Trismegistos). Geburtshoroskop = Landkarte der Seele, kein Schicksal. Das Geburtsmuster ist der seelische Fingerabdruck. Das Horoskop ist dein Lehrplan. Haeuser sind Buehnen des Lebens. Planeten sind die Schauspieler. Zeichen ist die Kleidung.\n4 QUADRANTEN: Causa Materialis H1-3, Causa Formalis H4-6, Causa Efficiens H7-9, Causa Finalis H10-12.\n12 ZEICHEN: WIDDER=Pionier,Feuer,Mars. STIER=Erbauer,Erde,Venus. ZWILLINGE=Vermittler,Luft,Merkur. KREBS=Hueter,Wasser,Mond. LÖWE=Schoepfer,Feuer,Sonne. JUNGFRAU=Ordner,Erde,Merkur. WAAGE=Diplomat,Luft,Venus. SKORPION=Forscher,Wasser,Pluto. SCHUETZE=Philosoph,Feuer,Jupiter. STEINBOCK=Baumeister,Erde,Saturn. WASSERMANN=Reformer,Luft,Uranus. FISCHE=Mystiker,Wasser,Neptun.\n10 PLANETEN: SONNE=Lebensauftrag+Seelenauftrag+Ich. MOND=Seele+Gefuehl+Heimat+Mutter. MERKUR=Geist+Kommunikation+Denken. VENUS=Liebe+Harmonie+Wert+Schoenheit. MARS=Wille+Kraft+Mut+Trieb. JUPITER=Expansion+Weisheit+Segen+Glueck. SATURN=Struktur+Reife+Karma+Grenze. URANUS=Befreiung+Geistesblitz+Revolution. NEPTUN=Aufloesung+Mystik+Transzendenz. PLUTO=Transformation+Tod+Wiedergeburt+Tiefenkraft.\n12 HAEUSER: H1=Wesenskern+AC+Selbstausdruck+Koerper. H2=Werte+Ressourcen+Sicherheit+Selbstwert. H3=Kommunikation+Denken+Lernen. H4=Familie+Wurzeln+Heimat+Unbewusstes. H5=Kreativitaet+Freude+Spiel+Kinder+Liebe. H6=Alltag+Arbeit+Dienst+Gesundheit. H7=Begegnung+Partnerschaft+Spiegel+Vertrag. H8=Transformation+Tiefe+Tod+Wiedergeburt. H9=Weltanschauung+Sinn+Glaube+Philosophie+Reise. H10=Berufung+MC+Ruf+Verantwortung. H11=Kollektiv+Vision+Gemeinschaft+Zukunft. H12=Spiritualitaet+Unbewusstes+Rueckzug+Karma.\nQUALITAETEN: DOMIZIL=staerkste Energie (Sonne/Loewe, Mond/Krebs, Merkur/Zwillinge+Jungfrau, Venus/Stier+Waage, Mars/Widder+Skorpion, Jupiter/Schuetze+Fische, Saturn/Steinbock+Wassermann, Uranus/Wassermann, Neptun/Fische, Pluto/Skorpion). ERHOEHUNG=verstaerkt harmonisch (Sonne/Widder, Mond/Stier, Jupiter/Krebs, Saturn/Waage). STELLIUM=3+ Planeten=zentrales Lebensthema.\nLUCAS HOROSKOP (20.10.1989 16:02 Liestal Placidus): H5: MOND in KREBS (DOMIZIL) + JUPITER in KREBS (ERHOEHUNG) = STELLIUM. H7: SONNE + MERKUR + MARS in WAAGE = TRIPLE STELLIUM. H8: PLUTO in SKORPION (DOMIZIL). H9: VENUS in SCHUETZE. H10: SATURN (DOMIZIL) + URANUS in STEINBOCK. H11: NEPTUN in STEINBOCK.\nKAPITELSTRUKTUR PFLICHT: 1.Philosophisch-poetischer Einstieg. 2.Haus-Zeichen und Grundqualitaet. 3.PLANETEN-IN-HAUS PRIO 1: jeden Planeten einzeln und tief erklaeren, Domizil+Erhoehung explizit benennen, Stellium als Drama beschreiben, leeres Haus=Hausherrscher Position erklaeren. 4.Polaritaets-Haus als ergaenzende Spannung einweben. 5.UNERLÖST: konkretes Alltagsbeispiel. 6.ERLÖST: konkrete Loesung mit Beispiel. 7.MITNEHMEN PFLICHT NIEMALS WEGLASSEN: Mitnehmen fuer deinen Weg: + 1 konkrete Mini-Uebung diese Woche.';
+
 
 // ── HAUS-ZUORDNUNGSSYSTEM (nach Randolf M. Schäfer / Astrosophie) ────────
 // Jedes Haus = Tierkreiszeichen-Prinzip + Hausherrscher-Planet + Polaritäts-Haus (Gegenüber)
@@ -1380,7 +1383,7 @@ function renderChallenges(){
          +'<div id="chbody'+i+'" style="overflow:hidden;max-height:0;transition:max-height .35s ease,opacity .3s;opacity:0">'
          +'<div style="border-top:1px solid '+col+'22;margin-top:.55rem;padding-top:.875rem">'
          +'<p style="font-family:var(--serif);font-size:.87rem;color:'+col+';font-style:italic;line-height:1.85;margin-bottom:.875rem">'+ch.a+'</p>'
-         +'<button onclick="event.stopPropagation();startPkg(&apos;gratis&apos;)" type="button" style="background:'+col+';color:#fff;border:none;padding:.5rem 1.2rem;border-radius:6px;font-family:var(--serif);font-size:.78rem;font-weight:600;cursor:pointer;width:100%">Jetzt meinen Wesenskern entdecken</button>'
+         +'<button type="button" style="background:'+col+';color:#fff;border:none;padding:.5rem 1.2rem;border-radius:6px;font-family:var(--serif);font-size:.78rem;font-weight:600;cursor:pointer;width:100%">Jetzt meinen Wesenskern entdecken</button>'
          +'</div></div></div>';
   }
   c.innerHTML=html;
@@ -1427,7 +1430,7 @@ function renderPkgs(){
    +'<li>Dein AC-Wesenskern in 1 Lebensbereich</li>'
    +'<li>Sofort als PDF lesbar</li>'
    +'<li>Persönliche Lernaufgabe der Woche</li></ul>'
-   +'<button class="btn btn-teal btn-fw" onclick="startPkg(&apos;gratis&apos;)" type="button">Kostenlos starten</button></div>'
+   +'<button class="btn btn-teal btn-fw" type="button">Kostenlos starten</button></div>'
 
    +'<div style="border:1px solid rgba(123,111,196,.28);background:linear-gradient(135deg,rgba(123,111,196,.05),var(--deep));border-radius:16px;padding:1.4rem;margin-bottom:.65rem">'
    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.65rem">'
@@ -1441,7 +1444,7 @@ function renderPkgs(){
    +'<li>1 Quadrant deiner Wahl · 3 Lebensbereiche</li>'
    +'<li>Dein persönlicher Slogan – aus deinem Wesenskern</li>'
    +'<li>Konkrete Impulse für Beziehungen, Beruf oder Familie</li></ul>'
-   +'<button onclick="startPkg(&apos;individual&apos;)" type="button" style="background:#5a4fa8;color:#fff;border-radius:8px;font-family:var(--serif);font-size:.95rem;font-weight:600;padding:.85rem;cursor:pointer;border:none;width:100%">Quadrant wählen · CHF 39.–</button></div>'
+   +'<button type="button" style="background:#5a4fa8;color:#fff;border-radius:8px;font-family:var(--serif);font-size:.95rem;font-weight:600;padding:.85rem;cursor:pointer;border:none;width:100%">Quadrant wählen · CHF 39.–</button></div>'
 
    +'<div style="border:1px solid rgba(200,168,75,.3);background:linear-gradient(135deg,rgba(200,168,75,.05),var(--deep));border-radius:16px;padding:1.4rem;margin-bottom:.65rem">'
    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.65rem">'
@@ -1456,7 +1459,7 @@ function renderPkgs(){
    +'<li>Dein persönlicher Slogan – aus deinem Wesenskern</li>'
    +'<li>Abschliessender Nordstern-Impuls für deinen Weg</li>'
    +'<li>Begleitung: Hinweis auf 1:1 Coaching mit Luca</li></ul>'
-   +'<button class="btn btn-gold btn-fw" onclick="startPkg(&apos;seelenkompas&apos;)" type="button" style="color:#060e18">SeelenKompass sichern · CHF 69.–</button></div>'
+   +'<button class="btn btn-gold btn-fw" type="button" style="color:#060e18">SeelenKompass sichern · CHF 69.–</button></div>'
 
    +'<div style="border:1px solid rgba(45,155,181,.3);background:linear-gradient(135deg,rgba(45,155,181,.06),var(--deep));border-radius:16px;padding:1.4rem;margin-bottom:.65rem">'
    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.65rem">'
@@ -1469,7 +1472,7 @@ function renderPkgs(){
    +'<li>Alle 12 Monate · echte Transit-Berechnung gegen dein Radix</li>'
    +'<li>Fluss-Visualisierung mit den stärksten Monaten des Jahres</li>'
    +'<li>Jedes Jahr neu erstellbar</li></ul>'
-   +'<button class="btn btn-fw" onclick="startPkg(&apos;jahreshoroskop&apos;)" type="button" style="background:#2d9bb5;color:#fff;border:none;border-radius:8px;font-family:var(--serif);font-size:.95rem;font-weight:600;padding:.85rem;cursor:pointer">Jahreshoroskop 2026 · CHF 69.–</button></div>'
+   +'<button class="btn btn-fw" type="button" style="background:#2d9bb5;color:#fff;border:none;border-radius:8px;font-family:var(--serif);font-size:.95rem;font-weight:600;padding:.85rem;cursor:pointer">Jahreshoroskop 2026 · CHF 69.–</button></div>'
 
    +'<div style="border:1px solid rgba(200,168,75,.25);background:linear-gradient(135deg,rgba(200,168,75,.05),var(--deep));border-radius:16px;padding:1.4rem;margin-bottom:.65rem">'
    +'<div style="font-size:.56rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.65rem">Kombi-Pakete</div>'
@@ -1477,22 +1480,22 @@ function renderPkgs(){
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">Individual + Jahreshoroskop</div>'
    +'<div style="font-size:.62rem;color:var(--muted)">beide Analysen in einem PDF</div></div>'
-   +'<button class="btn btn-sm" onclick="startCombo(&apos;ind_jahr&apos;)" type="button" style="background:var(--purple);color:#fff;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 108.–</button></div>'
+   +'<button class="btn btn-sm" type="button" style="background:var(--purple);color:#fff;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 108.–</button></div>'
 
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">SeelenKompass + Jahreshoroskop <span style="color:var(--gold);font-size:.6rem">· 5% Vorteil</span></div>'
    +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 138.–</div></div>'
-   +'<button class="btn btn-sm" onclick="startCombo(&apos;seele_jahr&apos;)" type="button" style="background:var(--gold);color:#060e18;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 130.–</button></div>'
+   +'<button class="btn btn-sm" type="button" style="background:var(--gold);color:#060e18;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 130.–</button></div>'
 
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">Individual + Jahreshoroskop + 1:1 <span style="color:var(--gold);font-size:.6rem">· 5% Vorteil</span></div>'
    +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 438.–</div></div>'
-   +'<button class="btn btn-sm" onclick="startCombo(&apos;ind_jahr_coaching&apos;)" type="button" style="background:var(--purple);color:#fff;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 420.–</button></div>'
+   +'<button class="btn btn-sm" type="button" style="background:var(--purple);color:#fff;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 420.–</button></div>'
 
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0 0">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">SeelenKompass + Jahreshoroskop + 1:1 <span style="color:var(--gold);font-size:.6rem">· 5% Vorteil</span></div>'
    +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 468.–</div></div>'
-   +'<button class="btn btn-sm" onclick="startCombo(&apos;seele_jahr_coaching&apos;)" type="button" style="background:var(--gold);color:#060e18;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 450.–</button></div>'
+   +'<button class="btn btn-sm" type="button" style="background:var(--gold);color:#060e18;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 450.–</button></div>'
    +'</div>'
 
    +'<div style="border:1px solid rgba(37,108,134,.2);background:var(--mid);border-radius:16px;padding:1.4rem">'
@@ -1943,17 +1946,17 @@ function showResult(){
     up='<div style="display:grid;gap:.5rem">'
       +'<div style="background:rgba(123,111,196,.07);border:1px solid rgba(123,111,196,.25);border-radius:var(--r2);padding:.875rem;text-align:center">'
       +'<p style="font-family:var(--serif);color:var(--purple);font-size:.9rem;margin-bottom:.2rem;font-weight:600">Einen Quadrant vertiefen · CHF 39.–</p>'
-      +'<button class="btn btn-sm" style="background:var(--purpleD);color:#fff;margin-top:.4rem;border-radius:var(--r);border:none;font-family:var(--serif);font-weight:600;cursor:pointer;padding:.48rem 1rem" onclick="startPkg(\'individual\')">Individual-Analyse starten →</button>'
+      +'<button class="btn btn-sm" style="background:var(--purpleD);color:#fff;margin-top:.4rem;border-radius:var(--r);border:none;font-family:var(--serif);font-weight:600;cursor:pointer;padding:.48rem 1rem">Individual-Analyse starten →</button>'
       +'</div>'
       +'<div style="background:rgba(200,168,75,.05);border:1px solid rgba(200,168,75,.25);border-radius:var(--r2);padding:.875rem;text-align:center">'
       +'<p style="font-family:var(--serif);color:var(--gold);font-size:.9rem;margin-bottom:.2rem;font-weight:600">Alle 12 Lebensbereiche · CHF 69.–</p>'
-      +'<button class="btn btn-gold btn-sm" style="color:#192436;margin-top:.4rem" onclick="startPkg(\'seelenkompas\')">SeelenKompass sichern →</button>'
+      +'<button class="btn btn-gold btn-sm" style="color:#192436;margin-top:.4rem">SeelenKompass sichern →</button>'
       +'</div></div>';
   } else if(S.pkg==='individual'){
     up='<div style="display:grid;gap:.5rem">'
       +'<div style="background:rgba(200,168,75,.05);border:1px solid rgba(200,168,75,.25);border-radius:var(--r2);padding:.875rem;text-align:center">'
       +'<p style="font-family:var(--serif);color:var(--gold);font-size:.9rem;margin-bottom:.2rem;font-weight:600">Upgrade: Alle 12 Lebensbereiche · nur CHF 30.– mehr</p>'
-      +'<button class="btn btn-gold btn-sm" style="color:#192436;margin-top:.4rem" onclick="startPkg(\'seelenkompas\')">SeelenKompass upgraden →</button>'
+      +'<button class="btn btn-gold btn-sm" style="color:#192436;margin-top:.4rem">SeelenKompass upgraden →</button>'
       +'</div>'
       +'<div style="background:rgba(37,108,134,.07);border:1px solid rgba(37,108,134,.22);border-radius:var(--r2);padding:.875rem;text-align:center">'
       +'<p style="font-family:var(--serif);color:var(--teal);font-size:.9rem;margin-bottom:.2rem;font-weight:600">1:1 Coaching mit Luca · CHF 291.– Aufpreis</p>'
@@ -2489,6 +2492,18 @@ p.lead{font-family:'Cormorant Garamond',serif;font-size:.88rem;color:#192436;fon
 section{margin-bottom:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(25,36,54,.08)}
 section:last-child{border-bottom:none}
 @media print{body{padding:1rem}section{page-break-inside:avoid}}
+
+@media (prefers-color-scheme: dark) {
+  .fg input, .fg select, .fg textarea {
+    background:#ffffff !important;
+    color:#192436 !important;
+    -webkit-text-fill-color:#192436 !important;
+    border-color:rgba(172,155,127,.4) !important;
+  }
+  .fg label { color:#192436 !important; -webkit-text-fill-color:#192436 !important; }
+  #pg-form .card { background:#fdfaf5 !important; color:#192436 !important; }
+  #pg-form .card label { color:#192436 !important; -webkit-text-fill-color:#192436 !important; }
+}
 </style></head><body>
 
 <div style="text-align:center;padding:3rem 1rem 2.5rem;margin-bottom:2.5rem;
