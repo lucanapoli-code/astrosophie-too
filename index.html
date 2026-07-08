@@ -2105,9 +2105,14 @@ function showResult(){
 function openPDF(){
   var blob=new Blob([S.pdfHtml],{type:'text/html;charset=utf-8'});
   var url=URL.createObjectURL(blob);
-  var frame=el('pdf-frame');
-  frame.src=url;
-  goPage('pdf');
+  // Versuche neuen Tab - funktioniert auf Samsung besser als iframe
+  var w=window.open(url,'_blank');
+  if(!w){
+    // Fallback: iframe
+    var frame=el('pdf-frame');
+    frame.src=url;
+    goPage('pdf');
+  }
 }
 function printDoc(){
   var w=window.open('','_blank');
