@@ -339,7 +339,7 @@ section:last-child{border-bottom:none}
     </div>
   </div>
 
-  <div class="div"></div>
+  
 
   <!-- SO FUNKTIONIERT ES – hell -->
   <div class="sec">
@@ -377,7 +377,7 @@ section:last-child{border-bottom:none}
     </div>
   </div>
 
-  <div class="div"></div>
+  
 
   <!-- 1:1 COACHING – hell -->
   <div class="sec">
@@ -1521,6 +1521,7 @@ function startCombo(combo){
 
 function startPkg(pkg, combo){
   S.pkg=pkg;S.selQ=null;S.combo=combo||null;
+  if(pkg==='seelenkompas'&&typeof window.showCosmos==='function')window.showCosmos();
   var titles={gratis:'Erster Einblick – Kostenlos',individual:'Individual-Analyse – CHF 39.–',seelenkompas:'SeelenKompass – CHF 69.–',jahreshoroskop:'Jahreshoroskop 2026 – CHF 69.–'};
   var subs={gratis:'1 Lebensbereich · Dein Wesenskern',individual:'1 Quadrant · 3 Lebensbereiche',seelenkompas:'4 Quadranten · 12 Lebensbereiche',jahreshoroskop:'12 Monate · Dein Fluss durchs Jahr 2026'};
   if(combo){ titles[pkg]=combo.label+' – '+combo.price; subs[pkg]=subs[pkg]+' · danach folgt das Jahreshoroskop'; }
