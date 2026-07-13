@@ -1,0 +1,13 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "https://analyse.luca-calicchio.com/*"
+  to = "https://fanciful-macaron-42d4c2.netlify.app/:splat"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
