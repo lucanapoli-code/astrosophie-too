@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" style="color-scheme:only light!important;background:#fdfaf5!important" data-force-light="1">
 <head>
 <script>
 // Force light mode - läuft vor CSS - weltbeste Lösung (MDN/CSS-Tricks 2024)
@@ -330,6 +330,31 @@ html[data-force-light] .card {
   }
   /* Labels */
   label { color: #192436 !important; -webkit-text-fill-color: #192436 !important; }
+}
+
+/* Chrome Android Force Dark deaktivieren */
+html[data-force-light="1"] {
+  color-scheme: only light !important;
+  background-color: #fdfaf5 !important;
+  -webkit-color-scheme: light !important;
+}
+html[data-force-light="1"] body,
+html[data-force-light="1"] .pg,
+html[data-force-light="1"] .pg.on {
+  background-color: #fdfaf5 !important;
+  color: #192436 !important;
+}
+html[data-force-light="1"] input,
+html[data-force-light="1"] textarea {
+  background: #ffffff !important;
+  color: #192436 !important;
+  -webkit-text-fill-color: #192436 !important;
+}
+
+/* Chrome Force Dark Override - filter trick */
+html {
+  filter: invert(0%);
+  -webkit-filter: invert(0%);
 }
 </style>
 </head>
@@ -2146,7 +2171,7 @@ function mergePdfs(pdfList){
     var divider = idx>0 ? '<div style="page-break-before:always;text-align:center;padding:3rem 0 2rem"><p style="font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#4a6a7a">— Teil '+(idx+1)+' deines Kombi-Pakets —</p></div>' : '';
     return divider+body;
   }).join('\n');
-  return '<!DOCTYPE html><html lang="de">'+head+'<body>'+bodies+'</body></html>';
+  return '<!DOCTYPE html><html lang="de" style="color-scheme:only light!important;background:#fdfaf5!important" data-force-light="1">'+head+'<body>'+bodies+'</body></html>';
 }
 
 function showResult(){
@@ -2285,7 +2310,7 @@ function buildPDF(chapters,fd,pkg,selQ,h){
   var head='<meta charset="UTF-8"><meta name="color-scheme" content="only light"><meta name="theme-color" content="#fdfaf5"><meta name="supported-color-schemes" content="light">'
     +'<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">'
     +'<style>'+css+'</style>';
-  return '<!DOCTYPE html><html lang="de"><head>'+head+'</head><body>'+body+'</body></html>';
+  return '<!DOCTYPE html><html lang="de" style="color-scheme:only light!important;background:#fdfaf5!important" data-force-light="1"><head>'+head+'</head><body>'+body+'</body></html>';
 }
 
 
@@ -2311,7 +2336,7 @@ function buildPDF(chapters,fd,pkg,selQ,h){
   var head='<meta charset="UTF-8"><meta name="color-scheme" content="only light"><meta name="theme-color" content="#fdfaf5"><meta name="supported-color-schemes" content="light">'
     +'<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">'
     +'<style>'+css+'</style>';
-  return '<!DOCTYPE html><html lang="de"><head>'+head+'</head><body>'+body+'</body></html>';
+  return '<!DOCTYPE html><html lang="de" style="color-scheme:only light!important;background:#fdfaf5!important" data-force-light="1"><head>'+head+'</head><body>'+body+'</body></html>';
 }
 
 
