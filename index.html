@@ -379,9 +379,9 @@ html {
       <button class="hero-btn" onclick="startPkg('gratis')">✦ Kostenlose Analyse starten</button>
       <div class="hero-link" onclick="window.open('https://calendly.com/luca-calicchio-info','_blank')">Lieber direkt ins Erstgespräch? Hier buchen</div>
       <div class="hero-pkgs">
-        <button class="hero-pkg" onclick="startPkg('individual')">Individual · CHF 39.–</button>
-        <button class="hero-pkg" onclick="startPkg('seelenkompas')">SeelenKompass · CHF 79.–</button>
-        <button class="hero-pkg" onclick="startPkg('jahreshoroskop')">Jahreshoroskop 2026 · CHF 69.–</button>
+        <button class="hero-pkg" onclick="startPkg('individual')">Individual · CHF 49.–</button>
+        <button class="hero-pkg" onclick="startPkg('seelenkompas')">SeelenKompass · CHF 99.–</button>
+        <button class="hero-pkg" onclick="startPkg('jahreshoroskop')">Jahreshoroskop · CHF 9.–/Mo</button>
       </div>
       <div class="hero-trust">
         <span class="trust-i">Swiss Ephemeris Genauigkeit</span>
@@ -488,28 +488,28 @@ html {
         <p class="pkg-name">Gratis-Analyse</p>
         <p class="pkg-price" style="color:var(--gold)">CHF 0.–</p>
         <p class="pkg-desc">Dein Wesenskern in einem Lebensbereich. Sofort als PDF, ohne Anmeldung.</p>
-        <button class="pkg-btn btn-gold">Kostenlos starten</button>
+        <button onclick="startPkg('gratis')" class="pkg-btn btn-gold">Kostenlos starten</button>
       </div>
       <div class="pkg" onclick="startPkg('individual')" style="border:1px solid rgba(123,111,196,.3)">
         <span class="pkg-badge" style="color:#9b8fc4">BELIEBT</span>
         <p class="pkg-name">Individual-Analyse</p>
-        <p class="pkg-price" style="color:#9b8fc4">CHF 39.–</p>
+        <p class="pkg-price" style="color:#9b8fc4">CHF 49.–</p>
         <p class="pkg-desc">Alle 3 Lebensbereiche eines Quadranten. Dein persönlicher Slogan inklusive.</p>
-        <button class="pkg-btn btn-navy">Quadrant wählen</button>
+        <button onclick="startPkg('individual')" class="pkg-btn btn-navy">Quadrant wählen</button>
       </div>
       <div class="pkg" onclick="startPkg('seelenkompas')" style="border:1px solid rgba(172,155,127,.35)">
         <span class="pkg-badge" style="color:var(--gold)">EMPFOHLEN</span>
         <p class="pkg-name">SeelenKompass</p>
         <p class="pkg-price" style="color:var(--gold)">CHF 69.–</p>
         <p class="pkg-desc">Alle 12 Lebensbereiche. Das vollständige Bild deines Seelenmusters.</p>
-        <button class="pkg-btn btn-gold">Vollanalyse starten</button>
+        <button onclick="startPkg('seelenkompas')" class="pkg-btn btn-gold">Vollanalyse starten</button>
       </div>
       <div class="pkg" onclick="startPkg('jahreshoroskop')" style="border:1px solid rgba(96,153,96,.3)">
         <span class="pkg-badge" style="color:#6d9e6d">JAHRESPLAN</span>
         <p class="pkg-name">Jahreshoroskop 2026</p>
         <p class="pkg-price" style="color:#6d9e6d">CHF 69.–</p>
         <p class="pkg-desc">13 Monatsanalysen – dein persönlicher Fahrplan für 2026.</p>
-        <button class="pkg-btn btn-navy">Jahreshoroskop sichern</button>
+        <button onclick="startPkg('jahreshoroskop')" class="pkg-btn btn-navy">Jahreshoroskop sichern</button>
       </div>
     </div>
   </div>
@@ -1462,6 +1462,33 @@ function mkYearPrompt(id, h, isFirst, yearData){
 
 
 // postMessage von PDF-Buttons
+
+// Challenge Buttons
+document.addEventListener('click', function(e){
+  var ch = e.target.getAttribute ? e.target.getAttribute('data-ch') : null;
+  if(ch) startPkg(ch);
+});
+// GlobalButtonHandler
+
+// Globaler Button Click Handler
+document.addEventListener('click', function(e) {
+  var b = e.target.closest('button,a[data-pkg],[data-pkg]');
+  if (!b) return;
+  var pkg = b.getAttribute ? b.getAttribute('data-pkg') : null;
+  if (pkg) { startPkg(pkg); return; }
+  var t = b.textContent ? b.textContent.trim() : '';
+  if (t.indexOf('Kostenlos') > -1 || t.indexOf('Wesenskern') > -1 || t.indexOf('Einblick') > -1) startPkg('gratis');
+  else if (t.indexOf('Quadrant') > -1 || t.indexOf('Individual') > -1) startPkg('individual');
+  else if (t.indexOf('SeelenKompass') > -1 || t.indexOf('Vollanalyse') > -1 || t.indexOf('upgraden') > -1) startPkg('seelenkompas');
+  else if (t.indexOf('Jahreshoroskop') > -1 || t.indexOf('abonnieren') > -1) startPkg('jahreshoroskop');
+  else if (t.indexOf('131') > -1) startPkg('ind_jahr');
+  else if (t.indexOf('179') > -1) startPkg('seele_jahr');
+  else if (t.indexOf('420') > -1) startPkg('ind_jahr_coaching');
+  else if (t.indexOf('450') > -1) startPkg('seele_jahr_coaching');
+  else if (t.indexOf('Erneut') > -1) startGen();
+  else if (t.indexOf('ERSTGESPRÄCH') > -1 || t.indexOf('Erstgespräch') > -1) window.open('https://calendly.com/luca-calicchio-info','_blank');
+});
+
 window.addEventListener('message', function(e){
   try{
     if(e.data&&e.data.openPkg){
@@ -1502,7 +1529,7 @@ function renderChallenges(){
   var html='';
   for(var i=0;i<CHALLENGES.length;i++){
     var ch=CHALLENGES[i],col=cols[i];
-    html+='<div id="chcard'+i+'" onclick="toggleCh('+i+')" style="border:1px solid '+col+'22;background:var(--deep);border-radius:16px;padding:1.25rem 1.35rem;cursor:pointer;transition:all .25s;margin-bottom:.45rem">'
+    html+='<div id="chcard'+i+'" style="border:1px solid '+col+'22;background:var(--deep);border-radius:16px;padding:1.25rem 1.35rem;cursor:pointer;transition:all .25s;margin-bottom:.45rem">'
          +'<div style="display:flex;align-items:flex-start;gap:.875rem;margin-bottom:.45rem">'
          +'<div style="width:38px;height:38px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.05rem;background:'+col+'15;border:1px solid '+col+'35">'+ch.ic+'</div>'
          +'<div style="flex:1"><div style="font-family:var(--serif);color:var(--white);font-weight:600;font-size:.93rem;margin-bottom:.15rem">'+ch.t+'</div>'
@@ -1516,6 +1543,10 @@ function renderChallenges(){
          +'</div></div></div>';
   }
   c.innerHTML=html;
+  c.addEventListener('click',function(e){
+    var b=e.target.closest('button');
+    if(b&&b.textContent.indexOf('Wesenskern')>-1) startPkg('gratis');
+  });
 }
 
 function toggleCh(i){
@@ -1566,14 +1597,14 @@ function renderPkgs(){
    +'<div><div style="font-size:.56rem;color:#7b6fc4;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.2rem">Beliebt</div>'
    +'<div style="font-family:var(--serif);color:var(--white);font-size:1.1rem;font-weight:600">Individual-Analyse</div>'
    +'<div style="font-size:.65rem;color:var(--muted);margin-top:.1rem">1 Quadrant · 3 Lebensbereiche</div></div>'
-   +'<div><div style="font-family:var(--serif);font-size:1.8rem;font-weight:300;color:#7b6fc4;text-align:right">CHF 39.–</div>'
+   +'<div><div style="font-family:var(--serif);font-size:1.8rem;font-weight:300;color:#7b6fc4;text-align:right">CHF 49.–</div>'
    +'<div style="font-size:.58rem;color:var(--muted);text-align:right">einmalig</div></div></div>'
    +'<p style="font-size:.76rem;color:var(--body);line-height:1.88;margin-bottom:.65rem">Du wählst den Quadranten der dich bewegt. Drei tiefe Kapitel – sofort als PDF.</p>'
    +'<ul style="font-size:.7rem;color:var(--muted);line-height:1.85;margin:0 0 .875rem;padding-left:1.1rem">'
    +'<li>1 Quadrant deiner Wahl · 3 Lebensbereiche</li>'
    +'<li>Dein persönlicher Slogan – aus deinem Wesenskern</li>'
    +'<li>Konkrete Impulse für Beziehungen, Beruf oder Familie</li></ul>'
-   +'<button type="button" style="background:#5a4fa8;color:#fff;border-radius:8px;font-family:var(--serif);font-size:.95rem;font-weight:600;padding:.85rem;cursor:pointer;border:none;width:100%">Quadrant wählen · CHF 39.–</button></div>'
+   +'<button type="button" style="background:#5a4fa8;color:#fff;border-radius:8px;font-family:var(--serif);font-size:.95rem;font-weight:600;padding:.85rem;cursor:pointer;border:none;width:100%">Quadrant wählen · CHF 49.–</button></div>'
 
    +'<div style="border:1px solid rgba(200,168,75,.3);background:linear-gradient(135deg,rgba(200,168,75,.05),var(--deep));border-radius:16px;padding:1.4rem;margin-bottom:.65rem">'
    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.65rem">'
@@ -1588,20 +1619,21 @@ function renderPkgs(){
    +'<li>Dein persönlicher Slogan – aus deinem Wesenskern</li>'
    +'<li>Abschliessender Nordstern-Impuls für deinen Weg</li>'
    +'<li>Begleitung: Hinweis auf 1:1 Coaching mit Luca</li></ul>'
-   +'<button class="btn btn-gold btn-fw" type="button" style="color:#060e18">SeelenKompass sichern · CHF 79.–</button></div>'
+   +'<button class="btn btn-gold btn-fw" type="button" style="color:#060e18">SeelenKompass sichern · CHF 99.–</button></div>'
 
    +'<div style="border:1px solid rgba(45,155,181,.3);background:linear-gradient(135deg,rgba(45,155,181,.06),var(--deep));border-radius:16px;padding:1.4rem;margin-bottom:.65rem">'
    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.65rem">'
-   +'<div><div style="font-size:.56rem;color:#2d9bb5;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.2rem">Jährlich · Neu</div>'
-   +'<div style="font-family:var(--serif);color:var(--white);font-size:1.1rem;font-weight:600">Jahreshoroskop 2026</div>'
-   +'<div style="font-size:.65rem;color:var(--muted);margin-top:.1rem">12 Monate · Dein Fluss durchs Jahr</div></div>'
-   +'<div style="font-family:var(--serif);font-size:1.8rem;font-weight:300;color:#2d9bb5">CHF 69.–</div></div>'
-   +'<p style="font-size:.76rem;color:var(--body);line-height:1.88;margin-bottom:.65rem">Wie die Bewegungen des Jahres 2026 dein Geburtsmuster berühren – Monat für Monat als Fluss visualisiert, mit den Themen, die jeweils stärker hervortreten.</p>'
+   +'<div><div style="font-size:.56rem;color:#6d9e6d;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.2rem">🌙 MONATSABO</div>'
+   +'<div style="font-family:var(--serif);color:var(--white);font-size:1.1rem;font-weight:600">Jahreshoroskop</div>'
+   +'<div style="font-size:.65rem;color:var(--muted);margin-top:.1rem">Was jeden Monat auf dich zukommt</div></div>'
+   +'<div style="text-align:right"><div style="font-family:var(--serif);font-size:1.8rem;font-weight:300;color:#6d9e6d">CHF 9.–</div>'
+   +'<div style="font-size:.58rem;color:var(--muted);text-align:right">/Monat</div></div>'
+   +'<p style="font-size:.76rem;color:var(--body);line-height:1.88;margin-bottom:.65rem">Jeden Monat weisst du was auf dich zukommt — energetisch, emotional, beruflich. Abgestimmt auf dein Geburtsmuster.</p>'
    +'<ul style="font-size:.7rem;color:var(--muted);line-height:1.85;margin:0 0 .875rem;padding-left:1.1rem">'
-   +'<li>Alle 12 Monate · echte Transit-Berechnung gegen dein Radix</li>'
-   +'<li>Fluss-Visualisierung mit den stärksten Monaten des Jahres</li>'
+   +'<li>Alle 12 Monate · persönlich auf dein Geburtsmuster abgestimmt</li>'
+   +'<li>Die stärksten Energien des Monats — was kommt, was hilft</li>'
    +'<li>Jedes Jahr neu erstellbar</li></ul>'
-   +'<button class="btn btn-fw" type="button" style="background:#2d9bb5;color:#fff;border:none;border-radius:8px;font-family:var(--serif);font-size:.95rem;font-weight:600;padding:.85rem;cursor:pointer">Jahreshoroskop 2026 · CHF 69.–</button></div>'
+   +'<button class="btn btn-fw" type="button" style="background:#2d9bb5;color:#fff;border:none;border-radius:8px;font-family:var(--serif);font-size:.95rem;font-weight:600;padding:.85rem;cursor:pointer">Jahreshoroskop · CHF 9.–/Mo</button></div>'
 
    +'<div style="border:1px solid rgba(200,168,75,.25);background:linear-gradient(135deg,rgba(200,168,75,.05),var(--deep));border-radius:16px;padding:1.4rem;margin-bottom:.65rem">'
    +'<div style="font-size:.56rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.65rem">Kombi-Pakete</div>'
@@ -1609,12 +1641,12 @@ function renderPkgs(){
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">Individual + Jahreshoroskop</div>'
    +'<div style="font-size:.62rem;color:var(--muted)">beide Analysen in einem PDF</div></div>'
-   +'<button class="btn btn-sm" type="button" style="background:var(--purple);color:#fff;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 108.–</button></div>'
+   +'<button class="btn btn-sm" type="button" style="background:var(--purple);color:#fff;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 131.–</button></div>'
 
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">SeelenKompass + Jahreshoroskop <span style="color:var(--gold);font-size:.6rem">· 5% Vorteil</span></div>'
-   +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 138.–</div></div>'
-   +'<button class="btn btn-sm" type="button" style="background:var(--gold);color:#060e18;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 130.–</button></div>'
+   +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 148.–</div></div>'
+   +'<button class="btn btn-sm" type="button" style="background:var(--gold);color:#060e18;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 179.–</button></div>'
 
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">Individual + Jahreshoroskop + 1:1 <span style="color:var(--gold);font-size:.6rem">· 5% Vorteil</span></div>'
@@ -1623,7 +1655,7 @@ function renderPkgs(){
 
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0 0">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">SeelenKompass + Jahreshoroskop + 1:1 <span style="color:var(--gold);font-size:.6rem">· 5% Vorteil</span></div>'
-   +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 468.–</div></div>'
+   +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 498.–</div></div>'
    +'<button class="btn btn-sm" type="button" style="background:var(--gold);color:#060e18;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 450.–</button></div>'
    +'</div>'
 
@@ -1650,14 +1682,14 @@ function renderPkgs(){
    +'<div><div style="font-size:.56rem;color:#7b6fc4;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.2rem">Beliebt</div>'
    +'<div style="font-family:var(--serif);color:var(--white);font-size:1.1rem;font-weight:600">Individual-Analyse</div>'
    +'<div style="font-size:.65rem;color:var(--muted);margin-top:.1rem">1 Quadrant · 3 Lebensbereiche</div></div>'
-   +'<div><div style="font-family:var(--serif);font-size:1.8rem;font-weight:300;color:#7b6fc4;text-align:right">CHF 39.–</div>'
+   +'<div><div style="font-family:var(--serif);font-size:1.8rem;font-weight:300;color:#7b6fc4;text-align:right">CHF 49.–</div>'
    +'<div style="font-size:.58rem;color:var(--muted);text-align:right">einmalig</div></div></div>'
    +'<p style="font-size:.76rem;color:var(--body);line-height:1.88;margin-bottom:.65rem">Du wählst den Quadranten der dich bewegt. Drei tiefe Kapitel – sofort als PDF.</p>'
    +'<ul style="font-size:.7rem;color:var(--muted);line-height:1.85;margin:0 0 .875rem;padding-left:1.1rem">'
    +'<li>1 Quadrant deiner Wahl · 3 Lebensbereiche</li>'
    +'<li>Dein persönlicher Slogan – aus deinem Wesenskern</li>'
    +'<li>Konkrete Impulse für Beziehungen, Beruf oder Familie</li></ul>'
-   +'<button type="button" style="background:#5a4fa8;color:#fff;border-radius:8px;font-family:var(--serif);font-size:.95rem;font-weight:600;padding:.85rem;cursor:pointer;border:none;width:100%">Quadrant wählen · CHF 39.–</button></div>'
+   +'<button type="button" style="background:#5a4fa8;color:#fff;border-radius:8px;font-family:var(--serif);font-size:.95rem;font-weight:600;padding:.85rem;cursor:pointer;border:none;width:100%">Quadrant wählen · CHF 49.–</button></div>'
 
    +'<div style="border:1px solid rgba(200,168,75,.3);background:linear-gradient(135deg,rgba(200,168,75,.05),var(--deep));border-radius:16px;padding:1.4rem;margin-bottom:.65rem">'
    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.65rem">'
@@ -1672,20 +1704,21 @@ function renderPkgs(){
    +'<li>Dein persönlicher Slogan – aus deinem Wesenskern</li>'
    +'<li>Abschliessender Nordstern-Impuls für deinen Weg</li>'
    +'<li>Begleitung: Hinweis auf 1:1 Coaching mit Luca</li></ul>'
-   +'<button class="btn btn-gold btn-fw" type="button" style="color:#060e18">SeelenKompass sichern · CHF 79.–</button></div>'
+   +'<button class="btn btn-gold btn-fw" type="button" style="color:#060e18">SeelenKompass sichern · CHF 99.–</button></div>'
 
    +'<div style="border:1px solid rgba(45,155,181,.3);background:linear-gradient(135deg,rgba(45,155,181,.06),var(--deep));border-radius:16px;padding:1.4rem;margin-bottom:.65rem">'
    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.65rem">'
-   +'<div><div style="font-size:.56rem;color:#2d9bb5;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.2rem">Jährlich · Neu</div>'
-   +'<div style="font-family:var(--serif);color:var(--white);font-size:1.1rem;font-weight:600">Jahreshoroskop 2026</div>'
-   +'<div style="font-size:.65rem;color:var(--muted);margin-top:.1rem">12 Monate · Dein Fluss durchs Jahr</div></div>'
-   +'<div style="font-family:var(--serif);font-size:1.8rem;font-weight:300;color:#2d9bb5">CHF 69.–</div></div>'
-   +'<p style="font-size:.76rem;color:var(--body);line-height:1.88;margin-bottom:.65rem">Wie die Bewegungen des Jahres 2026 dein Geburtsmuster berühren – Monat für Monat als Fluss visualisiert, mit den Themen, die jeweils stärker hervortreten.</p>'
+   +'<div><div style="font-size:.56rem;color:#6d9e6d;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.2rem">🌙 MONATSABO</div>'
+   +'<div style="font-family:var(--serif);color:var(--white);font-size:1.1rem;font-weight:600">Jahreshoroskop</div>'
+   +'<div style="font-size:.65rem;color:var(--muted);margin-top:.1rem">Was jeden Monat auf dich zukommt</div></div>'
+   +'<div style="text-align:right"><div style="font-family:var(--serif);font-size:1.8rem;font-weight:300;color:#6d9e6d">CHF 9.–</div>'
+   +'<div style="font-size:.58rem;color:var(--muted);text-align:right">/Monat</div></div>'
+   +'<p style="font-size:.76rem;color:var(--body);line-height:1.88;margin-bottom:.65rem">Jeden Monat weisst du was auf dich zukommt — energetisch, emotional, beruflich. Abgestimmt auf dein Geburtsmuster.</p>'
    +'<ul style="font-size:.7rem;color:var(--muted);line-height:1.85;margin:0 0 .875rem;padding-left:1.1rem">'
-   +'<li>Alle 12 Monate · echte Transit-Berechnung gegen dein Radix</li>'
-   +'<li>Fluss-Visualisierung mit den stärksten Monaten des Jahres</li>'
+   +'<li>Alle 12 Monate · persönlich auf dein Geburtsmuster abgestimmt</li>'
+   +'<li>Die stärksten Energien des Monats — was kommt, was hilft</li>'
    +'<li>Jedes Jahr neu erstellbar</li></ul>'
-   +'<button class="btn btn-fw" type="button" style="background:#2d9bb5;color:#fff;border:none;border-radius:8px;font-family:var(--serif);font-size:.95rem;font-weight:600;padding:.85rem;cursor:pointer">Jahreshoroskop 2026 · CHF 69.–</button></div>'
+   +'<button class="btn btn-fw" type="button" style="background:#2d9bb5;color:#fff;border:none;border-radius:8px;font-family:var(--serif);font-size:.95rem;font-weight:600;padding:.85rem;cursor:pointer">Jahreshoroskop · CHF 9.–/Mo</button></div>'
 
    +'<div style="border:1px solid rgba(200,168,75,.25);background:linear-gradient(135deg,rgba(200,168,75,.05),var(--deep));border-radius:16px;padding:1.4rem;margin-bottom:.65rem">'
    +'<div style="font-size:.56rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.65rem">Kombi-Pakete</div>'
@@ -1693,12 +1726,12 @@ function renderPkgs(){
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">Individual + Jahreshoroskop</div>'
    +'<div style="font-size:.62rem;color:var(--muted)">beide Analysen in einem PDF</div></div>'
-   +'<button class="btn btn-sm" type="button" style="background:var(--purple);color:#fff;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 108.–</button></div>'
+   +'<button class="btn btn-sm" type="button" style="background:var(--purple);color:#fff;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 131.–</button></div>'
 
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">SeelenKompass + Jahreshoroskop <span style="color:var(--gold);font-size:.6rem">· 5% Vorteil</span></div>'
-   +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 138.–</div></div>'
-   +'<button class="btn btn-sm" type="button" style="background:var(--gold);color:#060e18;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 130.–</button></div>'
+   +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 148.–</div></div>'
+   +'<button class="btn btn-sm" type="button" style="background:var(--gold);color:#060e18;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 179.–</button></div>'
 
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">Individual + Jahreshoroskop + 1:1 <span style="color:var(--gold);font-size:.6rem">· 5% Vorteil</span></div>'
@@ -1707,7 +1740,7 @@ function renderPkgs(){
 
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0 0">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">SeelenKompass + Jahreshoroskop + 1:1 <span style="color:var(--gold);font-size:.6rem">· 5% Vorteil</span></div>'
-   +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 468.–</div></div>'
+   +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 498.–</div></div>'
    +'<button class="btn btn-sm" type="button" style="background:var(--gold);color:#060e18;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 450.–</button></div>'
    +'</div>'
 
@@ -1723,8 +1756,8 @@ function renderPkgs(){
 }
 function startCombo(combo){
   var combos={
-    ind_jahr:{label:'Individual + Jahreshoroskop',price:'CHF 108.–',pkgs:['individual','jahreshoroskop'],coaching:false},
-    seele_jahr:{label:'SeelenKompass + Jahreshoroskop',price:'CHF 130.–',pkgs:['seelenkompas','jahreshoroskop'],coaching:false},
+    ind_jahr:{label:'Individual + Jahreshoroskop',price:'CHF 131.–',pkgs:['individual','jahreshoroskop'],coaching:false},
+    seele_jahr:{label:'SeelenKompass + Jahreshoroskop',price:'CHF 179.–',pkgs:['seelenkompas','jahreshoroskop'],coaching:false},
     ind_jahr_coaching:{label:'Individual + Jahreshoroskop + 1:1',price:'CHF 420.–',pkgs:['individual','jahreshoroskop'],coaching:true},
     seele_jahr_coaching:{label:'SeelenKompass + Jahreshoroskop + 1:1',price:'CHF 450.–',pkgs:['seelenkompas','jahreshoroskop'],coaching:true}
   };
@@ -1737,12 +1770,12 @@ function startCombo(combo){
 function startPkg(pkg, combo){
   S.pkg=pkg;S.selQ=null;S.combo=combo||null;
   if(pkg==='seelenkompas'&&typeof window.showCosmos==='function')window.showCosmos();
-  var titles={gratis:'Erster Einblick – Kostenlos',individual:'Individual-Analyse – CHF 39.–',seelenkompas:'SeelenKompass – CHF 79.–',jahreshoroskop:'Jahreshoroskop 2026 – CHF 69.–'};
+  var titles={gratis:'Erster Einblick – Kostenlos',individual:'Individual-Analyse – CHF 49.–',seelenkompas:'SeelenKompass – CHF 99.–',jahreshoroskop:'Jahreshoroskop 2026 – CHF 69.–'};
   var subs={gratis:'1 Lebensbereich · Dein Wesenskern',individual:'1 Quadrant · 3 Lebensbereiche',seelenkompas:'4 Quadranten · 12 Lebensbereiche',jahreshoroskop:'12 Monate · Dein Fluss durchs Jahr 2026'};
   if(combo){ titles[pkg]=combo.label+' – '+combo.price; subs[pkg]=subs[pkg]+' · danach folgt das Jahreshoroskop'; }
   var btn=document.getElementById('btn-go');
   if(btn){if(pkg==='gratis'){btn.style.background='#192436';btn.style.color='#ac9b7f';btn.textContent='Einblick erstellen';}
-  else if(pkg==='individual'){btn.style.background='#5a4fa8';btn.style.color='#fff';btn.textContent=combo?('Weiter · '+combo.price):'Analyse erstellen · CHF 39.–';}
+  else if(pkg==='individual'){btn.style.background='#5a4fa8';btn.style.color='#fff';btn.textContent=combo?('Weiter · '+combo.price):'Analyse erstellen · CHF 49.–';}
   else if(pkg==='jahreshoroskop'){btn.style.background='#2d9bb5';btn.style.color='#fff';btn.textContent=combo?('Weiter · '+combo.price):'Jahreshoroskop erstellen · CHF 69.–';}
   else{btn.style.background='var(--gold)';btn.style.color='#060e18';btn.textContent=combo?('Weiter · '+combo.price):'Analyse erstellen · CHF 69.–';}}
   var ft=document.getElementById('form-title');if(ft)ft.textContent=titles[pkg]||'';
@@ -1758,7 +1791,7 @@ function startPkg(pkg, combo){
     for(var i=0;i<QUADS.length;i++){
       var q=QUADS[i];
       var col=qColors[q.id]; var bg=qBg[q.id]; var border=qBorder[q.id];
-      html+='<div id="qo'+q.id+'" onclick="pickQ(\''+q.id+'\')" style="'
+      html+='<div id="qo'+q.id+'" style="'
         +'background:'+bg+';border:1.5px solid '+border+';'
         +'border-radius:12px;padding:.875rem 1rem;'
         +'margin-bottom:.5rem;cursor:pointer;'
@@ -1777,7 +1810,7 @@ function startPkg(pkg, combo){
   var pn=document.getElementById('pay-note');
   if(pn){
     if(combo){pn.style.display='block';pn.textContent='💳 '+combo.price+' für das gesamte Kombi-Paket'+(combo.coaching?' inkl. 1:1 Coaching':'')+' · Visa, Mastercard & Twint';}
-    else if(pkg!=='gratis'){pn.style.display='block';pn.textContent='💳 '+(pkg==='individual'?'CHF 39.–':'CHF 69.–')+' · Visa, Mastercard & Twint';}
+    else if(pkg!=='gratis'){pn.style.display='block';pn.textContent='💳 '+(pkg==='individual'?'CHF 49.–':'CHF 69.–')+' · Visa, Mastercard & Twint';}
     else{pn.style.display='none';}
   }
   goPage('form');
@@ -1983,7 +2016,7 @@ function runGenBatch(areas,startIdx){
       var failedIdxs=results.filter(function(r){return !r.ok;}).map(function(r){return r.i+1;});
       var box=el('gen-err');box.style.display='block';
       box.innerHTML='Verbindungsproblem bei Kapitel '+failedIdxs.join(', ')+'. '
-        +'<button onclick="el(\'gen-err\').style.display=\'none\';startCountdown('+(areas.length-startIdx)+');runGenBatch(window.__areas,'+startIdx+')" '
+        +'<button '
         +'style="margin-left:.5rem;padding:.3rem .8rem;border-radius:6px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer">Erneut versuchen</button>';
       window.__areas=areas;
       return;
@@ -2203,7 +2236,7 @@ function showResult(){
   if(S.pkg==='gratis'){
     up='<div style="display:grid;gap:.5rem">'
       +'<div style="background:rgba(123,111,196,.07);border:1px solid rgba(123,111,196,.25);border-radius:var(--r2);padding:.875rem;text-align:center">'
-      +'<p style="font-family:var(--serif);color:var(--purple);font-size:.9rem;margin-bottom:.2rem;font-weight:600">Einen Quadrant vertiefen · CHF 39.–</p>'
+      +'<p style="font-family:var(--serif);color:var(--purple);font-size:.9rem;margin-bottom:.2rem;font-weight:600">Einen Quadrant vertiefen · CHF 49.–</p>'
       +'<button class="btn btn-sm" style="background:var(--purpleD);color:#fff;margin-top:.4rem;border-radius:var(--r);border:none;font-family:var(--serif);font-weight:600;cursor:pointer;padding:.48rem 1rem">Individual-Analyse starten →</button>'
       +'</div>'
       +'<div style="background:rgba(200,168,75,.05);border:1px solid rgba(200,168,75,.25);border-radius:var(--r2);padding:.875rem;text-align:center">'
@@ -2235,14 +2268,9 @@ function showResult(){
 function openPDF(){
   var blob=new Blob([S.pdfHtml],{type:'text/html;charset=utf-8'});
   var url=URL.createObjectURL(blob);
-  // Versuche neuen Tab - funktioniert auf Samsung besser als iframe
-  var w=window.open(url,'_blank');
-  if(!w){
-    // Fallback: iframe
-    var frame=el('pdf-frame');
-    frame.src=url;
-    goPage('pdf');
-  }
+  var frame=el('pdf-frame');
+  frame.src=url;
+  goPage('pdf');
 }
 function printDoc(){
   var w=window.open('','_blank');
@@ -2321,6 +2349,10 @@ function buildPDF(chapters,fd,pkg,selQ,h){
     +'<style>'+css+'</style>';
   return '<!DOCTYPE html><html lang="de"><head>'+head+'</head><body>'+body+'</body></html>';
 }
+
+
+
+
 </script>
 
 <div id="pg-legal" class="pg">
@@ -2337,7 +2369,7 @@ function buildPDF(chapters,fd,pkg,selQ,h){
 </div>
 <div class="card">
 <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.4rem;font-weight:300;color:#192436;margin-bottom:1rem">AGB</h2>
-<p style="font-size:.82rem;color:#6a7a8a;line-height:1.8;margin-bottom:.75rem"><strong style="color:#192436">Preise</strong><br>Gratis: CHF 0.– · Individual: CHF 39.– · SeelenKompass: CHF 79.– · Jahreshoroskop: CHF 69.–</p>
+<p style="font-size:.82rem;color:#6a7a8a;line-height:1.8;margin-bottom:.75rem"><strong style="color:#192436">Preise</strong><br>Gratis: CHF 0.– · Individual: CHF 49.– · SeelenKompass: CHF 99.– · Jahreshoroskop: CHF 69.–</p>
 <p style="font-size:.82rem;color:#6a7a8a;line-height:1.8"><strong style="color:#192436">Recht</strong><br>Schweizer Recht. Gerichtsstand Oftringen, Aargau.</p>
 </div>
 </div>
