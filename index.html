@@ -587,9 +587,9 @@ html {
     <div class="fg" style="margin-bottom:1.1rem">
       <label>Geburtsdatum</label>
       <div style="display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:.5rem">
-        <input type="number" id="f-day" onchange="syncDate()" placeholder="Tag" min="1" max="31" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
-        <input type="number" id="f-month" onchange="syncDate()" placeholder="Monat" min="1" max="12" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
-        <input type="number" id="f-year" onchange="syncDate()" placeholder="Jahr" min="1900" max="2010" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="number" id="f-day" placeholder="TT" min="1" max="31" maxlength="2" inputmode="numeric" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,2);if(parseInt(this.value)>31)this.value='31';syncDate();if(this.value.length===2)document.getElementById('f-month').focus()"/>
+        <input type="number" id="f-month" placeholder="MM" min="1" max="12" maxlength="2" inputmode="numeric" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,2);if(parseInt(this.value)>12)this.value='12';syncDate();if(this.value.length===2)document.getElementById('f-year').focus()"/>
+        <input type="number" id="f-year" placeholder="JJJJ" min="1900" max="2010" maxlength="4" inputmode="numeric" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,4);syncDate()"/>
       </div>
       <p style="font-size:.65rem;color:#9aabba;margin-top:.3rem;line-height:1.5">Tag · Monat · Jahr — z.B. 15 · 03 · 1990</p>
       <input type="hidden" id="f-date"/>
@@ -1959,17 +1959,8 @@ function tryHoro(){
 // ── GENERIERUNG ───────────────────────────────────────────────────────────
 function showFormErr(msg){
   var e=el('form-err');
-  if(!e)return;
-  e.textContent=msg;
-  e.style.display='block';
-  e.style.color='#c00';
-  e.style.background='rgba(200,0,0,.08)';
-  e.style.border='1.5px solid rgba(200,0,0,.3)';
-  e.style.padding='.75rem 1rem';
-  e.style.borderRadius='10px';
-  e.style.fontSize='.82rem';
-  e.style.marginBottom='1rem';
-  setTimeout(function(){e.scrollIntoView({behavior:'smooth',block:'nearest'});},50);
+  if(e){e.textContent=msg;e.style.display='block';}
+  alert(msg);
 }
 
 // ── COUNTDOWN ─────────────────────────────────────────────────────────────
@@ -2128,7 +2119,12 @@ function startGen(){
   var name=el('f-name').value.trim(),date=el('f-date').value;
   var time=el('f-time').value,place=el('f-place').value.trim();
   el('form-err').style.display='none';
-  if(!name||!date||!time||!place){showFormErr('Bitte Name, Geburtsdatum, Geburtszeit und Geburtsort eingeben.');return;}
+  var missing=[];
+  if(!name) missing.push('Name');
+  if(!date) missing.push('Geburtsdatum');
+  if(!time) missing.push('Geburtszeit');
+  if(!place) missing.push('Geburtsort');
+  if(missing.length>0){showFormErr('Bitte ausfüllen: '+missing.join(', '));return;}
   // Geburtsort: wenn nicht erkannt, Fallback mit Schweiz-Koordinaten
   if(!S.horo && date && time){
     try{
