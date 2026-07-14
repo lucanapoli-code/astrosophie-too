@@ -2105,18 +2105,24 @@ function syncDate(){
   var m=document.getElementById('f-month');
   var y=document.getElementById('f-year');
   var fd=document.getElementById('f-date');
-  if(d&&m&&y&&fd&&d.value&&m.value&&y.value){
-    var dd=String(d.value).padStart(2,'0');
-    var mm=String(m.value).padStart(2,'0');
-    fd.value=y.value+'-'+mm+'-'+dd;
+  if(!d||!m||!y||!fd)return;
+  var dv=d.value.trim(), mv=m.value.trim(), yv=y.value.trim();
+  if(dv&&mv&&yv){
+    var dd=String(parseInt(dv)||1).padStart(2,'0');
+    var mm=String(parseInt(mv)||1).padStart(2,'0');
+    fd.value=yv+'-'+mm+'-'+dd;
     tryHoro();
   }
 }
 
 function startGen(){
-  // Sicherstellen dass f-date gesetzt ist
+  // f-date manuell setzen
+  var dEl=el('f-day'),mEl=el('f-month'),yEl=el('f-year'),fdEl=el('f-date');
+  if(dEl&&mEl&&yEl&&fdEl&&dEl.value&&mEl.value&&yEl.value){
+    fdEl.value=yEl.value+'-'+String(parseInt(mEl.value)).padStart(2,'0')+'-'+String(parseInt(dEl.value)).padStart(2,'0');
+  }
   syncDate();
-  var name=el('f-name').value.trim(),date=el('f-date').value;
+  var name=el('f-name').value.trim(),date=el('f-date')?el('f-date').value:'';
   var time=el('f-time').value,place=el('f-place').value.trim();
   el('form-err').style.display='none';
   var missing=[];
