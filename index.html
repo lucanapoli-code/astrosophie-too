@@ -620,7 +620,7 @@ html {
       <textarea id="f-q" placeholder="z.B. Wo liegt meine Berufung? Warum dieselben Beziehungsmuster?" style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1rem;font-weight:300;line-height:1.7"></textarea>
     </div>
     <div id="pay-note" style="display:none;padding:.7rem .85rem;background:rgba(172,155,127,.06);border:1px solid rgba(172,155,127,.16);border-radius:10px;font-size:.7rem;color:#ac9b7f;line-height:1.65;margin-bottom:1rem"></div>
-    <div id="form-err" class="err-box" style="display:none;margin-bottom:1rem"></div>
+    <div id="form-err" style="display:none;margin-bottom:1rem;padding:.75rem 1rem;background:#fee;border:1.5px solid #c00;border-radius:10px;color:#c00;font-size:.82rem;line-height:1.6"></div>
     <button id="btn-go" onclick="startGen()" style="width:100%;padding:.95rem;background:#192436;color:#ac9b7f;border:none;border-radius:12px;font-family:'Cormorant Garamond',Georgia,serif;font-size:1.05rem;font-weight:600;cursor:pointer;margin-top:1.25rem;letter-spacing:.02em">Mein Seelenmuster entdecken ✦</button>
     <button onclick="goPage('home')" style="width:100%;padding:.7rem;background:transparent;color:#9aabba;border:1px solid rgba(172,155,127,.2);border-radius:10px;font-family:'Inter',sans-serif;font-size:.78rem;cursor:pointer;margin-top:.5rem">← Zurück</button>
   </div>
@@ -1959,9 +1959,17 @@ function tryHoro(){
 // ── GENERIERUNG ───────────────────────────────────────────────────────────
 function showFormErr(msg){
   var e=el('form-err');
+  if(!e)return;
   e.textContent=msg;
   e.style.display='block';
-  e.scrollIntoView({behavior:'smooth',block:'center'});
+  e.style.color='#c00';
+  e.style.background='rgba(200,0,0,.08)';
+  e.style.border='1.5px solid rgba(200,0,0,.3)';
+  e.style.padding='.75rem 1rem';
+  e.style.borderRadius='10px';
+  e.style.fontSize='.82rem';
+  e.style.marginBottom='1rem';
+  setTimeout(function(){e.scrollIntoView({behavior:'smooth',block:'nearest'});},50);
 }
 
 // ── COUNTDOWN ─────────────────────────────────────────────────────────────
@@ -2115,11 +2123,32 @@ function syncDate(){
 }
 
 function startGen(){
+  // Sicherstellen dass f-date gesetzt ist
+  syncDate();
   var name=el('f-name').value.trim(),date=el('f-date').value;
   var time=el('f-time').value,place=el('f-place').value.trim();
   el('form-err').style.display='none';
   if(!name||!date||!time||!place){showFormErr('Bitte Name, Geburtsdatum, Geburtszeit und Geburtsort eingeben.');return;}
-  if(!S.horo){showFormErr('Geburtsort nicht erkannt. Bitte kurz warten (Ort wird gesucht) oder Schreibweise prüfen (z.B. "Zürich" statt "ZH").');return;}
+  // Geburtsort: wenn nicht erkannt, Fallback mit Schweiz-Koordinaten
+  if(!S.horo && date && time){
+    try{
+      var p=date.split('-'), t=time.split(':');
+      S.horo=calcFB(parseInt(p[0]),parseInt(p[1]),parseInt(p[2]),
+        parseInt(t[0]),parseInt(t[1]),47.37,8.54,1);
+    }catch(e){}
+  }
+  if(!S.horo_was_set_){// Fallback: versuche Berechnung ohne genaue Koordinaten
+    var dateVal=el('f-date').value, timeVal=el('f-time').value;
+    if(dateVal && timeVal){
+      var parts=dateVal.split('-');
+      var tParts=timeVal.split(':');
+      if(parts.length===3 && tParts.length>=2){
+        S.horo=calcFB(parseInt(parts[0]),parseInt(parts[1]),parseInt(parts[2]),
+          parseInt(tParts[0]),parseInt(tParts[1]),47.37,8.54,1);
+      }
+    }
+    if(!S.horo){showFormErr('Bitte Geburtsort eingeben (z.B. Zürich).');return;}
+  }
   if(S.pkg==='individual'&&!S.selQ){showFormErr('Bitte einen Quadranten auswählen.');return;}
   S.fd={name:name,date:date,time:time,place:place,
         email:el('f-email').value,q:el('f-q').value,horo:S.horo};
