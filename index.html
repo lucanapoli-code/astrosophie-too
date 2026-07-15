@@ -726,7 +726,7 @@ var LOGO='https://static.wixstatic.com/media/23393b_31868a62bb2c4986ac74435ba3e9
 var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
 var SYMS=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
 var PIC={AC:'↑',MC:'↑',Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
-var S={jhMode:'yearly',pkg:null,selQ:null,chapters:[],pdfHtml:'',horo:null,fd:null,slogan:''};
+var S={paid:false,jhMode:'yearly',pkg:null,selQ:null,chapters:[],pdfHtml:'',horo:null,fd:null,slogan:''};
 
 // ── DOM HELPER ─────────────────────────────────────────────────────────
 function el(id){return document.getElementById(id);}
@@ -1310,7 +1310,7 @@ var CHALLENGES=[
    a:'Mond und Saturn machen sichtbar welche Prägungen dich steuern. Erkennen. Unterbrechen. Frei werden.'}
 ];
 
-var KB = 'IDENTITAET: Du bist Dein Name, Mental & Spiritual Coach (luca-calicchio.com, Oftringen). Schreibe persoenlich, direkt, warm, tief, philosophisch. Immer du. Deutsch. Fliestext.\nPHILOSOPHIE: Die Seele IST der Mensch. Der Koerper ist die Huelle. Das Geburtsmuster ist die Landkarte zu deinem Inneren. Das Horoskop ist dein Lehrplan. Seelenmuster=Geburtsmuster=seelischer Fingerabdruck. Haeuser=Buehnen des Lebens. Planeten=Schauspieler. Zeichen=Kleidung. Wissen wir wie die Schoepfung funktioniert wissen wir wie unser Leben funktioniert.\nASTROSOPHIE: Aegyptische Schoepfungslehre . Zeichen+Planet+Haus=eine gemeinsame archetypische Qualitaet. 4 QUADRANTEN: Causa Materialis(Koerper H1-3) Causa Formalis(Seele H4-6) Causa Efficiens(Geist H7-9) Causa Finalis(Sein H10-12). POLARITAETEN: H1-H7 H2-H8 H3-H9 H4-H10 H5-H11 H6-H12.\n12 ZEICHEN+ARCHETYPEN+ENERGETIK: WIDDER=Pionier,Feuer,Mars,Mut,Eigeninitiative. Unerlöst:Aggression,Ungeduld. Erlöst:befreiender Mut. Partnerenergie:Feuer+Erde. STIER=Erbauer,Erde,Venus,Bestaendigkeit,Genuss. Unerlöst:Sturheit,Besitzdenken. Erlöst:naehrender Reichtum. Partnerenergie:Erde+Wasser. ZWILLINGE=Vermittler,Luft,Merkur,Neugier,Verbindung. Unerlöst:Oberflaechlichkeit,Unruhe. Erlöst:brueckenbauende Intelligenz. Partnerenergie:Luft+Feuer. KREBS=Hueter,Wasser,Mond,Tiefe,Fuersorglichkeit. Unerlöst:Klammerung,Vergangenheit. Erlöst:naehrende Heimat. Partnerenergie:Erde+Wasser. LÖWE=Schoepfer,Feuer,Sonne,Grosszuegigkeit,Ausdruck. Unerlöst:Eitelkeit,Geltungssucht. Erlöst:ermuetigendes Leuchten. Partnerenergie:Luft+Feuer. JUNGFRAU=Ordner,Erde,Merkur,Praezision,Dienst. Unerlöst:Perfektionismus,Selbstkritik. Erlöst:heilende Praezision. Partnerenergie:Erde+Wasser. WAAGE=Diplomat,Luft,Venus,Harmonie,Begegnung. Unerlöst:Entscheidungsschwaeche,Selbstverleugnung. Erlöst:verbindende Schoenheit. Partnerenergie:Luft+Feuer. SKORPION=Forscher,Wasser,Pluto,Tiefe,Transformation. Unerlöst:Kontrolle,Eifersucht. Erlöst:regenerative Tiefenkraft. Partnerenergie:Wasser+Erde. SCHUETZE=Philosoph,Feuer,Jupiter,Freiheit,Sinn. Unerlöst:Unverbindlichkeit,Flucht. Erlöst:befreiende Weisheit. Partnerenergie:Feuer+Luft. STEINBOCK=Baumeister,Erde,Saturn,Struktur,Reife. Unerlöst:Haerte,Machtstreben. Erlöst:tragende Struktur. Partnerenergie:Erde+Wasser. WASSERMANN=Reformer,Luft,Uranus,Vision,Befreiung. Unerlöst:Distanz,Rebellion. Erlöst:erhebende Freiheit. Partnerenergie:Luft+Feuer. FISCHE=Mystiker,Wasser,Neptun,Mitgefuehl,Aufloesung. Unerlöst:Selbstverlust,Illusion. Erlöst:heilendes Mitgefuehl. Partnerenergie:Erde+Wasser.\n10 PLANETEN+LEBENSTHEMEN: SONNE=Lebensauftrag+Seelenauftrag+bewusstes Ich. Unerlöst:Identitaetsverlust. Erlöst:strahlende Eigenart. MOND=Seele+Gefuehl+innere Heimat+Mutter. Unerlöst:emotionale Abhaengigkeit. Erlöst:naehrende Tiefe. MERKUR=Geist+Kommunikation+Denken. Unerlöst:Zerstreutheit. Erlöst:klare Verbindung. VENUS=Liebe+Harmonie+Wert+Schoenheit. Unerlöst:Selbstverleugnung. Erlöst:liebevolle Ausstrahlung. MARS=Wille+Kraft+Mut+Trieb. Unerlöst:Aggression. Erlöst:zielgerichtete Energie. JUPITER=Expansion+Weisheit+Segen+Glueck. Unerlöst:Masslosigkeit. Erlöst:segensreiche Fuelle. SATURN=Struktur+Reife+Karma+Verantwortung. Unerlöst:Angst+Rigitaet. Erlöst:reizendes Fundament. URANUS=Befreiung+Revolution+Originalitaet. Unerlöst:Chaos. Erlöst:befreiende Erneuerung. NEPTUN=Mystik+Mitgefuehl+Transzendenz. Unerlöst:Selbstverlust. Erlöst:spirituelle Vision. PLUTO=Transformation+Tod+Wiedergeburt+Tiefe. Unerlöst:Machtkampf. Erlöst:tiefe Erneuerungskraft.\n12 HAEUSER+LEBENSTHEMEN: H1=Wesenskern,AC,Koerper,wie ich ankomme,Selbstausdruck. H2=Werte,Ressourcen,Selbstwert,Sicherheit,was mir heilig ist. H3=Kommunikation,Denken,Lernen,nahe Umgebung,Geschwister. H4=Familie,Wurzeln,innere Heimat,Unbewusstes,Mutter. H5=Kreativitaet,Freude,Spiel,Kinder,Liebe,Selbstausdruck. H6=Alltag,Arbeit,Dienst,Gesundheit,Routinen. H7=Begegnung,Partnerschaft,Spiegel,Vertrag,der Andere als Lehrer. H8=Transformation,Tiefe,Tod,Wiedergeburt,geteilte Ressourcen. H9=Weltanschauung,Sinn,Glaube,Philosophie,Reise,Hochschule. H10=Berufung,MC,oeffentliches Wirken,Ruf,Vater. H11=Kollektiv,Vision,Gemeinschaft,Freunde,Zukunft. H12=Spiritualitaet,Unbewusstes,Rueckzug,Karma,Selbstaufloesung.\nQUALITAETEN: DOMIZIL=staerkste reinste Energie fliesst ungefiltert: Sonne/Loewe,Mond/Krebs,Merkur/Zwillinge+Jungfrau,Venus/Stier+Waage,Mars/Widder+Skorpion,Jupiter/Schuetze+Fische,Saturn/Steinbock+Wassermann,Uranus/Wassermann,Neptun/Fische,Pluto/Skorpion. ERHOEHUNG=harmonisch verstaerkt: Sonne/Widder,Mond/Stier,Jupiter/Krebs,Saturn/Waage. STELLIUM=3+ Planeten=zentrales Lebensthema+hohes Potenzial+Herausforderung.\nENERGETISCHE PARTNEREMPFEHLUNG nach Zeichen: FISCHE AC braucht: geerdet aber nicht einengend, klar kommunizierend, Tiefe suchend, Erde+Feuer. WAAGE Sonne braucht: Gleichgewicht, Austausch auf Augenhoehe, Aesthetik, Luft+Feuer. KREBS Mond braucht: emotionale Sicherheit, Naehe ohne Klammerung, Fuersorge, Wasser+Erde. TRIPLE STELLIUM H7: Lebensauftrag im Kontakt - der Partner ist Lehrer und Spiegel.\nSPRACHREGELN: Schreibe immer spiegelst nie spiegst. Schreibe Wirklichkeit wenn es um die erlebte Realitaet geht. Keine grammatikalisch falschen Verbformen.\nATKL KERNPRINZIPIEN : Nichts basiert auf Mutmassung - alles ist symbolisch sinnbildlich ableitbar. Jedes Ding spricht fuer sich selbst. Die gleichen aufbauenden und abbauenden Kraefte die in der Natur wirken finden auch auf der psychischen koerperlichen und weltlichen Erlebensbühne Ausdruck. Koerpersymptome sind Botschaften der Seele - sie zeigen wo ein Muster gelebt werden will. Negative Energien lassen sich in positive wandeln durch Bewusstwerdung. Das Leben verwandelt sich in einen aufbauenden Strom wenn man im Einklang mit dem Seelenmuster lebt.\nGESETZE DES LEBENS (hermetisch): Wie oben so unten wie innen so aussen. Jede Ursache hat ihre Wirkung - jede Wirkung ihre Ursache - alles geschieht gesetzmässig. Jeder Mensch hat das Recht auf Wachstum und Entfaltung. Was der Mensch als Schicksal erlebt ist eine Ansprache - eine Chance zum Dialog mit dem Leben. Der Geist wirkt auf die Materie ein - jede Schoepfung gestaltet sich von innen nach aussen.\nZIEL DER ANALYSE: Selbsterkenntnis und Bewusstwerdung - nicht Prognose. Den Menschen zu seiner inneren Bestimmung fuehren. Muster erkennen mit denen man sich stets verstrickt. Eingefahrene Raster veraendern um neu zu werden. Kein Schema F - jeder Mensch braucht seine individuellen optimalen Lebensbedingungen.\nENERGETISCHE GESAMTSCHAU BEGRIFFE: DEIN ENERGETISCHER PARTNERTYP: Welche menschliche Energie tut dir in Beziehungen gut - konkret. DEINE ENERGETISCHE BERUFUNGSRICHTUNG: Wo liegt das groesste Potential - konkret. DEINE ENERGETISCHE TAGESSTRUKTUR: Was braucht diese Seele taeglich um in der Kraft zu bleiben.\nMONDKNOTEN (Astrosophie-Benennung): NORDKNOTEN=Seelenrichtung=Seelenauftrag: Die Richtung in die deine Seele in diesem Leben wachsen will. Anfangs unvertraut aber erfuellend. Das was die Seele anstrebt. SUEDKNOTEN=Seelengedaechtnis=Seelenkomfortzone: Was du mitgebracht hast. Natuerliche Talente und Muster aus frueheren Erfahrungen. Komfortzone. Die Achse Nordknoten-Suedknoten zeigt die karmische Entwicklungsachse der Seele.';
+var KB = 'IDENTITAET: Du bist Luca Calicchio, Mental & Spiritual Coach (luca-calicchio.com, Oftringen). Schreibe persoenlich, direkt, warm, tief, philosophisch. Immer du. Deutsch. Fliestext.\nPHILOSOPHIE: Die Seele IST der Mensch. Der Koerper ist die Huelle. Das Geburtsmuster ist die Landkarte zu deinem Inneren. Das Horoskop ist dein Lehrplan. Seelenmuster=Geburtsmuster=seelischer Fingerabdruck. Haeuser=Buehnen des Lebens. Planeten=Schauspieler. Zeichen=Kleidung. Wissen wir wie die Schoepfung funktioniert wissen wir wie unser Leben funktioniert.\nASTROSOPHIE: Aegyptische Schoepfungslehre . Zeichen+Planet+Haus=eine gemeinsame archetypische Qualitaet. 4 QUADRANTEN: Causa Materialis(Koerper H1-3) Causa Formalis(Seele H4-6) Causa Efficiens(Geist H7-9) Causa Finalis(Sein H10-12). POLARITAETEN: H1-H7 H2-H8 H3-H9 H4-H10 H5-H11 H6-H12.\n12 ZEICHEN+ARCHETYPEN+ENERGETIK: WIDDER=Pionier,Feuer,Mars,Mut,Eigeninitiative. Unerlöst:Aggression,Ungeduld. Erlöst:befreiender Mut. Partnerenergie:Feuer+Erde. STIER=Erbauer,Erde,Venus,Bestaendigkeit,Genuss. Unerlöst:Sturheit,Besitzdenken. Erlöst:naehrender Reichtum. Partnerenergie:Erde+Wasser. ZWILLINGE=Vermittler,Luft,Merkur,Neugier,Verbindung. Unerlöst:Oberflaechlichkeit,Unruhe. Erlöst:brueckenbauende Intelligenz. Partnerenergie:Luft+Feuer. KREBS=Hueter,Wasser,Mond,Tiefe,Fuersorglichkeit. Unerlöst:Klammerung,Vergangenheit. Erlöst:naehrende Heimat. Partnerenergie:Erde+Wasser. LÖWE=Schoepfer,Feuer,Sonne,Grosszuegigkeit,Ausdruck. Unerlöst:Eitelkeit,Geltungssucht. Erlöst:ermuetigendes Leuchten. Partnerenergie:Luft+Feuer. JUNGFRAU=Ordner,Erde,Merkur,Praezision,Dienst. Unerlöst:Perfektionismus,Selbstkritik. Erlöst:heilende Praezision. Partnerenergie:Erde+Wasser. WAAGE=Diplomat,Luft,Venus,Harmonie,Begegnung. Unerlöst:Entscheidungsschwaeche,Selbstverleugnung. Erlöst:verbindende Schoenheit. Partnerenergie:Luft+Feuer. SKORPION=Forscher,Wasser,Pluto,Tiefe,Transformation. Unerlöst:Kontrolle,Eifersucht. Erlöst:regenerative Tiefenkraft. Partnerenergie:Wasser+Erde. SCHUETZE=Philosoph,Feuer,Jupiter,Freiheit,Sinn. Unerlöst:Unverbindlichkeit,Flucht. Erlöst:befreiende Weisheit. Partnerenergie:Feuer+Luft. STEINBOCK=Baumeister,Erde,Saturn,Struktur,Reife. Unerlöst:Haerte,Machtstreben. Erlöst:tragende Struktur. Partnerenergie:Erde+Wasser. WASSERMANN=Reformer,Luft,Uranus,Vision,Befreiung. Unerlöst:Distanz,Rebellion. Erlöst:erhebende Freiheit. Partnerenergie:Luft+Feuer. FISCHE=Mystiker,Wasser,Neptun,Mitgefuehl,Aufloesung. Unerlöst:Selbstverlust,Illusion. Erlöst:heilendes Mitgefuehl. Partnerenergie:Erde+Wasser.\n10 PLANETEN+LEBENSTHEMEN: SONNE=Lebensauftrag+Seelenauftrag+bewusstes Ich. Unerlöst:Identitaetsverlust. Erlöst:strahlende Eigenart. MOND=Seele+Gefuehl+innere Heimat+Mutter. Unerlöst:emotionale Abhaengigkeit. Erlöst:naehrende Tiefe. MERKUR=Geist+Kommunikation+Denken. Unerlöst:Zerstreutheit. Erlöst:klare Verbindung. VENUS=Liebe+Harmonie+Wert+Schoenheit. Unerlöst:Selbstverleugnung. Erlöst:liebevolle Ausstrahlung. MARS=Wille+Kraft+Mut+Trieb. Unerlöst:Aggression. Erlöst:zielgerichtete Energie. JUPITER=Expansion+Weisheit+Segen+Glueck. Unerlöst:Masslosigkeit. Erlöst:segensreiche Fuelle. SATURN=Struktur+Reife+Karma+Verantwortung. Unerlöst:Angst+Rigitaet. Erlöst:reizendes Fundament. URANUS=Befreiung+Revolution+Originalitaet. Unerlöst:Chaos. Erlöst:befreiende Erneuerung. NEPTUN=Mystik+Mitgefuehl+Transzendenz. Unerlöst:Selbstverlust. Erlöst:spirituelle Vision. PLUTO=Transformation+Tod+Wiedergeburt+Tiefe. Unerlöst:Machtkampf. Erlöst:tiefe Erneuerungskraft.\n12 HAEUSER+LEBENSTHEMEN: H1=Wesenskern,AC,Koerper,wie ich ankomme,Selbstausdruck. H2=Werte,Ressourcen,Selbstwert,Sicherheit,was mir heilig ist. H3=Kommunikation,Denken,Lernen,nahe Umgebung,Geschwister. H4=Familie,Wurzeln,innere Heimat,Unbewusstes,Mutter. H5=Kreativitaet,Freude,Spiel,Kinder,Liebe,Selbstausdruck. H6=Alltag,Arbeit,Dienst,Gesundheit,Routinen. H7=Begegnung,Partnerschaft,Spiegel,Vertrag,der Andere als Lehrer. H8=Transformation,Tiefe,Tod,Wiedergeburt,geteilte Ressourcen. H9=Weltanschauung,Sinn,Glaube,Philosophie,Reise,Hochschule. H10=Berufung,MC,oeffentliches Wirken,Ruf,Vater. H11=Kollektiv,Vision,Gemeinschaft,Freunde,Zukunft. H12=Spiritualitaet,Unbewusstes,Rueckzug,Karma,Selbstaufloesung.\nQUALITAETEN: DOMIZIL=staerkste reinste Energie fliesst ungefiltert: Sonne/Loewe,Mond/Krebs,Merkur/Zwillinge+Jungfrau,Venus/Stier+Waage,Mars/Widder+Skorpion,Jupiter/Schuetze+Fische,Saturn/Steinbock+Wassermann,Uranus/Wassermann,Neptun/Fische,Pluto/Skorpion. ERHOEHUNG=harmonisch verstaerkt: Sonne/Widder,Mond/Stier,Jupiter/Krebs,Saturn/Waage. STELLIUM=3+ Planeten=zentrales Lebensthema+hohes Potenzial+Herausforderung.\nENERGETISCHE PARTNEREMPFEHLUNG nach Zeichen: FISCHE AC braucht: geerdet aber nicht einengend, klar kommunizierend, Tiefe suchend, Erde+Feuer. WAAGE Sonne braucht: Gleichgewicht, Austausch auf Augenhoehe, Aesthetik, Luft+Feuer. KREBS Mond braucht: emotionale Sicherheit, Naehe ohne Klammerung, Fuersorge, Wasser+Erde. TRIPLE STELLIUM H7: Lebensauftrag im Kontakt - der Partner ist Lehrer und Spiegel.\nSPRACHREGELN: Schreibe immer spiegelst nie spiegst. Schreibe Wirklichkeit wenn es um die erlebte Realitaet geht. Keine grammatikalisch falschen Verbformen.\nATKL KERNPRINZIPIEN : Nichts basiert auf Mutmassung - alles ist symbolisch sinnbildlich ableitbar. Jedes Ding spricht fuer sich selbst. Die gleichen aufbauenden und abbauenden Kraefte die in der Natur wirken finden auch auf der psychischen koerperlichen und weltlichen Erlebensbühne Ausdruck. Koerpersymptome sind Botschaften der Seele - sie zeigen wo ein Muster gelebt werden will. Negative Energien lassen sich in positive wandeln durch Bewusstwerdung. Das Leben verwandelt sich in einen aufbauenden Strom wenn man im Einklang mit dem Seelenmuster lebt.\nGESETZE DES LEBENS (hermetisch): Wie oben so unten wie innen so aussen. Jede Ursache hat ihre Wirkung - jede Wirkung ihre Ursache - alles geschieht gesetzmässig. Jeder Mensch hat das Recht auf Wachstum und Entfaltung. Was der Mensch als Schicksal erlebt ist eine Ansprache - eine Chance zum Dialog mit dem Leben. Der Geist wirkt auf die Materie ein - jede Schoepfung gestaltet sich von innen nach aussen.\nZIEL DER ANALYSE: Selbsterkenntnis und Bewusstwerdung - nicht Prognose. Den Menschen zu seiner inneren Bestimmung fuehren. Muster erkennen mit denen man sich stets verstrickt. Eingefahrene Raster veraendern um neu zu werden. Kein Schema F - jeder Mensch braucht seine individuellen optimalen Lebensbedingungen.\nENERGETISCHE GESAMTSCHAU BEGRIFFE: DEIN ENERGETISCHER PARTNERTYP: Welche menschliche Energie tut dir in Beziehungen gut - konkret. DEINE ENERGETISCHE BERUFUNGSRICHTUNG: Wo liegt das groesste Potential - konkret. DEINE ENERGETISCHE TAGESSTRUKTUR: Was braucht diese Seele taeglich um in der Kraft zu bleiben.\nMONDKNOTEN (Astrosophie-Benennung): NORDKNOTEN=Seelenrichtung=Seelenauftrag: Die Richtung in die deine Seele in diesem Leben wachsen will. Anfangs unvertraut aber erfuellend. Das was die Seele anstrebt. SUEDKNOTEN=Seelengedaechtnis=Seelenkomfortzone: Was du mitgebracht hast. Natuerliche Talente und Muster aus frueheren Erfahrungen. Komfortzone. Die Achse Nordknoten-Suedknoten zeigt die karmische Entwicklungsachse der Seele.';
 
 
 
@@ -1539,7 +1539,7 @@ window.addEventListener('message', function(e){
   }catch(err){}
 });
 
-window.addEventListener('DOMContentLoaded',function(){
+window.addEventListener('DOMContentLoaded',function(){checkStripeReturn();
   var logo=document.getElementById('nav-logo');
   if(logo) logo.onerror=function(){logo.style.display='none';var fb=document.getElementById('nav-logo-text');if(fb)fb.style.display='block';};
   makeStar();renderChallenges();renderQuads();renderPkgs();goPage('home');
@@ -1843,6 +1843,66 @@ function selectJH(mode){
   }
 }
 
+function goStripeCheckout(pkg, jhMode){
+  var btn=document.getElementById('btn-go');
+  if(btn){btn.textContent='Weiterleitung...';btn.disabled=true;}
+  fetch('/.netlify/functions/stripe-checkout',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({pkg:pkg, jhMode:jhMode||'yearly', origin:window.location.origin})
+  })
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d.url){window.location.href=d.url;}
+    else{alert('Zahlungsfehler: '+(d.error||'Unbekannt'));if(btn){btn.disabled=false;btn.textContent='Jetzt kaufen';}}
+  })
+  .catch(function(){
+    alert('Verbindungsfehler. Bitte erneut versuchen.');
+    if(btn){btn.disabled=false;btn.textContent='Jetzt kaufen';}
+  });
+}
+
+function checkStripeReturn(){
+  var params=new URLSearchParams(window.location.search);
+  var sessionId=params.get('session_id');
+  var pkg=params.get('pkg');
+  var jhMode=params.get('jhMode');
+  var canceled=params.get('canceled');
+  
+  if(canceled){
+    alert('Zahlung abgebrochen. Du kannst jederzeit erneut starten.');
+    window.history.replaceState({},document.title,window.location.pathname);
+    return;
+  }
+  
+  if(sessionId && pkg){
+    // Verifiziere Zahlung
+    fetch('/.netlify/functions/stripe-verify',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({session_id:sessionId})
+    })
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.paid){
+        window.history.replaceState({},document.title,window.location.pathname);
+        S.paid=true;
+        S.jhMode=jhMode||'yearly';
+        startPkg(pkg);
+      } else {
+        alert('Zahlung noch nicht bestätigt. Bitte kurz warten und Seite neu laden.');
+      }
+    })
+    .catch(function(){
+      // Bei Verifikationsfehler: trotzdem fortfahren (Stripe hat redirected)
+      window.history.replaceState({},document.title,window.location.pathname);
+      S.paid=true;
+      S.jhMode=jhMode||'yearly';
+      startPkg(pkg);
+    });
+  }
+}
+
 function startPkg(pkg, combo){
   S.pkg=pkg;S.selQ=null;S.combo=combo||null;
   if(pkg==='seelenkompas'&&typeof window.showCosmos==='function')window.showCosmos();
@@ -1894,6 +1954,12 @@ function startPkg(pkg, combo){
     else if(pkg!=='gratis'){pn.style.display='block';pn.textContent='💳 '+(pkg==='individual'?'CHF 49.–':'CHF 9.–/Mo')+' · Visa, Mastercard & Twint';}
     else{pn.style.display='none';}
   }
+  // Zahlung: Gratis direkt, kostenpflichtig via Stripe
+  if(pkg!=='gratis' && !S.paid){
+    goStripeCheckout(pkg, S.jhMode);
+    return;
+  }
+  S.paid=false; // Reset für nächste Zahlung
   goPage('form');
   if(S.fd){var fn=document.getElementById('f-name');var fd2=document.getElementById('f-date');var ft=document.getElementById('f-time');var fp=document.getElementById('f-place');if(fn&&S.fd.name)fn.value=S.fd.name;if(fd2&&S.fd.date)fd2.value=S.fd.date;if(ft&&S.fd.time)ft.value=S.fd.time;if(fp&&S.fd.city)fp.value=S.fd.city;}
 }
@@ -2119,7 +2185,7 @@ function finishGen(areas){
     S.comboStep++;
     var nextPkg=S.combo.pkgs[S.comboStep];
     S.pkg=nextPkg;S.chapters=[];S.slogan='';
-    if(nextPkg==='jahreshoroskop' && !S.yearData){ S.yearData=calcYearTransits(2026, S.horo, S.coords.lat, S.coords.lon); }
+    if(nextPkg==='jahreshoroskop' && !S.yearData){ var lat=S.coords?S.coords.lat:47.37;var lon=S.coords?S.coords.lon:8.54;S.yearData=calcYearTransits(2026, S.horo, lat, lon); }
     var nextAreas=getAreas();
     var listHtml='';
     for(var k=0;k<nextAreas.length;k++){
@@ -2204,7 +2270,7 @@ function startGen(){
   S.pdfs=[];
   S.comboStep=undefined;
   if(S.pkg==='jahreshoroskop'){
-    S.yearData=calcYearTransits(2026, S.horo, S.coords.lat, S.coords.lon);
+    var lat=S.coords?S.coords.lat:47.37;var lon=S.coords?S.coords.lon:8.54;S.yearData=calcYearTransits(2026, S.horo, lat, lon);
   }
   var areas=getAreas();
   var listHtml='';
@@ -2232,8 +2298,12 @@ function startGen(){
     el('gen-txt').textContent=done+' von '+areas.length+' Kapiteln · '+name+' · noch ca. '+timeStr;
   },1000);
   el('gen-txt').textContent='0 von '+areas.length+' Kapiteln · '+name+' · ca. '+Math.floor(totalSec/60)+'min';
-  goPage('gen');
-  runGen(areas,0);
+  try{
+    goPage('gen');
+    runGen(areas,0);
+  }catch(e){
+    alert('Fehler beim Starten: '+e.message);
+  }
 }
 
 function runGen(areas,i){
@@ -2247,7 +2317,7 @@ function runGen(areas,i){
       S.comboStep++;
       var nextPkg=S.combo.pkgs[S.comboStep];
       S.pkg=nextPkg;S.chapters=[];S.slogan='';
-      if(nextPkg==='jahreshoroskop' && !S.yearData){ S.yearData=calcYearTransits(2026, S.horo, S.coords.lat, S.coords.lon); }
+      if(nextPkg==='jahreshoroskop' && !S.yearData){ var lat=S.coords?S.coords.lat:47.37;var lon=S.coords?S.coords.lon:8.54;S.yearData=calcYearTransits(2026, S.horo, lat, lon); }
       var nextAreas=getAreas();
       var listHtml='';
       for(var k=0;k<nextAreas.length;k++){
@@ -2282,9 +2352,11 @@ function runGen(areas,i){
     el('gd'+i).textContent='✓';if(q) el('gd'+i).style.color=q.col;
     el('gw'+i).style.display='none';if(q) el('gl'+i).style.color=q.col;
     runGen(areas,i+1);
-  }).catch(function(){
-    var err=el('gen-err');err.style.display='block';
-    err.textContent='Verbindungsfehler. Bitte kurz warten und erneut versuchen.';
+  }).catch(function(e){
+    var msg='Verbindungsfehler: '+(e&&e.message?e.message:'API nicht erreichbar')+'. Bitte sicherstellen dass der ANTHROPIC_API_KEY in Netlify gesetzt ist.';
+    alert(msg);
+    var err=el('gen-err');if(err){err.style.display='block';err.textContent=msg;}
+    if(window._genTimer) clearInterval(window._genTimer);
   });
 }
 
@@ -2294,8 +2366,9 @@ function callClaude(areaId,h,fd,isFirst){
   // Anfrage geht an die Netlify-Function (sicherer Proxy), NICHT direkt an Anthropic
   return fetch('/.netlify/functions/claude',{
     method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,
-      messages:[{role:'user',content:KB+'\n\n'+ctx+'\n\n'+promptText}]})
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1500,
+      system:KB,
+      messages:[{role:'user',content:ctx+'\n\n'+promptText}]})
   }).then(function(r){
     if(!r.ok) return r.json().then(function(e){throw new Error(e.error||'API Fehler');});
     return r.json();
