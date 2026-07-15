@@ -2183,27 +2183,20 @@ function startGen(){
   if(!time) missing.push('Geburtszeit');
   if(!place) missing.push('Geburtsort');
   if(missing.length>0){showFormErr('Bitte ausfüllen: '+missing.join(', '));return;}
-  // Geburtsort: wenn nicht erkannt, Fallback mit Schweiz-Koordinaten
-  if(!S.horo && date && time){
+  // Horoskop berechnen falls noch nicht vorhanden
+  if(!S.horo){
     try{
-      var p=date.split('-'), t=time.split(':');
-      S.horo=calcFB(parseInt(p[0]),parseInt(p[1]),parseInt(p[2]),
-        parseInt(t[0]),parseInt(t[1]),47.37,8.54,1);
+      var dp=date.split('-'),tp=time.split(':');
+      var lat=S.coords?S.coords.lat:47.37;
+      var lon=S.coords?S.coords.lon:8.54;
+      S.horo=calcFB(parseInt(dp[0]),parseInt(dp[1]),parseInt(dp[2]),
+        parseInt(tp[0]),parseInt(tp[1]),lat,lon,1);
     }catch(e){}
   }
-  if(!S.horo_was_set_){// Fallback: versuche Berechnung ohne genaue Koordinaten
-    var dateVal=el('f-date').value, timeVal=el('f-time').value;
-    if(dateVal && timeVal){
-      var parts=dateVal.split('-');
-      var tParts=timeVal.split(':');
-      if(parts.length===3 && tParts.length>=2){
-        S.horo=calcFB(parseInt(parts[0]),parseInt(parts[1]),parseInt(parts[2]),
-          parseInt(tParts[0]),parseInt(tParts[1]),47.37,8.54,1);
-      }
-    }
-    if(!S.horo){showFormErr('Bitte Geburtsort eingeben (z.B. Zürich).');return;}
-  }
-  if(S.pkg==='individual'&&!S.selQ){showFormErr('Bitte einen Quadranten auswählen.');return;}
+  if(!S.horo){showFormErr('Bitte Geburtsdatum und Geburtszeit prüfen.');return;}
+  // S.coords sicherstellen
+  if(!S.coords) S.coords={lat:47.37,lon:8.54,tz:1};
+  if(S.pkg==='individual'&&!S.selQ){showFormErr('Bitte einen Quadranten wählen.');return;}
   S.fd={name:name,date:date,time:time,place:place,
         email:el('f-email').value,q:el('f-q').value,horo:S.horo};
   S.chapters=[];
