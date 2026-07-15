@@ -2161,11 +2161,13 @@ function runGenBatch(areas,startIdx){
     if(hadFail){
       stopCountdown();
       var failedIdxs=results.filter(function(r){return !r.ok;}).map(function(r){return r.i+1;});
+      var errMsg='Verbindungsfehler bei Kapitel '+failedIdxs.join(', ')+'. Bitte stelle sicher dass der ANTHROPIC_API_KEY in den Netlify Environment Variables gesetzt ist.';
+      alert(errMsg);
       var box=el('gen-err');box.style.display='block';
-      box.innerHTML='Verbindungsproblem bei Kapitel '+failedIdxs.join(', ')+'. '
-        +'<button '
-        +'style="margin-left:.5rem;padding:.3rem .8rem;border-radius:6px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer">Erneut versuchen</button>';
+      box.innerHTML=errMsg+'<button onclick="runGen(window.__areas||[],0)" '
+        +'style="display:block;margin-top:.5rem;padding:.4rem .8rem;border-radius:6px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer">Erneut versuchen</button>';
       window.__areas=areas;
+      stopCountdown();
       return;
     }
     runGenBatch(areas,endIdx);
@@ -2299,14 +2301,20 @@ function startGen(){
   },1000);
   el('gen-txt').textContent='0 von '+areas.length+' Kapiteln · '+name+' · ca. '+Math.floor(totalSec/60)+'min';
   try{
+    console.log('startGen: goPage gen');
     goPage('gen');
+    console.log('startGen: runGen start, areas='+areas.length+' pkg='+S.pkg);
     runGen(areas,0);
+    console.log('startGen: runGen gestartet');
   }catch(e){
-    alert('Fehler beim Starten: '+e.message);
+    alert('JS FEHLER in startGen: '+e.message+'\n\nStack: '+e.stack);
+    console.error('startGen crash:',e);
   }
 }
 
 function runGen(areas,i){
+  console.log('runGen i='+i+' areas='+areas.length);
+  try{
   if(i>=areas.length){
     el('prog').style.width='100%';
     var thisPdf=buildPDF(S.chapters,S.fd,S.pkg,S.selQ,S.horo);
@@ -2340,6 +2348,8 @@ function runGen(areas,i){
   el('gl'+i).style.color='var(--white)';
   el('gw'+i).style.display='block';
   el('prog').style.width=(i/areas.length*100)+'%';
+  console.log('runGen: callClaude area='+areas[i].id);
+  } catch(rgErr){ alert('Fehler in runGen setup: '+rgErr.message); return; }
   callClaude(areas[i].id,S.horo,S.fd,i===0).then(function(text){
     if(i===0){
       var sm=text.match(/SLOGAN:\s*"([^"]+)"/i);
