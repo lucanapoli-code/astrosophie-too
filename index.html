@@ -1810,7 +1810,7 @@ function startPkg(pkg, combo){
   var pn=document.getElementById('pay-note');
   if(pn){
     if(combo){pn.style.display='block';pn.textContent='💳 '+combo.price+' für das gesamte Kombi-Paket'+(combo.coaching?' inkl. 1:1 Coaching':'')+' · Visa, Mastercard & Twint';}
-    else if(pkg!=='gratis'){pn.style.display='block';pn.textContent='💳 '+(pkg==='individual'?'CHF 49.–':'CHF 9.–/Mo')+' · Visa, Mastercard & Twint';}
+    else if(pkg!=='gratis'){pn.style.display='block';pn.textContent='💳 '+(pkg==='individual'?'CHF 49.–':pkg==='seelenkompas'?'CHF 99.–':'CHF 9.–/Mo oder CHF 99.–/Jahr')+' · Visa, Mastercard & Twint';}
     else{pn.style.display='none';}
   }
   goPage('form');
