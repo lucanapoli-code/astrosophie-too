@@ -2085,7 +2085,11 @@ function syncDate(){
 }
 
 function startGen(){
-  syncDate();
+  // f-date direkt aus f-day/f-month/f-year setzen
+  var dEl=el('f-day'),mEl=el('f-month'),yEl=el('f-year'),fdEl=el('f-date');
+  if(dEl&&mEl&&yEl&&fdEl&&dEl.value&&mEl.value&&yEl.value){
+    fdEl.value=yEl.value+'-'+String(parseInt(mEl.value)).padStart(2,'0')+'-'+String(parseInt(dEl.value)).padStart(2,'0');
+  }
   var name=el('f-name').value.trim(),date=el('f-date').value;
   var time=el('f-time').value,place=el('f-place').value.trim();
   el('form-err').style.display='none';
