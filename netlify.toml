@@ -1,4 +1,4 @@
-[build]
+ö[build]
   publish = "."
   functions = "netlify/functions"
 
@@ -6,7 +6,7 @@
   node_bundler = "esbuild"
 
 [functions."claude"]
-  timeout = 30
+  timeout = 26
 
 [[redirects]]
   from = "https://analyse.luca-calicchio.com/*"
