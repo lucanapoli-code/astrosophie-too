@@ -2190,7 +2190,7 @@ function callClaude(areaId,h,fd,isFirst){
   // Anfrage geht an die Netlify-Function (sicherer Proxy), NICHT direkt an Anthropic
   return fetch('/.netlify/functions/claude',{
     method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:600,
       messages:[{role:'user',content:KB+'\n\n'+ctx+'\n\n'+promptText}]})
   }).then(function(r){
     return r.text().then(function(txt){
