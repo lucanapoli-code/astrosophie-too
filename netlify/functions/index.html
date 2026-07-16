@@ -621,21 +621,7 @@ html {
     </div>
     <div id="pay-note" style="display:none;padding:.7rem .85rem;background:rgba(172,155,127,.06);border:1px solid rgba(172,155,127,.16);border-radius:10px;font-size:.7rem;color:#ac9b7f;line-height:1.65;margin-bottom:1rem"></div>
     <div id="form-err" class="err-box" style="display:none;margin-bottom:1rem"></div>
-    <div id="jh-form-toggle" style="display:none;margin-bottom:1rem">
-      <div style="display:flex;gap:.5rem;margin-bottom:.5rem">
-        <div id="jh-form-monthly" onclick="selectJHForm('monthly')" style="flex:1;border:1.5px solid rgba(96,153,96,.35);border-radius:10px;padding:.6rem;text-align:center;cursor:pointer;background:rgba(96,153,96,.06)">
-          <div style="font-size:.5rem;color:#6d9e6d;text-transform:uppercase;margin-bottom:.15rem">Monatlich</div>
-          <div style="font-family:var(--serif);font-size:1.2rem;color:#6d9e6d">CHF 9.–</div>
-          <div style="font-size:.5rem;color:#6a7a8a">jederzeit kündbar</div>
-        </div>
-        <div id="jh-form-yearly" onclick="selectJHForm('yearly')" style="flex:1;border:2px solid #6d9e6d;border-radius:10px;padding:.6rem;text-align:center;cursor:pointer;background:rgba(96,153,96,.12);position:relative">
-          <div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:#6d9e6d;color:#0d1a28;font-size:.44rem;font-weight:700;padding:.12rem .4rem;border-radius:20px;white-space:nowrap">2 Monate gratis</div>
-          <div style="font-size:.5rem;color:#6d9e6d;text-transform:uppercase;margin-bottom:.15rem">Jährlich</div>
-          <div style="font-family:var(--serif);font-size:1.2rem;color:#6d9e6d">CHF 99.–</div>
-          <div style="font-size:.5rem;color:#6d9e6d;font-weight:600">du sparst CHF 9.–</div>
-        </div>
-      </div>
-    </div>
+    <div id="jh-form-toggle" style="display:none;margin-bottom:1rem"><div style="display:flex;gap:.5rem;margin-bottom:.5rem"><div id="jh-form-monthly" onclick="selectJHForm('monthly')" style="flex:1;border:1.5px solid rgba(96,153,96,.35);border-radius:10px;padding:.6rem;text-align:center;cursor:pointer;background:rgba(96,153,96,.06)"><div style="font-size:.5rem;color:#6d9e6d;text-transform:uppercase;margin-bottom:.15rem">Monatlich</div><div style="font-family:var(--serif);font-size:1.2rem;color:#6d9e6d">CHF 9.–</div><div style="font-size:.5rem;color:#6a7a8a">jederzeit kündbar</div></div><div id="jh-form-yearly" onclick="selectJHForm('yearly')" style="flex:1;border:2px solid #6d9e6d;border-radius:10px;padding:.6rem;text-align:center;cursor:pointer;background:rgba(96,153,96,.12);position:relative"><div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:#6d9e6d;color:#0d1a28;font-size:.44rem;font-weight:700;padding:.12rem .4rem;border-radius:20px;white-space:nowrap">2 Monate gratis</div><div style="font-size:.5rem;color:#6d9e6d;text-transform:uppercase;margin-bottom:.15rem">Jährlich</div><div style="font-family:var(--serif);font-size:1.2rem;color:#6d9e6d">CHF 99.–</div><div style="font-size:.5rem;color:#6d9e6d;font-weight:600">du sparst CHF 9.–</div></div></div></div>
     <button id="btn-go" onclick="startGen()" style="width:100%;padding:.95rem;background:#192436;color:#ac9b7f;border:none;border-radius:12px;font-family:'Cormorant Garamond',Georgia,serif;font-size:1.05rem;font-weight:600;cursor:pointer;margin-top:1.25rem;letter-spacing:.02em">Mein Seelenmuster entdecken ✦</button>
     <button onclick="goPage('home')" style="width:100%;padding:.7rem;background:transparent;color:#9aabba;border:1px solid rgba(172,155,127,.2);border-radius:10px;font-family:'Inter',sans-serif;font-size:.78rem;cursor:pointer;margin-top:.5rem">← Zurück</button>
   </div>
@@ -653,6 +639,7 @@ html {
     <div class="prog-wrap"><div class="prog-bar" id="prog"></div></div>
     <div id="gen-list"></div>
     <div id="gen-err" class="err-box" style="display:none"></div>
+    <div style="text-align:center;margin-top:1rem"><button id="test-api-btn" onclick="testAPI()" style="background:transparent;border:1px solid rgba(172,155,127,.3);color:rgba(172,155,127,.5);font-size:.6rem;padding:.3rem .6rem;border-radius:6px;cursor:pointer">API Test</button></div>
   </div>
 </div>
 </div>
@@ -1796,29 +1783,17 @@ function startCombo(combo){
 
 function selectJH(mode){
   S.jhMode=mode;
-  var mo=document.getElementById('jh-monthly');
-  var yr=document.getElementById('jh-yearly');
+  var mo=document.getElementById('jh-monthly'),yr=document.getElementById('jh-yearly');
   if(!mo||!yr)return;
-  if(mode==='monthly'){
-    mo.style.border='2px solid #6d9e6d';mo.style.background='rgba(96,153,96,.12)';
-    yr.style.border='1.5px solid rgba(96,153,96,.35)';yr.style.background='rgba(96,153,96,.06)';
-  }else{
-    yr.style.border='2px solid #6d9e6d';yr.style.background='rgba(96,153,96,.12)';
-    mo.style.border='1.5px solid rgba(96,153,96,.35)';mo.style.background='rgba(96,153,96,.06)';
-  }
+  if(mode==='monthly'){mo.style.border='2px solid #6d9e6d';mo.style.background='rgba(96,153,96,.12)';yr.style.border='1.5px solid rgba(96,153,96,.35)';yr.style.background='rgba(96,153,96,.06)';}
+  else{yr.style.border='2px solid #6d9e6d';yr.style.background='rgba(96,153,96,.12)';mo.style.border='1.5px solid rgba(96,153,96,.35)';mo.style.background='rgba(96,153,96,.06)';}
 }
 function selectJHForm(mode){
   S.jhMode=mode;
-  var mo=document.getElementById('jh-form-monthly');
-  var yr=document.getElementById('jh-form-yearly');
+  var mo=document.getElementById('jh-form-monthly'),yr=document.getElementById('jh-form-yearly');
   if(!mo||!yr)return;
-  if(mode==='monthly'){
-    mo.style.border='2px solid #6d9e6d';mo.style.background='rgba(96,153,96,.12)';
-    yr.style.border='1.5px solid rgba(96,153,96,.35)';yr.style.background='rgba(96,153,96,.06)';
-  }else{
-    yr.style.border='2px solid #6d9e6d';yr.style.background='rgba(96,153,96,.12)';
-    mo.style.border='1.5px solid rgba(96,153,96,.35)';mo.style.background='rgba(96,153,96,.06)';
-  }
+  if(mode==='monthly'){mo.style.border='2px solid #6d9e6d';mo.style.background='rgba(96,153,96,.12)';yr.style.border='1.5px solid rgba(96,153,96,.35)';yr.style.background='rgba(96,153,96,.06)';}
+  else{yr.style.border='2px solid #6d9e6d';yr.style.background='rgba(96,153,96,.12)';mo.style.border='1.5px solid rgba(96,153,96,.35)';mo.style.background='rgba(96,153,96,.06)';}
 }
 
 function startPkg(pkg, combo){
@@ -2236,6 +2211,23 @@ function runGen(areas,i){
   });
 }
 
+function testAPI(){
+  var btn=document.getElementById('test-api-btn');
+  if(btn)btn.textContent='Teste...';
+  fetch('/.netlify/functions/claude',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:5,messages:[{role:'user',content:'Antworte mit: OK'}]})
+  }).then(function(r){
+    return r.text().then(function(t){
+      alert('Status: '+r.status+'\nAntwort: '+t.slice(0,300));
+      if(btn)btn.textContent='API Test';
+    });
+  }).catch(function(e){
+    alert('FEHLER: '+e.message+'\n\nDie Netlify Function ist nicht erreichbar!');
+    if(btn)btn.textContent='API Test';
+  });
+}
 function callClaude(areaId,h,fd,isFirst){
   var ctx='KUNDE: '+fd.name+'\nGeburt: '+fd.date+' · '+fd.time+' Uhr · '+fd.place+(fd.q?'\nSeine Frage: '+fd.q:'');
   var promptText = (S.pkg==='jahreshoroskop') ? mkYearPrompt(areaId,h,isFirst,S.yearData) : mkPrompt(areaId,h,isFirst);
@@ -2245,10 +2237,11 @@ function callClaude(areaId,h,fd,isFirst){
     body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,
       messages:[{role:'user',content:KB+'\n\n'+ctx+'\n\n'+promptText}]})
   }).then(function(r){
-    if(!r.ok) return r.json().then(function(e){throw new Error(e.error||'API Fehler');});
-    return r.json();
-  }).then(function(d){
-    return(d.content||[]).map(function(b){return b.text||'';}).join('');
+    return r.text().then(function(txt){
+      if(!r.ok){alert('Fehler '+r.status+': '+txt.slice(0,200));throw new Error(txt.slice(0,100));}
+      var d=JSON.parse(txt);
+      return(d.content||[]).map(function(b){return b.text||'';}).join('');
+    });
   });
 }
 
@@ -2412,11 +2405,10 @@ function buildPDF(chapters,fd,pkg,selQ,h){
 <div id="pg-legal" class="pg">
 <div class="wrap" style="padding-bottom:3.5rem;padding-top:5rem;max-width:680px">
 <button onclick="goPage('home')" style="background:transparent;border:none;color:#9aabba;font-size:.8rem;cursor:pointer;margin-bottom:2rem;font-family:'Inter',sans-serif">← Zurück</button>
-<div class="card" style="margin-bottom:1.5rem">
-<h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.4rem;font-weight:300;color:#192436;margin-bottom:1rem">Impressum</h2>
-<p style="font-size:.82rem;color:#6a7a8a;line-height:1.8"><strong style="color:#192436">Mental &amp; Spiritual</strong><br>Luca Calicchio<br>Oftringen, Aargau, Schweiz<br><a href="mailto:info@luca-calicchio.com" style="color:#ac9b7f">info@luca-calicchio.com</a><br><a href="https://www.luca-calicchio.com" style="color:#ac9b7f">www.luca-calicchio.com</a></p>
-</div>
-<div class="card" style="margin-bottom:1.5rem">
+<div class="card" style="margin-bottom:1.5rem"><h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.4rem;font-weight:300;color:#192436;margin-bottom:1rem">Impressum</h2><p style="font-size:.82rem;color:#6a7a8a;line-height:1.8"><strong style="color:#192436">Mental &amp; Spiritual</strong><br>Luca Calicchio<br>Oftringen, Aargau, Schweiz<br><a href="mailto:info@luca-calicchio.com" style="color:#ac9b7f">info@luca-calicchio.com</a><br><a href="https://www.luca-calicchio.com" style="color:#ac9b7f">www.luca-calicchio.com</a></p></div>
+<div class="card" style="margin-bottom:1.5rem"><h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.4rem;font-weight:300;color:#192436;margin-bottom:1rem">Datenschutz</h2><p style="font-size:.82rem;color:#6a7a8a;line-height:1.8">Geburtsdaten werden nur zur Analyse genutzt. Keine Weitergabe an Dritte.</p></div>
+<div class="card"><h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.4rem;font-weight:300;color:#192436;margin-bottom:1rem">AGB</h2><p style="font-size:.82rem;color:#6a7a8a;line-height:1.8"><strong style="color:#192436">Preise</strong><br>Gratis: CHF 0.– · Individual: CHF 49.– · SeelenKompass: CHF 99.– · Jahreshoroskop: CHF 9.–/Mo oder CHF 99.–/Jahr<br><strong style="color:#192436">Recht</strong><br>Schweizer Recht. Gerichtsstand Oftringen, Aargau.</p></div>
+</div><div class="card" style="margin-bottom:1.5rem">
 <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.4rem;font-weight:300;color:#192436;margin-bottom:1rem">Datenschutz</h2>
 <p style="font-size:.82rem;color:#6a7a8a;line-height:1.8;margin-bottom:.75rem"><strong style="color:#192436">Erhobene Daten</strong><br>Diese App verarbeitet deine Geburtsdaten ausschliesslich zur Erstellung der Analyse. Keine Weitergabe an Dritte.</p>
 <p style="font-size:.82rem;color:#6a7a8a;line-height:1.8"><strong style="color:#192436">Kontakt</strong><br><a href="mailto:info@luca-calicchio.com" style="color:#ac9b7f">info@luca-calicchio.com</a></p>
@@ -2433,13 +2425,3 @@ function buildPDF(chapters,fd,pkg,selQ,h){
 
 </body>
 </html>
-
-
-<div id="pg-legal" class="pg">
-<div class="wrap" style="padding:4rem 1.5rem 3rem;max-width:680px">
-<button onclick="goPage('home')" style="background:transparent;border:none;color:#9aabba;font-size:.8rem;cursor:pointer;margin-bottom:2rem">← Zurück</button>
-<div class="card" style="margin-bottom:1rem"><h2 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;margin-bottom:.75rem">Impressum</h2><p style="font-size:.8rem;color:#6a7a8a;line-height:1.8"><strong>Mental &amp; Spiritual</strong><br>Luca Calicchio, Oftringen<br><a href="mailto:info@luca-calicchio.com" style="color:#ac9b7f">info@luca-calicchio.com</a></p></div>
-<div class="card" style="margin-bottom:1rem"><h2 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;margin-bottom:.75rem">Datenschutz</h2><p style="font-size:.8rem;color:#6a7a8a;line-height:1.8">Geburtsdaten werden nur zur Analyse genutzt.</p></div>
-<div class="card"><h2 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;margin-bottom:.75rem">AGB</h2><p style="font-size:.8rem;color:#6a7a8a;line-height:1.8">Gratis: CHF 0.– · Individual: CHF 49.– · SeelenKompass: CHF 99.– · Jahreshoroskop: CHF 9.–/Mo oder CHF 99.–/Jahr</p></div>
-</div>
-</div>
