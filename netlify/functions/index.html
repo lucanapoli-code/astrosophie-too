@@ -575,9 +575,9 @@ html {
     <div class="fg" style="margin-bottom:1.1rem">
       <label>Geburtsdatum</label>
       <div style="display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:.5rem">
-        <input type="number" id="f-day" onchange="syncDate()" placeholder="Tag" min="1" max="31" maxlength="2" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
-        <input type="number" id="f-month" onchange="syncDate()" placeholder="Monat" min="1" max="12" maxlength="2" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
-        <input type="number" id="f-year" onchange="syncDate()" placeholder="Jahr" min="1900" max="2010" maxlength="4" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="number" id="f-day" onchange="syncDate()" placeholder="Tag" min="1" max="31" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="number" id="f-month" onchange="syncDate()" placeholder="Monat" min="1" max="12" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="number" id="f-year" onchange="syncDate()" placeholder="Jahr" min="1900" max="2010" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
       </div>
       <p style="font-size:.65rem;color:#9aabba;margin-top:.3rem;line-height:1.5">Tag · Monat · Jahr — z.B. 15 · 03 · 1990</p>
       <input type="hidden" id="f-date"/>
@@ -630,7 +630,7 @@ html {
 </div>
 </div>
 
-<div id="pg-result" class="pg">
+<div id="pg-result" class="pg" style="background:#0d1a28!important;color:#eeeae0!important">
 <div class="wrap" style="padding-bottom:3.5rem">
   <div style="margin-top:1.25rem">
     <div class="res-hdr">
@@ -1269,7 +1269,6 @@ var CHALLENGES=[
 ];
 
 var KB = 'IDENTITAET: Du bist Dein Name, Mental & Spiritual Coach (luca-calicchio.com, Oftringen). Schreibe persoenlich, direkt, warm, tief, philosophisch. Immer du. Deutsch. Fliestext.\nPHILOSOPHIE: Die Seele IST der Mensch. Der Koerper ist die Huelle. Das Geburtsmuster ist die Landkarte zu deinem Inneren. Das Horoskop ist dein Lehrplan. Seelenmuster=Geburtsmuster=seelischer Fingerabdruck. Haeuser=Buehnen des Lebens. Planeten=Schauspieler. Zeichen=Kleidung. Wissen wir wie die Schoepfung funktioniert wissen wir wie unser Leben funktioniert.\nASTROSOPHIE: Aegyptische Schoepfungslehre . Zeichen+Planet+Haus=eine gemeinsame archetypische Qualitaet. 4 QUADRANTEN: Causa Materialis(Koerper H1-3) Causa Formalis(Seele H4-6) Causa Efficiens(Geist H7-9) Causa Finalis(Sein H10-12). POLARITAETEN: H1-H7 H2-H8 H3-H9 H4-H10 H5-H11 H6-H12.\n12 ZEICHEN+ARCHETYPEN+ENERGETIK: WIDDER=Pionier,Feuer,Mars,Mut,Eigeninitiative. Unerlöst:Aggression,Ungeduld. Erlöst:befreiender Mut. Partnerenergie:Feuer+Erde. STIER=Erbauer,Erde,Venus,Bestaendigkeit,Genuss. Unerlöst:Sturheit,Besitzdenken. Erlöst:naehrender Reichtum. Partnerenergie:Erde+Wasser. ZWILLINGE=Vermittler,Luft,Merkur,Neugier,Verbindung. Unerlöst:Oberflaechlichkeit,Unruhe. Erlöst:brueckenbauende Intelligenz. Partnerenergie:Luft+Feuer. KREBS=Hueter,Wasser,Mond,Tiefe,Fuersorglichkeit. Unerlöst:Klammerung,Vergangenheit. Erlöst:naehrende Heimat. Partnerenergie:Erde+Wasser. LÖWE=Schoepfer,Feuer,Sonne,Grosszuegigkeit,Ausdruck. Unerlöst:Eitelkeit,Geltungssucht. Erlöst:ermuetigendes Leuchten. Partnerenergie:Luft+Feuer. JUNGFRAU=Ordner,Erde,Merkur,Praezision,Dienst. Unerlöst:Perfektionismus,Selbstkritik. Erlöst:heilende Praezision. Partnerenergie:Erde+Wasser. WAAGE=Diplomat,Luft,Venus,Harmonie,Begegnung. Unerlöst:Entscheidungsschwaeche,Selbstverleugnung. Erlöst:verbindende Schoenheit. Partnerenergie:Luft+Feuer. SKORPION=Forscher,Wasser,Pluto,Tiefe,Transformation. Unerlöst:Kontrolle,Eifersucht. Erlöst:regenerative Tiefenkraft. Partnerenergie:Wasser+Erde. SCHUETZE=Philosoph,Feuer,Jupiter,Freiheit,Sinn. Unerlöst:Unverbindlichkeit,Flucht. Erlöst:befreiende Weisheit. Partnerenergie:Feuer+Luft. STEINBOCK=Baumeister,Erde,Saturn,Struktur,Reife. Unerlöst:Haerte,Machtstreben. Erlöst:tragende Struktur. Partnerenergie:Erde+Wasser. WASSERMANN=Reformer,Luft,Uranus,Vision,Befreiung. Unerlöst:Distanz,Rebellion. Erlöst:erhebende Freiheit. Partnerenergie:Luft+Feuer. FISCHE=Mystiker,Wasser,Neptun,Mitgefuehl,Aufloesung. Unerlöst:Selbstverlust,Illusion. Erlöst:heilendes Mitgefuehl. Partnerenergie:Erde+Wasser.\n10 PLANETEN+LEBENSTHEMEN: SONNE=Lebensauftrag+Seelenauftrag+bewusstes Ich. Unerlöst:Identitaetsverlust. Erlöst:strahlende Eigenart. MOND=Seele+Gefuehl+innere Heimat+Mutter. Unerlöst:emotionale Abhaengigkeit. Erlöst:naehrende Tiefe. MERKUR=Geist+Kommunikation+Denken. Unerlöst:Zerstreutheit. Erlöst:klare Verbindung. VENUS=Liebe+Harmonie+Wert+Schoenheit. Unerlöst:Selbstverleugnung. Erlöst:liebevolle Ausstrahlung. MARS=Wille+Kraft+Mut+Trieb. Unerlöst:Aggression. Erlöst:zielgerichtete Energie. JUPITER=Expansion+Weisheit+Segen+Glueck. Unerlöst:Masslosigkeit. Erlöst:segensreiche Fuelle. SATURN=Struktur+Reife+Karma+Verantwortung. Unerlöst:Angst+Rigitaet. Erlöst:reizendes Fundament. URANUS=Befreiung+Revolution+Originalitaet. Unerlöst:Chaos. Erlöst:befreiende Erneuerung. NEPTUN=Mystik+Mitgefuehl+Transzendenz. Unerlöst:Selbstverlust. Erlöst:spirituelle Vision. PLUTO=Transformation+Tod+Wiedergeburt+Tiefe. Unerlöst:Machtkampf. Erlöst:tiefe Erneuerungskraft.\n12 HAEUSER+LEBENSTHEMEN: H1=Wesenskern,AC,Koerper,wie ich ankomme,Selbstausdruck. H2=Werte,Ressourcen,Selbstwert,Sicherheit,was mir heilig ist. H3=Kommunikation,Denken,Lernen,nahe Umgebung,Geschwister. H4=Familie,Wurzeln,innere Heimat,Unbewusstes,Mutter. H5=Kreativitaet,Freude,Spiel,Kinder,Liebe,Selbstausdruck. H6=Alltag,Arbeit,Dienst,Gesundheit,Routinen. H7=Begegnung,Partnerschaft,Spiegel,Vertrag,der Andere als Lehrer. H8=Transformation,Tiefe,Tod,Wiedergeburt,geteilte Ressourcen. H9=Weltanschauung,Sinn,Glaube,Philosophie,Reise,Hochschule. H10=Berufung,MC,oeffentliches Wirken,Ruf,Vater. H11=Kollektiv,Vision,Gemeinschaft,Freunde,Zukunft. H12=Spiritualitaet,Unbewusstes,Rueckzug,Karma,Selbstaufloesung.\nQUALITAETEN: DOMIZIL=staerkste reinste Energie fliesst ungefiltert: Sonne/Loewe,Mond/Krebs,Merkur/Zwillinge+Jungfrau,Venus/Stier+Waage,Mars/Widder+Skorpion,Jupiter/Schuetze+Fische,Saturn/Steinbock+Wassermann,Uranus/Wassermann,Neptun/Fische,Pluto/Skorpion. ERHOEHUNG=harmonisch verstaerkt: Sonne/Widder,Mond/Stier,Jupiter/Krebs,Saturn/Waage. STELLIUM=3+ Planeten=zentrales Lebensthema+hohes Potenzial+Herausforderung.\nENERGETISCHE PARTNEREMPFEHLUNG nach Zeichen: FISCHE AC braucht: geerdet aber nicht einengend, klar kommunizierend, Tiefe suchend, Erde+Feuer. WAAGE Sonne braucht: Gleichgewicht, Austausch auf Augenhoehe, Aesthetik, Luft+Feuer. KREBS Mond braucht: emotionale Sicherheit, Naehe ohne Klammerung, Fuersorge, Wasser+Erde. TRIPLE STELLIUM H7: Lebensauftrag im Kontakt - der Partner ist Lehrer und Spiegel.\nSPRACHREGELN: Schreibe immer spiegelst nie spiegst. Schreibe Wirklichkeit wenn es um die erlebte Realitaet geht. Keine grammatikalisch falschen Verbformen.\nATKL KERNPRINZIPIEN : Nichts basiert auf Mutmassung - alles ist symbolisch sinnbildlich ableitbar. Jedes Ding spricht fuer sich selbst. Die gleichen aufbauenden und abbauenden Kraefte die in der Natur wirken finden auch auf der psychischen koerperlichen und weltlichen Erlebensbühne Ausdruck. Koerpersymptome sind Botschaften der Seele - sie zeigen wo ein Muster gelebt werden will. Negative Energien lassen sich in positive wandeln durch Bewusstwerdung. Das Leben verwandelt sich in einen aufbauenden Strom wenn man im Einklang mit dem Seelenmuster lebt.\nGESETZE DES LEBENS (hermetisch): Wie oben so unten wie innen so aussen. Jede Ursache hat ihre Wirkung - jede Wirkung ihre Ursache - alles geschieht gesetzmässig. Jeder Mensch hat das Recht auf Wachstum und Entfaltung. Was der Mensch als Schicksal erlebt ist eine Ansprache - eine Chance zum Dialog mit dem Leben. Der Geist wirkt auf die Materie ein - jede Schoepfung gestaltet sich von innen nach aussen.\nZIEL DER ANALYSE: Selbsterkenntnis und Bewusstwerdung - nicht Prognose. Den Menschen zu seiner inneren Bestimmung fuehren. Muster erkennen mit denen man sich stets verstrickt. Eingefahrene Raster veraendern um neu zu werden. Kein Schema F - jeder Mensch braucht seine individuellen optimalen Lebensbedingungen.\nENERGETISCHE GESAMTSCHAU BEGRIFFE: DEIN ENERGETISCHER PARTNERTYP: Welche menschliche Energie tut dir in Beziehungen gut - konkret. DEINE ENERGETISCHE BERUFUNGSRICHTUNG: Wo liegt das groesste Potential - konkret. DEINE ENERGETISCHE TAGESSTRUKTUR: Was braucht diese Seele taeglich um in der Kraft zu bleiben.\nMONDKNOTEN (Astrosophie-Benennung): NORDKNOTEN=Seelenrichtung=Seelenauftrag: Die Richtung in die deine Seele in diesem Leben wachsen will. Anfangs unvertraut aber erfuellend. Das was die Seele anstrebt. SUEDKNOTEN=Seelengedaechtnis=Seelenkomfortzone: Was du mitgebracht hast. Natuerliche Talente und Muster aus frueheren Erfahrungen. Komfortzone. Die Achse Nordknoten-Suedknoten zeigt die karmische Entwicklungsachse der Seele.';
-
 
 
 
@@ -2189,15 +2188,23 @@ function callClaude(areaId,h,fd,isFirst){
   var ctx='KUNDE: '+fd.name+'\nGeburt: '+fd.date+' · '+fd.time+' Uhr · '+fd.place+(fd.q?'\nSeine Frage: '+fd.q:'');
   var promptText = (S.pkg==='jahreshoroskop') ? mkYearPrompt(areaId,h,isFirst,S.yearData) : mkPrompt(areaId,h,isFirst);
   // Anfrage geht an die Netlify-Function (sicherer Proxy), NICHT direkt an Anthropic
+  var payload=JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,
+    messages:[{role:'user',content:KB+'\n\n'+ctx+'\n\n'+promptText}]});
   return fetch('/.netlify/functions/claude',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,
-      messages:[{role:'user',content:KB+'\n\n'+ctx+'\n\n'+promptText}]})
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:payload
   }).then(function(r){
-    if(!r.ok) return r.json().then(function(e){throw new Error(e.error||'API Fehler');});
-    return r.json();
-  }).then(function(d){
-    return(d.content||[]).map(function(b){return b.text||'';}).join('');
+    return r.text().then(function(txt){
+      if(!r.ok) throw new Error('HTTP '+r.status+': '+txt.slice(0,150));
+      try{
+        var d=JSON.parse(txt);
+        if(d.error) throw new Error(d.error);
+        return(d.content||[]).map(function(b){return b.text||'';}).join('');
+      }catch(parseErr){
+        throw new Error('Parse Fehler: '+txt.slice(0,100));
+      }
+    });
   });
 }
 
