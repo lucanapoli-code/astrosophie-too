@@ -575,9 +575,9 @@ html {
     <div class="fg" style="margin-bottom:1.1rem">
       <label>Geburtsdatum</label>
       <div style="display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:.5rem">
-        <input type="number" id="f-day" onchange="syncDate()" placeholder="Tag" min="1" max="31" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
-        <input type="number" id="f-month" onchange="syncDate()" placeholder="Monat" min="1" max="12" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
-        <input type="number" id="f-year" onchange="syncDate()" placeholder="Jahr" min="1900" max="2010" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="number" id="f-day" onchange="syncDate()" placeholder="Tag" min="1" max="31" maxlength="2" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="number" id="f-month" onchange="syncDate()" placeholder="Monat" min="1" max="12" maxlength="2" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="number" id="f-year" onchange="syncDate()" placeholder="Jahr" min="1900" max="2010" maxlength="4" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
       </div>
       <p style="font-size:.65rem;color:#9aabba;margin-top:.3rem;line-height:1.5">Tag · Monat · Jahr — z.B. 15 · 03 · 1990</p>
       <input type="hidden" id="f-date"/>
@@ -630,7 +630,7 @@ html {
 </div>
 </div>
 
-<div id="pg-result" class="pg" style="background:#0d1a28!important;color:#eeeae0!important">
+<div id="pg-result" class="pg">
 <div class="wrap" style="padding-bottom:3.5rem">
   <div style="margin-top:1.25rem">
     <div class="res-hdr">
@@ -1279,6 +1279,7 @@ var KB = 'IDENTITAET: Du bist Dein Name, Mental & Spiritual Coach (luca-calicchi
 
 
 
+
 // ── HAUS-ZUORDNUNGSSYSTEM (nach Randolf M. Schäfer / Astrosophie) ────────
 // Jedes Haus = Tierkreiszeichen-Prinzip + Hausherrscher-Planet + Polaritäts-Haus (Gegenüber)
 var HOUSES={
@@ -1810,7 +1811,7 @@ function startPkg(pkg, combo){
   var pn=document.getElementById('pay-note');
   if(pn){
     if(combo){pn.style.display='block';pn.textContent='💳 '+combo.price+' für das gesamte Kombi-Paket'+(combo.coaching?' inkl. 1:1 Coaching':'')+' · Visa, Mastercard & Twint';}
-    else if(pkg!=='gratis'){pn.style.display='block';pn.textContent='💳 '+(pkg==='individual'?'CHF 49.–':pkg==='seelenkompas'?'CHF 99.–':'CHF 9.–/Mo oder CHF 99.–/Jahr')+' · Visa, Mastercard & Twint';}
+    else if(pkg!=='gratis'){pn.style.display='block';pn.textContent='💳 '+(pkg==='individual'?'CHF 49.–':pkg==='seelenkompas'?'CHF 99.–':'CHF 9.–/Mo')+' · Visa, Mastercard & Twint';}
     else{pn.style.display='none';}
   }
   goPage('form');
