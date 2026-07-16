@@ -575,9 +575,9 @@ html {
     <div class="fg" style="margin-bottom:1.1rem">
       <label>Geburtsdatum</label>
       <div style="display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:.5rem">
-        <input type="number" id="f-day" onchange="syncDate()" placeholder="Tag" min="1" max="31" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
-        <input type="number" id="f-month" onchange="syncDate()" placeholder="Monat" min="1" max="12" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
-        <input type="number" id="f-year" onchange="syncDate()" placeholder="Jahr" min="1900" max="2010" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="number" id="f-day" onchange="syncDate()" placeholder="TT" min="1" max="31" maxlength="2" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="number" id="f-month" onchange="syncDate()" placeholder="MM" min="1" max="12" maxlength="2" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="number" id="f-year" onchange="syncDate()" placeholder="JJJJ" min="1900" max="2010" maxlength="4" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
       </div>
       <p style="font-size:.65rem;color:#9aabba;margin-top:.3rem;line-height:1.5">Tag · Monat · Jahr — z.B. 15 · 03 · 1990</p>
       <input type="hidden" id="f-date"/>
@@ -2188,22 +2188,16 @@ function callClaude(areaId,h,fd,isFirst){
   var ctx='KUNDE: '+fd.name+'\nGeburt: '+fd.date+' · '+fd.time+' Uhr · '+fd.place+(fd.q?'\nSeine Frage: '+fd.q:'');
   var promptText = (S.pkg==='jahreshoroskop') ? mkYearPrompt(areaId,h,isFirst,S.yearData) : mkPrompt(areaId,h,isFirst);
   // Anfrage geht an die Netlify-Function (sicherer Proxy), NICHT direkt an Anthropic
-  var payload=JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,
-    messages:[{role:'user',content:KB+'\n\n'+ctx+'\n\n'+promptText}]});
   return fetch('/.netlify/functions/claude',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:payload
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,
+      messages:[{role:'user',content:KB+'\n\n'+ctx+'\n\n'+promptText}]})
   }).then(function(r){
     return r.text().then(function(txt){
-      if(!r.ok) throw new Error('HTTP '+r.status+': '+txt.slice(0,150));
-      try{
-        var d=JSON.parse(txt);
-        if(d.error) throw new Error(d.error);
-        return(d.content||[]).map(function(b){return b.text||'';}).join('');
-      }catch(parseErr){
-        throw new Error('Parse Fehler: '+txt.slice(0,100));
-      }
+      if(!r.ok) throw new Error('HTTP '+r.status+': '+txt.slice(0,100));
+      var d=JSON.parse(txt);
+      if(d.error) throw new Error(d.error);
+      return(d.content||[]).map(function(b){return b.text||'';}).join('');
     });
   });
 }
