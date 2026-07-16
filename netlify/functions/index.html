@@ -2085,6 +2085,7 @@ function syncDate(){
 }
 
 function startGen(){
+  syncDate();
   var name=el('f-name').value.trim(),date=el('f-date').value;
   var time=el('f-time').value,place=el('f-place').value.trim();
   el('form-err').style.display='none';
