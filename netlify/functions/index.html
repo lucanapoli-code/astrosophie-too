@@ -2270,9 +2270,10 @@ function showResult(){
 function openPDF(){
   var blob=new Blob([S.pdfHtml],{type:'text/html;charset=utf-8'});
   var url=URL.createObjectURL(blob);
-  var frame=el('pdf-frame');
-  frame.src=url;
-  goPage('pdf');
+  var a=document.createElement('a');
+  var name=(S.fd&&S.fd.name?S.fd.name:'Seelenmuster').replace(/\s+/g,'-');
+  a.href=url;a.download='Seelenmuster-'+name+'.html';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
 }
 function printDoc(){
   var w=window.open('','_blank');
