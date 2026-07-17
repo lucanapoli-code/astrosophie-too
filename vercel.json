@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "functions": {
+    "api/claude.js": {
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/.netlify/functions/claude",
+      "destination": "/api/claude"
+    }
+  ]
+}
