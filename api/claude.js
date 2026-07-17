@@ -11,12 +11,27 @@ module.exports = async function(req, res) {
   const KEY = process.env.ANTHROPIC_API_KEY;
   if(!KEY) return res.status(500).json({error:'API Key fehlt'});
 
+  // Body lesen
+  let body = '';
+  if(typeof req.body === 'object') {
+    body = req.body;
+  } else {
+    await new Promise(function(resolve) {
+      let raw = '';
+      req.on('data', function(chunk) { raw += chunk; });
+      req.on('end', function() { 
+        try { body = JSON.parse(raw); } catch(e) { body = {}; }
+        resolve();
+      });
+    });
+  }
+
   return new Promise(function(resolve) {
     const data = JSON.stringify({
       model: 'claude-sonnet-4-6',
       max_tokens: 1500,
-      system: req.body.system || '',
-      messages: req.body.messages || []
+      system: body.system || '',
+      messages: body.messages || []
     });
 
     const request = https.request({
@@ -31,10 +46,10 @@ module.exports = async function(req, res) {
         'Content-Length': Buffer.byteLength(data)
       }
     }, function(apiRes) {
-      let body = '';
-      apiRes.on('data', function(chunk) { body += chunk; });
+      let result = '';
+      apiRes.on('data', function(chunk) { result += chunk; });
       apiRes.on('end', function() {
-        try { res.status(apiRes.statusCode).json(JSON.parse(body)); }
+        try { res.status(apiRes.statusCode).json(JSON.parse(result)); }
         catch(e) { res.status(500).json({error:'Parse error'}); }
         resolve();
       });
