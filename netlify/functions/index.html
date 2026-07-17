@@ -1453,7 +1453,7 @@ function mkYearPrompt(id, h, isFirst, yearData){
     var topAsps=md.aspects.slice(0,3); // bis zu 3 staerkste Aspekte des Monats
     var aspText = topAsps.length>0 ? topAsps.map(aspectLine).join(' ') : 'Keine engen Aspekte der langsamen Planeten in diesem Monat - eine ruhigere, integrierende Phase.';
     prompt=base+'\nMONAT: '+md.month+' 2026\nTRANSIT-ASPEKTE DIESES MONATS: '+aspText+'\n'
-      +'AUFGABE: Schreibe ein Kapitel für diesen Monat (280-320 Woerter). Erkläre konkret, was der/die genannte(n) Aspekt(e) bedeuten - welches Thema im Leben der Person diesen Monat staerker hervortritt, welche Spannung oder welcher Fluss entsteht. PFLICHT: zeige sowohl die unerlöste Variante (wie sich die Spannung zeigt, wenn man ihr unbewusst nachgibt, mit Beispiel) als auch direkt danach die erlöste Lösung (wie man bewusst und konstruktiv damit umgeht, mit Beispiel). PFLICHT als letzter Absatz: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten, in diesem Monat umsetzbaren Mini-Uebung (1 Satz). Niemals weglassen. Bleibe konkret und alltagsnah, vermeide vage Phrasen. Falls keine engen Aspekte vorliegen, beschreibe den Monat als ruhigere Phase zur Integration des bisherigen Jahres.';
+      +'AUFGABE: Schreibe ein Kapitel für diesen Monat (180-220 Woerter). Erkläre konkret, was der/die genannte(n) Aspekt(e) bedeuten - welches Thema im Leben der Person diesen Monat staerker hervortritt, welche Spannung oder welcher Fluss entsteht. PFLICHT: zeige sowohl die unerlöste Variante (wie sich die Spannung zeigt, wenn man ihr unbewusst nachgibt, mit Beispiel) als auch direkt danach die erlöste Lösung (wie man bewusst und konstruktiv damit umgeht, mit Beispiel). PFLICHT als letzter Absatz: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten, in diesem Monat umsetzbaren Mini-Uebung (1 Satz). Niemals weglassen. Bleibe konkret und alltagsnah, vermeide vage Phrasen. Falls keine engen Aspekte vorliegen, beschreibe den Monat als ruhigere Phase zur Integration des bisherigen Jahres.';
   }
   if(isFirst && prompt){
     prompt='Beginne deine GESAMTE Antwort mit exakt einer Zeile im Format SLOGAN: "..." - ein kurzer, poetischer Leitsatz (max. 12 Woerter) für das Jahr 2026 dieser Person, passend zu ihrem '+ac.sign+'-Wesenskern (z.B. SLOGAN: "2026 ist das Jahr, in dem du lernst, dem Fluss zu vertrauen."). Danach, ab einer neuen Zeile, fahre mit folgendem Kapitel fort:\n'+prompt;
@@ -2086,6 +2086,7 @@ function syncDate(){
 }
 
 function startGen(){
+  if(!S.pkg)S.pkg='gratis';
   var dEl=el('f-day'),mEl=el('f-month'),yEl=el('f-year'),fdEl=el('f-date');
   if(dEl&&mEl&&yEl&&fdEl&&dEl.value&&mEl.value&&yEl.value){fdEl.value=yEl.value+'-'+String(parseInt(mEl.value)).padStart(2,'0')+'-'+String(parseInt(dEl.value)).padStart(2,'0');}
   var name=el('f-name').value.trim(),date=el('f-date').value;
