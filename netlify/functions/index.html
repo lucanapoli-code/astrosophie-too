@@ -383,7 +383,10 @@ html {
         <button class="hero-pkg" onclick="startPkg('seelenkompas')">SeelenKompass · CHF 99.–</button>
         <button class="hero-pkg" onclick="startPkg('jahreshoroskop')">Jahreshoroskop · CHF 9.–/Mo</button>
       </div>
-      <div class="hero-trust">
+      <div style="margin:1rem 0;text-align:center">
+  <button onclick="testAPI()" style="background:rgba(172,155,127,.15);border:1px solid rgba(172,155,127,.3);color:#ac9b7f;padding:.4rem .8rem;border-radius:6px;font-size:.7rem;cursor:pointer">API Test</button>
+</div>
+<div class="hero-trust">
         <span class="trust-i">Swiss Ephemeris Genauigkeit</span>
         <span class="trust-i">Individuelles Seelenmuster</span>
       </div>
@@ -1766,6 +1769,24 @@ function startCombo(combo){
   S.combo=c;
   // Kombi-Pakete starten mit dem ersten enthaltenen Paket (z.B. Individual); das Jahreshoroskop folgt als 2. Generierungsschritt
   startPkg(c.pkgs[0], c);
+}
+
+function testAPI(){
+  var btn=event.target;
+  btn.textContent='Teste...';
+  fetch('/api/claude',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:5,messages:[{role:'user',content:'Antworte mit OK'}]})
+  }).then(function(r){
+    return r.text().then(function(t){
+      alert('Status: '+r.status+'\nAntwort: '+t.slice(0,200));
+      btn.textContent='API Test';
+    });
+  }).catch(function(e){
+    alert('FEHLER: '+e.message);
+    btn.textContent='API Test';
+  });
 }
 
 function startPkg(pkg, combo){
