@@ -14,38 +14,60 @@ exports.handler = async function(event) {
     try {
       const body = JSON.parse(event.body);
       const data = JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 800,
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1200,
+        stream: true,
         messages: body.messages || []
       });
 
-      const req = https.request({
+      const options = {
         hostname: 'api.anthropic.com',
         port: 443,
         path: '/v1/messages',
         method: 'POST',
-        timeout: 25000,
         headers: {
           'Content-Type': 'application/json',
           'x-api-key': KEY,
           'anthropic-version': '2023-06-01',
           'Content-Length': Buffer.byteLength(data)
         }
-      }, function(res) {
-        let body = '';
-        res.on('data', function(chunk) { body += chunk; });
+      };
+
+      const req = https.request(options, function(res) {
+        let fullText = '';
+        let buffer = '';
+
+        res.on('data', function(chunk) {
+          buffer += chunk.toString();
+          const lines = buffer.split('\n');
+          buffer = lines.pop();
+
+          for(const line of lines) {
+            if(line.startsWith('data: ')) {
+              const d = line.slice(6).trim();
+              if(d === '[DONE]') continue;
+              try {
+                const j = JSON.parse(d);
+                if(j.type === 'content_block_delta' && j.delta && j.delta.text) {
+                  fullText += j.delta.text;
+                }
+              } catch(e) {}
+            }
+          }
+        });
+
         res.on('end', function() {
           resolve({
-            statusCode: res.statusCode,
-            headers: {'Content-Type':'application/json','Access-Control-Allow-Origin':'*'},
-            body: body
+            statusCode: 200,
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+              content: [{type: 'text', text: fullText}]
+            })
           });
         });
-      });
-
-      req.on('timeout', function() {
-        req.destroy();
-        resolve({statusCode:504, headers:{'Access-Control-Allow-Origin':'*'}, body:JSON.stringify({error:'Timeout'})});
       });
 
       req.on('error', function(e) {
