@@ -2129,8 +2129,12 @@ function startGen(){
     el('gen-txt').textContent=done+' von '+areas.length+' Kapiteln · '+name+' · noch ca. '+timeStr;
   },1000);
   el('gen-txt').textContent='0 von '+areas.length+' Kapiteln · '+name+' · ca. '+Math.floor(totalSec/60)+'min';
-  goPage('gen');
-  runGen(areas,0);
+  try{
+    goPage('gen');
+    runGen(areas,0);
+  }catch(e){
+    alert('Crash: '+e.message+'\n'+e.stack.split('\n').slice(0,3).join('\n'));
+  }
 }
 
 function runGen(areas,i){
