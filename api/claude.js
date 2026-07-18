@@ -1,6 +1,5 @@
 const https = require('https');
 
-// Vercel Body Parser deaktivieren
 module.exports.config = {
   api: {
     bodyParser: false
@@ -18,7 +17,6 @@ module.exports = async function(req, res) {
   const KEY = process.env.ANTHROPIC_API_KEY;
   if(!KEY) return res.status(500).json({error:'API Key fehlt'});
 
-  // Raw body lesen
   const body = await new Promise(function(resolve) {
     let raw = '';
     req.on('data', function(chunk) { raw += chunk.toString(); });
@@ -52,7 +50,7 @@ module.exports = async function(req, res) {
       apiRes.on('data', function(chunk) { result += chunk; });
       apiRes.on('end', function() {
         try { res.status(apiRes.statusCode).json(JSON.parse(result)); }
-        catch(e) { res.status(500).json({error:'Parse error: '+result.slice(0,100)}); }
+        catch(e) { res.status(500).json({error:'Parse error'}); }
         resolve();
       });
     });
