@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- build:1784360364 -->
 <html lang="de" style="color-scheme:only light!important;background:#fdfaf5!important" data-force-light="1">
 <head>
 <script>
@@ -575,9 +576,9 @@ html {
     <div class="fg" style="margin-bottom:1.1rem">
       <label>Geburtsdatum</label>
       <div style="display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:.5rem">
-        <input type="number" id="f-day" oninput="if(this.value.length>2)this.value=this.value.slice(0,2);syncDate();" placeholder="TT" min="1" max="31" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
-        <input type="number" id="f-month" oninput="if(this.value.length>2)this.value=this.value.slice(0,2);syncDate();" placeholder="MM" min="1" max="12" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
-        <input type="number" id="f-year" oninput="if(this.value.length>4)this.value=this.value.slice(0,4);syncDate();" placeholder="JJJJ" min="1900" max="2010" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="text" id="f-day" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,2);syncDate();" placeholder="TT" inputmode="numeric" pattern="[0-9]*" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="text" id="f-month" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,2);syncDate();" placeholder="MM" inputmode="numeric" pattern="[0-9]*" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="text" id="f-year" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,4);syncDate();" placeholder="JJJJ" inputmode="numeric" pattern="[0-9]*" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
       </div>
       <p style="font-size:.65rem;color:#9aabba;margin-top:.3rem;line-height:1.5">Tag · Monat · Jahr — z.B. 15 · 03 · 1990</p>
       <input type="hidden" id="f-date"/>
