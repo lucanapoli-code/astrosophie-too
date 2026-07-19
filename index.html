@@ -1,4 +1,5 @@
-<!DOCTYPE html><!-- v3 -->
+<!DOCTYPE html>
+<!-- build:1784492377 -->
 <html lang="de" style="color-scheme:only light!important;background:#fdfaf5!important" data-force-light="1">
 <head>
 <script>
@@ -2180,9 +2181,10 @@ function runGen(areas,i){
     el('gd'+i).textContent='✓';if(q) el('gd'+i).style.color=q.col;
     el('gw'+i).style.display='none';if(q) el('gl'+i).style.color=q.col;
     runGen(areas,i+1);
-  }).catch(function(){
-    var err=el('gen-err');err.style.display='block';
-    err.textContent='Verbindungsfehler. Bitte kurz warten und erneut versuchen.';
+  }).catch(function(e){
+    var msg=(e&&e.message)?e.message:'Verbindungsfehler';
+    alert('FEHLER: '+msg);
+    goPage('form');
   });
 }
 
@@ -2195,10 +2197,17 @@ function callClaude(areaId,h,fd,isFirst){
     body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,
       messages:[{role:'user',content:KB+'\n\n'+ctx+'\n\n'+promptText}]})
   }).then(function(r){
-    if(!r.ok) return r.json().then(function(e){throw new Error(e.error||'API Fehler');});
-    return r.json();
-  }).then(function(d){
-    return(d.content||[]).map(function(b){return b.text||'';}).join('');
+    return r.text().then(function(txt){
+      if(!r.ok){
+        var msg='';
+        try{var e=JSON.parse(txt);msg=e.error&&e.error.message?e.error.message:txt.slice(0,100);}
+        catch(x){msg=txt.slice(0,100);}
+        alert('API Fehler '+r.status+': '+msg);
+        throw new Error(msg);
+      }
+      var d=JSON.parse(txt);
+      return(d.content||[]).map(function(b){return b.text||'';}).join('');
+    });
   });
 }
 
