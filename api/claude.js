@@ -1,7 +1,7 @@
-const https = require('https'); // v2
+const https = require('https');
 
 module.exports.config = {
-  api: { bodyParser: false }
+  api: { bodyParser: true }
 };
 
 module.exports = async function(req, res) {
@@ -15,25 +15,24 @@ module.exports = async function(req, res) {
   const KEY = process.env.ANTHROPIC_API_KEY;
   if(!KEY) return res.status(500).json({error:'API Key fehlt'});
 
-  const body = await new Promise(function(resolve) {
-    let raw = '';
-    req.on('data', function(chunk) { raw += chunk.toString(); });
-    req.on('end', function() {
-      try { resolve(JSON.parse(raw)); }
-      catch(e) { resolve({}); }
-    });
+  const body = req.body || {};
+  const messages = body.messages || [];
+  
+  // Prüfe ob messages valide sind
+  const validMessages = messages.filter(function(m) {
+    return m && m.role && m.content && String(m.content).trim().length > 0;
   });
 
+  if(validMessages.length === 0) {
+    return res.status(400).json({error:'Keine validen Messages'});
+  }
+
   return new Promise(function(resolve) {
-    // system NUR wenn nicht leer
     const payload = {
       model: 'claude-sonnet-4-6',
       max_tokens: 1500,
-      messages: body.messages || []
+      messages: validMessages
     };
-    if(body.system && body.system.trim()) {
-      payload.system = body.system;
-    }
 
     const data = JSON.stringify(payload);
 
@@ -53,7 +52,7 @@ module.exports = async function(req, res) {
       apiRes.on('data', function(chunk) { result += chunk; });
       apiRes.on('end', function() {
         try { res.status(apiRes.statusCode).json(JSON.parse(result)); }
-        catch(e) { res.status(500).json({error:'Parse error'}); }
+        catch(e) { res.status(500).json({error:'Parse error: '+result.slice(0,200)}); }
         resolve();
       });
     });
