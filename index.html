@@ -2132,6 +2132,10 @@ function startGen(){
   },1000);
   el('gen-txt').textContent='0 von '+areas.length+' Kapiteln · '+name+' · ca. '+Math.floor(totalSec/60)+'min';
   goPage('gen');
+  var loadMsg=el('gen-txt');
+  if(loadMsg){loadMsg.textContent='Dein Seelenmuster wird erstellt – bitte warten...';}
+  var genCard=document.querySelector('#pg-gen .card');
+  if(genCard){genCard.style.background='rgba(255,255,255,0.05)';genCard.style.color='#eeeae0';}
   runGen(areas,0);
 }
 
