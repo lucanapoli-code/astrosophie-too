@@ -1,9 +1,7 @@
 const https = require('https');
 
 module.exports.config = {
-  api: {
-    bodyParser: false
-  }
+  api: { bodyParser: false }
 };
 
 module.exports = async function(req, res) {
@@ -27,12 +25,17 @@ module.exports = async function(req, res) {
   });
 
   return new Promise(function(resolve) {
-    const data = JSON.stringify({
+    // system NUR wenn nicht leer
+    const payload = {
       model: 'claude-sonnet-4-6',
       max_tokens: 1500,
-      system: body.system || '',
       messages: body.messages || []
-    });
+    };
+    if(body.system && body.system.trim()) {
+      payload.system = body.system;
+    }
+
+    const data = JSON.stringify(payload);
 
     const request = https.request({
       hostname: 'api.anthropic.com',
