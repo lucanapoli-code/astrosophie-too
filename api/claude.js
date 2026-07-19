@@ -1,4 +1,4 @@
-const https = require('https');
+const https = require('https'); // v2
 
 module.exports.config = {
   api: { bodyParser: false }
