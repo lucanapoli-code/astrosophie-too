@@ -671,7 +671,7 @@ html {
 </div>
 </div>
 
-<div id="pg-gen" class="pg" style="background:#192436!important;color:#eeeae0!important;min-height:100vh;display:none">
+<div id="pg-gen" class="pg" style="background:#192436!important;color:#eeeae0!important;min-height:100vh">
 <div class="wrap" style="padding-bottom:3.5rem">
   <div class="card" style="margin-top:1.25rem">
     <div style="text-align:center;margin-bottom:2rem">
@@ -1594,10 +1594,19 @@ function makeStar(){
 
 function goPage(id){
   var all=document.querySelectorAll('.pg');
-  for(var i=0;i<all.length;i++) all[i].classList.remove('on');
+  for(var i=0;i<all.length;i++){
+    all[i].classList.remove('on');
+    all[i].style.display='none';
+  }
   var pp=document.getElementById('pdf-pg');if(pp)pp.classList.remove('on');
   if(id==='pdf'){if(pp)pp.classList.add('on');}
-  else{var pg=document.getElementById('pg-'+id);if(pg){pg.classList.add('on');if(id==='gen'){pg.style.display='block';}else{window.scrollTo(0,0);}}}
+  else{
+    var pg=document.getElementById('pg-'+id);
+    if(pg){
+      pg.classList.add('on');
+      pg.style.display='block';
+    }
+  }
 }
 
 function renderChallenges(){
@@ -2219,9 +2228,18 @@ function startGen(){
     };
     orbWrap.innerHTML=anims[pkg]||anims['gratis'];
   }
-  var _timerSec=0;var _timerEl=el('gen-timer');
-  if(_timerEl){_timerEl.textContent='⟳ 0 Sekunden';}
-  var _timerInt=setInterval(function(){_timerSec++;if(_timerEl)_timerEl.textContent='⟳ '+_timerSec+' Sekunden';},1000);
+  var _countdowns={'gratis':35,'individual':90,'seelenkompas':210,'jahreshoroskop':270};
+  var _startSec=_countdowns[S.pkg||'gratis']||35;
+  var _timerSec=_startSec;
+  var _timerEl=el('gen-timer');
+  if(_timerEl){_timerEl.textContent='Noch ca. '+_timerSec+' Sekunden';}
+  var _timerInt=setInterval(function(){
+    _timerSec--;
+    if(_timerEl){
+      if(_timerSec<=0){_timerEl.textContent='Gleich fertig...';}
+      else{_timerEl.textContent='Noch ca. '+_timerSec+' Sekunden';}
+    }
+  },1000);
   S._timerInt=_timerInt;
   var loadMsg=el('gen-txt');
   if(loadMsg){loadMsg.textContent='Dein persönliches Seelenmuster wird jetzt erstellt...';}
