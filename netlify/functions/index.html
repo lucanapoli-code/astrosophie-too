@@ -2182,7 +2182,7 @@ function startGen(){
   var name=el('f-name').value.trim(),date=el('f-date').value;
   var time=el('f-time').value,place=el('f-place').value.trim();
   el('form-err').style.display='none';
-  if(!name||!date||!time||!place){showFormErr('Bitte Name, Geburtsdatum, Geburtszeit und Geburtsort eingeben.');return;}
+  if(!name||!date||!time||!place){alert('STOP: name='+name+' date='+date+' time='+time+' place='+place);showFormErr('Bitte Name, Geburtsdatum, Geburtszeit und Geburtsort eingeben.');return;}
   if(!S.horo){S.horo=calcFB(new Date(date).getFullYear(),new Date(date).getMonth()+1,new Date(date).getDate(),parseInt(time.split(':')[0]||12),parseInt(time.split(':')[1]||0),47.37,8.54,1);S.coords=S.coords||{lat:47.37,lon:8.54,tz:1};}
   if(S.pkg==='individual'&&!S.selQ){showFormErr('Bitte einen Quadranten auswählen.');return;}
   S.fd={name:name,date:date,time:time,place:place,
