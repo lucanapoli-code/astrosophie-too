@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- build:1784360364 -->
+<!-- build:1784492377 -->
 <html lang="de" style="color-scheme:only light!important;background:#fdfaf5!important" data-force-light="1">
 <head>
 <script>
@@ -576,8 +576,8 @@ html {
     <div class="fg" style="margin-bottom:1.1rem">
       <label>Geburtsdatum</label>
       <div style="display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:.5rem">
-        <input type="text" id="f-day" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,2);syncDate();" placeholder="TT" inputmode="numeric" pattern="[0-9]*" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
-        <input type="text" id="f-month" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,2);syncDate();" placeholder="MM" inputmode="numeric" pattern="[0-9]*" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="text" id="f-day" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,2);syncDate();if(this.value.length===2){var m=document.getElementById('f-month');if(m)m.focus();}" placeholder="TT" inputmode="numeric" pattern="[0-9]*" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="text" id="f-month" oninput="this.value=this.value.replace(/[^0-9]/g,'');if(parseInt(this.value)>12&&this.value.length===2)this.value='12';this.value=this.value.slice(0,2);syncDate();if(this.value.length===2){var y=document.getElementById('f-year');if(y)y.focus();}" placeholder="MM" inputmode="numeric" pattern="[0-9]*" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
         <input type="text" id="f-year" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,4);syncDate();" placeholder="JJJJ" inputmode="numeric" pattern="[0-9]*" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
       </div>
       <p style="font-size:.65rem;color:#9aabba;margin-top:.3rem;line-height:1.5">Tag · Monat · Jahr — z.B. 15 · 03 · 1990</p>
@@ -617,13 +617,14 @@ html {
 </div>
 </div>
 
-<div id="pg-gen" class="pg" style="background:#192436!important">
+<div id="pg-gen" class="pg" style="background:#192436!important;color:#eeeae0!important;min-height:100vh;display:none">
 <div class="wrap" style="padding-bottom:3.5rem">
   <div class="card" style="margin-top:1.25rem">
     <div style="text-align:center;margin-bottom:2rem">
       <div style="font-size:1.6rem;color:var(--teal);margin-bottom:.65rem;opacity:.6;animation:twinkle 2s ease-in-out infinite">🧭</div>
-      <h2 style="font-family:var(--serif);color:var(--white);font-size:1.3rem;font-weight:300;margin-bottom:.3rem">Dein Seelenmuster wird erstellt</h2>
-      <p id="gen-txt" style="color:var(--muted);font-size:.76rem;font-weight:300"></p>
+      <h2 style="font-family:var(--serif);color:#eeeae0;font-size:1.3rem;font-weight:300;margin-bottom:.3rem">⟳ Dein Seelenmuster wird erstellt...</h2>
+      <p id="gen-txt" style="color:#9aabba;font-size:.76rem;font-weight:300"></p>
+    <p id="gen-timer" style="color:#6d9e6d;font-size:.7rem;margin-top:.5rem;font-family:var(--serif)">⟳ 0 Sekunden</p>
     </div>
     <div class="prog-wrap"><div class="prog-bar" id="prog"></div></div>
     <div id="gen-list"></div>
@@ -632,25 +633,25 @@ html {
 </div>
 </div>
 
-<div id="pg-result" class="pg">
+<div id="pg-result" class="pg" style="background:#0d1a28!important;color:#eeeae0!important">
 <div class="wrap" style="padding-bottom:3.5rem">
   <div style="margin-top:1.25rem">
     <div class="res-hdr">
       <div style="font-size:1.5rem;margin-bottom:.4rem">✦</div>
-      <h2 style="font-family:var(--serif);color:var(--white);font-size:1.3rem;font-weight:300;margin-bottom:.2rem">Dein Seelenmuster ist fertig</h2>
+      <h2 style="font-family:'Cormorant Garamond',serif;color:#eeeae0;font-size:1.6rem;font-weight:300;margin-bottom:.3rem">✦ Dein Seelenmuster ist fertig</h2>
       <p id="res-sub" style="color:var(--muted);font-size:.74rem;font-weight:300"></p>
     </div>
     <div class="card" style="margin-bottom:.875rem">
-      <p style="font-size:.56rem;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.875rem;font-weight:600">Dein Dokument enthält</p>
+      <p style="font-size:.56rem;color:#ac9b7f;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.875rem;font-weight:600">Dein Dokument enthält</p>
       <div class="res-chs" id="res-chs"></div>
-      <div style="background:rgba(37,108,134,.06);border:1px solid rgba(37,108,134,.22);border-radius:var(--r2);padding:1.5rem;text-align:center;margin-bottom:.875rem">
+      <div style="background:rgba(172,155,127,.08);border:1px solid rgba(172,155,127,.25);border-radius:14px;padding:1.5rem;text-align:center;margin-bottom:.875rem">
         <div style="font-size:1.4rem;margin-bottom:.4rem">📖</div>
-        <h3 style="font-family:var(--serif);color:var(--teal);font-size:1.15rem;font-weight:300;margin-bottom:.3rem">Dokument jetzt lesen</h3>
+        <h3 style="font-family:'Cormorant Garamond',serif;color:#ac9b7f;font-size:1.3rem;font-weight:300;margin-bottom:.3rem">Deine Landkarte zum Inneren</h3>
         <p style="font-size:.74rem;color:var(--body);margin-bottom:.875rem;font-weight:300;line-height:1.75">Titelseite · Horoskop-Profil · Alle Kapitel · Persönlicher Nordstern</p>
-        <button class="btn btn-teal btn-fw" onclick="openPDF()" style="font-size:.9rem;padding:.875rem">📖 Dokument öffnen & lesen</button>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-top:.5rem">
-          <button class="btn btn-ghost btn-sm" onclick="dlDoc()">⬇ Herunterladen</button>
-          <button class="btn btn-ghost btn-sm" onclick="printDoc()">🖨 Als PDF drucken</button>
+        <button onclick="openPDF()" style="width:100%;padding:1rem;background:#ac9b7f;color:#192436;border:none;border-radius:10px;font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;cursor:pointer">📖 Dokument öffnen & lesen</button>
+        <div style="display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem">
+          <button onclick="dlDoc()" style="width:100%;padding:.75rem;background:transparent;color:#ac9b7f;border:1px solid rgba(172,155,127,.35);border-radius:10px;font-family:'Inter',sans-serif;font-size:.85rem;cursor:pointer;text-align:center">⬇ Herunterladen</button>
+          <button onclick="printDoc()" style="width:100%;padding:.75rem;background:transparent;color:#ac9b7f;border:1px solid rgba(172,155,127,.35);border-radius:10px;font-family:'Inter',sans-serif;font-size:.85rem;cursor:pointer;text-align:center">🖨 Als PDF drucken</button>
         </div>
       </div>
       <div id="upsell"></div>
@@ -1522,7 +1523,7 @@ function goPage(id){
   for(var i=0;i<all.length;i++) all[i].classList.remove('on');
   var pp=document.getElementById('pdf-pg');if(pp)pp.classList.remove('on');
   if(id==='pdf'){if(pp)pp.classList.add('on');}
-  else{var pg=document.getElementById('pg-'+id);if(pg)pg.classList.add('on');window.scrollTo(0,0);}
+  else{var pg=document.getElementById('pg-'+id);if(pg){pg.classList.add('on');if(id==='gen'){pg.style.display='block';}else{window.scrollTo(0,0);}}}
 }
 
 function renderChallenges(){
@@ -2132,6 +2133,13 @@ function startGen(){
   },1000);
   el('gen-txt').textContent='0 von '+areas.length+' Kapiteln · '+name+' · ca. '+Math.floor(totalSec/60)+'min';
   goPage('gen');
+  var _timerSec=0;var _timerEl=el('gen-timer');
+  if(_timerEl){_timerEl.textContent='⟳ 0 Sekunden';}
+  var _timerInt=setInterval(function(){_timerSec++;if(_timerEl)_timerEl.textContent='⟳ '+_timerSec+' Sekunden';},1000);
+  S._timerInt=_timerInt;
+  var loadMsg=el('gen-txt');
+  if(loadMsg){loadMsg.textContent='Dein persönliches Seelenmuster wird jetzt erstellt...';}
+
   runGen(areas,0);
 }
 
@@ -2181,9 +2189,10 @@ function runGen(areas,i){
     el('gd'+i).textContent='✓';if(q) el('gd'+i).style.color=q.col;
     el('gw'+i).style.display='none';if(q) el('gl'+i).style.color=q.col;
     runGen(areas,i+1);
-  }).catch(function(){
-    var err=el('gen-err');err.style.display='block';
-    err.textContent='Verbindungsfehler. Bitte kurz warten und erneut versuchen.';
+  }).catch(function(e){
+    var msg=(e&&e.message)?e.message:'Verbindungsfehler';
+    alert('FEHLER: '+msg);
+    goPage('form');
   });
 }
 
@@ -2196,10 +2205,17 @@ function callClaude(areaId,h,fd,isFirst){
     body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,
       messages:[{role:'user',content:KB+'\n\n'+ctx+'\n\n'+promptText}]})
   }).then(function(r){
-    if(!r.ok) return r.json().then(function(e){throw new Error(e.error||'API Fehler');});
-    return r.json();
-  }).then(function(d){
-    return(d.content||[]).map(function(b){return b.text||'';}).join('');
+    return r.text().then(function(txt){
+      if(!r.ok){
+        var msg='';
+        try{var e=JSON.parse(txt);msg=e.error&&e.error.message?e.error.message:txt.slice(0,100);}
+        catch(x){msg=txt.slice(0,100);}
+        alert('API Fehler '+r.status+': '+msg);
+        throw new Error(msg);
+      }
+      var d=JSON.parse(txt);
+      return(d.content||[]).map(function(b){return b.text||'';}).join('');
+    });
   });
 }
 
@@ -2218,7 +2234,7 @@ function mergePdfs(pdfList){
   return '<!DOCTYPE html><html lang="de"><head>'+head+'</head><body>'+bodies+'</body></html>';
 }
 
-function showResult(){
+function showResult(){if(S._timerInt){clearInterval(S._timerInt);}
   var h=S.fd.horo;
   var isCombo = S.pdfs && S.pdfs.length>1;
   var summaryAreas = isCombo ? getAreasFor(S.pdfs[0].pkg) : getAreas();
