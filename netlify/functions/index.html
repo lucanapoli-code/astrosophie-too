@@ -671,7 +671,7 @@ html {
 </div>
 </div>
 
-<div id="pg-gen" class="pg" style="background:linear-gradient(160deg,#0a1520,#192436,#0d1e2e);color:#eeeae0;position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;display:none;overflow-y:auto;align-items:center;justify-content:center">
+<div id="pg-gen" class="pg" style="background:linear-gradient(160deg,#0a1520,#192436,#0d1e2e);color:#eeeae0;min-height:100vh">
 <div class="wrap" style="padding-bottom:3.5rem">
   <div class="card" style="margin-top:1.25rem">
     <div style="text-align:center;margin-bottom:2rem">
@@ -1604,12 +1604,7 @@ function goPage(id){
     var pg=document.getElementById('pg-'+id);
     if(pg){
       pg.classList.add('on');
-      if(id==='gen'){
-        pg.style.display='flex';
-        pg.style.flexDirection='column';
-      }else{
-        pg.style.display='block';
-      }
+      pg.style.display='block';
     }
   }
 }
