@@ -357,6 +357,60 @@ html {
   filter: invert(0%);
   -webkit-filter: invert(0%);
 }
+
+/* ── Planeten-Animation ── */
+@keyframes orbit1{to{transform:rotate(360deg)}}
+@keyframes orbit2{to{transform:rotate(-360deg)}}
+@keyframes puls{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}}
+.orb-wrap{width:90px;height:90px;margin:0 auto 1.75rem;position:relative}
+.orb-ring1{width:90px;height:90px;border:1.5px solid rgba(172,155,127,.25);border-radius:50%;position:absolute;animation:orbit1 5s linear infinite}
+.orb-ring2{width:62px;height:62px;top:14px;left:14px;border:1.5px solid rgba(172,155,127,.4);border-radius:50%;position:absolute;animation:orbit2 3s linear infinite}
+.orb-planet1{width:8px;height:8px;background:linear-gradient(135deg,#ac9b7f,#c4b39a);border-radius:50%;position:absolute;top:-4px;left:50%;transform:translateX(-50%);box-shadow:0 0 6px rgba(172,155,127,.5)}
+.orb-planet2{width:6px;height:6px;background:linear-gradient(135deg,#6d9e6d,#8bc48b);border-radius:50%;position:absolute;top:-3px;left:50%;transform:translateX(-50%);box-shadow:0 0 5px rgba(109,158,109,.5)}
+.orb-center{font-size:1.1rem;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:puls 2.5s ease-in-out infinite}
+
+/* ── Paket-Animationen ── */
+@keyframes spin-cw{to{transform:rotate(360deg)}}
+@keyframes spin-ccw{to{transform:rotate(-360deg)}}
+@keyframes pulse-orb{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}}
+@keyframes sun-glow{0%,100%{box-shadow:0 0 8px rgba(109,158,109,.4);opacity:.8}50%{box-shadow:0 0 16px rgba(109,158,109,.8);opacity:1}}
+@keyframes orb-prog{to{width:88%}}
+
+/* Gratis: 2 Ringe Gold/Grün */
+.orb-wrap{width:90px;height:90px;margin:0 auto 1.75rem;position:relative}
+.orb-ring1{width:90px;height:90px;border:1.5px solid rgba(172,155,127,.25);border-radius:50%;position:absolute;animation:spin-cw 5s linear infinite}
+.orb-ring2{width:62px;height:62px;top:14px;left:14px;border:1.5px solid rgba(172,155,127,.4);border-radius:50%;position:absolute;animation:spin-ccw 3s linear infinite}
+.orb-dot1{width:8px;height:8px;background:linear-gradient(135deg,#ac9b7f,#c4b39a);border-radius:50%;position:absolute;top:-4px;left:50%;transform:translateX(-50%);box-shadow:0 0 6px rgba(172,155,127,.5)}
+.orb-dot2{width:6px;height:6px;background:linear-gradient(135deg,#6d9e6d,#8bc48b);border-radius:50%;position:absolute;top:-3px;left:50%;transform:translateX(-50%);box-shadow:0 0 5px rgba(109,158,109,.5)}
+.orb-center{font-size:1.1rem;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:pulse-orb 2.5s ease-in-out infinite}
+
+/* Individual: 3 Ringe Blau */
+.orb-wrap-i{width:100px;height:100px;margin:0 auto 1.75rem;position:relative}
+.orb-i-r1{width:100px;height:100px;border:1.5px solid rgba(45,155,181,.3);border-radius:50%;position:absolute;animation:spin-cw 6s linear infinite}
+.orb-i-r2{width:70px;height:70px;top:15px;left:15px;border:1.5px solid rgba(45,155,181,.5);border-radius:50%;position:absolute;animation:spin-ccw 4s linear infinite}
+.orb-i-r3{width:42px;height:42px;top:29px;left:29px;border:1px solid rgba(45,155,181,.3);border-radius:50%;position:absolute;animation:spin-cw 2.5s linear infinite}
+.orb-i-d1{width:9px;height:9px;background:linear-gradient(135deg,#2d9bb5,#4dc5df);border-radius:50%;position:absolute;top:-4.5px;left:50%;transform:translateX(-50%);box-shadow:0 0 8px rgba(45,155,181,.6)}
+.orb-i-d2{width:7px;height:7px;background:linear-gradient(135deg,#ac9b7f,#c4b39a);border-radius:50%;position:absolute;top:-3.5px;left:50%;transform:translateX(-50%)}
+.orb-i-d3{width:5px;height:5px;background:#2d9bb5;border-radius:50%;position:absolute;top:-2.5px;left:50%;transform:translateX(-50%)}
+.orb-i-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:1.2rem;color:#2d9bb5;animation:pulse-orb 2.5s ease-in-out infinite}
+
+/* SeelenKompass: 3 Ringe Gold */
+.orb-wrap-s{width:110px;height:110px;margin:0 auto 1.75rem;position:relative}
+.orb-s-r1{width:110px;height:110px;border:1.5px solid rgba(172,155,127,.2);border-radius:50%;position:absolute;animation:spin-cw 8s linear infinite}
+.orb-s-r2{width:80px;height:80px;top:15px;left:15px;border:1.5px solid rgba(172,155,127,.35);border-radius:50%;position:absolute;animation:spin-ccw 5s linear infinite}
+.orb-s-r3{width:50px;height:50px;top:30px;left:30px;border:1px solid rgba(172,155,127,.25);border-radius:50%;position:absolute;animation:spin-cw 3s linear infinite}
+.orb-s-d1{width:6px;height:6px;background:#ac9b7f;border-radius:50%;position:absolute;top:-3px;left:50%;transform:translateX(-50%);box-shadow:0 0 5px rgba(172,155,127,.6)}
+.orb-s-d2{width:6px;height:6px;background:#6d9e6d;border-radius:50%;position:absolute;top:-3px;left:50%;transform:translateX(-50%)}
+.orb-s-d3{width:4px;height:4px;background:#ac9b7f;border-radius:50%;position:absolute;top:-2px;left:50%;transform:translateX(-50%)}
+.orb-s-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:1.3rem;color:#ac9b7f;animation:pulse-orb 2.5s ease-in-out infinite}
+
+/* Jahreshoroskop: Sonne-Orbit Grün */
+.orb-wrap-j{width:100px;height:100px;margin:0 auto 1.75rem;position:relative}
+.orb-j-r1{width:100px;height:100px;border:1.5px solid rgba(109,158,109,.25);border-radius:50%;position:absolute;animation:spin-cw 12s linear infinite}
+.orb-j-r2{width:70px;height:70px;top:15px;left:15px;border:1.5px solid rgba(109,158,109,.4);border-radius:50%;position:absolute;animation:spin-ccw 7s linear infinite}
+.orb-j-d1{width:10px;height:10px;background:linear-gradient(135deg,#6d9e6d,#8bc48b);border-radius:50%;position:absolute;top:-5px;left:50%;transform:translateX(-50%);animation:sun-glow 3s ease-in-out infinite}
+.orb-j-d2{width:6px;height:6px;background:#ac9b7f;border-radius:50%;position:absolute;top:-3px;left:50%;transform:translateX(-50%)}
+.orb-j-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:.85rem;color:#6d9e6d;animation:pulse-orb 2.5s ease-in-out infinite;text-align:center;line-height:1.1}
 </style>
 </head>
 <body>
@@ -621,7 +675,11 @@ html {
 <div class="wrap" style="padding-bottom:3.5rem">
   <div class="card" style="margin-top:1.25rem">
     <div style="text-align:center;margin-bottom:2rem">
-      <div style="font-size:1.6rem;color:var(--teal);margin-bottom:.65rem;opacity:.6;animation:twinkle 2s ease-in-out infinite">🧭</div>
+      <div id="orb-pkg"><div class="orb-wrap">
+      <div class="orb-ring1"><div class="orb-planet1"></div></div>
+      <div class="orb-ring2"><div class="orb-planet2"></div></div>
+      <div class="orb-center">✦</div>
+    </div>
       <h2 style="font-family:var(--serif);color:#eeeae0;font-size:1.3rem;font-weight:300;margin-bottom:.3rem">⟳ Dein Seelenmuster wird erstellt...</h2>
       <p id="gen-txt" style="color:#9aabba;font-size:.76rem;font-weight:300"></p>
     <p id="gen-timer" style="color:#6d9e6d;font-size:.7rem;margin-top:.5rem;font-family:var(--serif)">⟳ 0 Sekunden</p>
@@ -637,21 +695,23 @@ html {
 <div class="wrap" style="padding-bottom:3.5rem">
   <div style="margin-top:1.25rem">
     <div class="res-hdr">
-      <div style="font-size:1.5rem;margin-bottom:.4rem">✦</div>
-      <h2 style="font-family:'Cormorant Garamond',serif;color:#eeeae0;font-size:1.6rem;font-weight:300;margin-bottom:.3rem">✦ Dein Seelenmuster ist fertig</h2>
+      <div style="text-align:center;margin-bottom:.4rem"><span style="font-size:1.8rem;display:inline-block;animation:puls 3s ease-in-out infinite">✦</span></div>
+      <h2 style="font-family:'Cormorant Garamond',serif;color:#eeeae0;font-size:1.6rem;font-weight:300;margin-bottom:.3rem">Dein Seelenmuster ist fertig</h2>
       <p id="res-sub" style="color:var(--muted);font-size:.74rem;font-weight:300"></p>
     </div>
     <div class="card" style="margin-bottom:.875rem">
       <p style="font-size:.56rem;color:#ac9b7f;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.875rem;font-weight:600">Dein Dokument enthält</p>
+      <p id="res-ac-text" style="font-family:'Cormorant Garamond',Georgia,serif;font-size:.95rem;color:#c4b8a4;line-height:1.8;font-style:italic;margin-bottom:.5rem;padding-bottom:.75rem;border-bottom:1px solid rgba(172,155,127,.1)"></p>
+      <p style="font-size:.72rem;color:#ac9b7f;font-weight:500;margin-bottom:.75rem">Was verbirgt sich noch in deinem Geburtsmuster? ↓</p>
       <div class="res-chs" id="res-chs"></div>
       <div style="background:rgba(172,155,127,.08);border:1px solid rgba(172,155,127,.25);border-radius:14px;padding:1.5rem;text-align:center;margin-bottom:.875rem">
         <div style="font-size:1.4rem;margin-bottom:.4rem">📖</div>
         <h3 style="font-family:'Cormorant Garamond',serif;color:#ac9b7f;font-size:1.3rem;font-weight:300;margin-bottom:.3rem">Deine Landkarte zum Inneren</h3>
-        <p style="font-size:.74rem;color:var(--body);margin-bottom:.875rem;font-weight:300;line-height:1.75">Titelseite · Horoskop-Profil · Alle Kapitel · Persönlicher Nordstern</p>
+        <p style="font-size:.74rem;color:var(--body);margin-bottom:.875rem;font-weight:300;line-height:1.75">Titelseite · Horoskop-Profil · Dein Wesenskern · Wer bin ich</p>
         <button onclick="openPDF()" style="width:100%;padding:1rem;background:#ac9b7f;color:#192436;border:none;border-radius:10px;font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;cursor:pointer">📖 Dokument öffnen & lesen</button>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-top:.5rem">
-          <button class="btn btn-ghost btn-sm" onclick="dlDoc()">⬇ Herunterladen</button>
-          <button class="btn btn-ghost btn-sm" onclick="printDoc()">🖨 Als PDF drucken</button>
+        <div style="display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem">
+          <button onclick="dlDoc()" style="width:100%;padding:.75rem;background:transparent;color:#ac9b7f;border:1px solid rgba(172,155,127,.35);border-radius:10px;font-family:'Inter',sans-serif;font-size:.85rem;cursor:pointer;text-align:center">⬇ Herunterladen</button>
+          <button onclick="printDoc()" style="width:100%;padding:.75rem;background:transparent;color:#ac9b7f;border:1px solid rgba(172,155,127,.35);border-radius:10px;font-family:'Inter',sans-serif;font-size:.85rem;cursor:pointer;text-align:center">🖨 Als PDF drucken</button>
         </div>
       </div>
       <div id="upsell"></div>
@@ -687,6 +747,20 @@ var LOGO='https://static.wixstatic.com/media/23393b_31868a62bb2c4986ac74435ba3e9
 var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
 var SYMS=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
 var PIC={AC:'↑',MC:'↑',Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+var AC_TEXTE={
+  'Fische':'Du trittst in die Welt ein wie das Wasser — grenzenlos, empfindend, tief. Dein Aszendent zeigt: Du bist hier, um zu heilen, zu träumen und zu verbinden.',
+  'Widder':'Du trittst in die Welt ein wie das Feuer — mutig, direkt, ungezähmt. Dein Aszendent zeigt: Du bist hier, um zu bewegen, zu führen und zu beginnen.',
+  'Stier':'Du trittst in die Welt ein wie die Erde — beständig, sinnlich, verlässlich. Dein Aszendent zeigt: Du bist hier, um zu erschaffen, zu bewahren und zu geniessen.',
+  'Zwillinge':'Du trittst in die Welt ein wie der Wind — neugierig, wandlungsfähig, lebendig. Dein Aszendent zeigt: Du bist hier, um zu verbinden, zu denken und zu kommunizieren.',
+  'Krebs':'Du trittst in die Welt ein wie der Mond — einfühlsam, schützend, tief verwurzelt. Dein Aszendent zeigt: Du bist hier, um zu nähren, zu fühlen und zu heimaten.',
+  'Löwe':'Du trittst in die Welt ein wie die Sonne — strahlend, grossherzig, präsent. Dein Aszendent zeigt: Du bist hier, um zu leuchten, zu erschaffen und zu inspirieren.',
+  'Jungfrau':'Du trittst in die Welt ein mit Präzision — analytisch, heilend, dienend. Dein Aszendent zeigt: Du bist hier, um zu verfeinern, zu heilen und das Wesentliche zu sehen.',
+  'Waage':'Du trittst in die Welt ein wie die Harmonie — ausgleichend, schön, gerecht. Dein Aszendent zeigt: Du bist hier, um zu verbinden, zu gestalten und Gleichgewicht zu schaffen.',
+  'Skorpion':'Du trittst in die Welt ein wie das Tiefe — intensiv, transformierend, unnachgiebig. Dein Aszendent zeigt: Du bist hier, um zu wandeln, zu enthüllen und neu zu werden.',
+  'Schütze':'Du trittst in die Welt ein wie der Pfeil — frei, visionär, weitreichend. Dein Aszendent zeigt: Du bist hier, um zu erkunden, zu lehren und Horizonte zu erweitern.',
+  'Steinbock':'Du trittst in die Welt ein wie der Berg — geduldig, zielstrebig, beständig. Dein Aszendent zeigt: Du bist hier, um aufzubauen, zu meistern und Bleibendes zu schaffen.',
+  'Wassermann':'Du trittst in die Welt ein wie der Blitz — originell, visionär, frei. Dein Aszendent zeigt: Du bist hier, um zu erneuern, zu verbinden und die Zukunft zu gestalten.'
+};
 var S={pkg:null,selQ:null,chapters:[],pdfHtml:'',horo:null,fd:null,slogan:''};
 
 // ── DOM HELPER ─────────────────────────────────────────────────────────
@@ -1523,7 +1597,7 @@ function goPage(id){
   for(var i=0;i<all.length;i++) all[i].classList.remove('on');
   var pp=document.getElementById('pdf-pg');if(pp)pp.classList.remove('on');
   if(id==='pdf'){if(pp)pp.classList.add('on');}
-  else{var pg=document.getElementById('pg-'+id);if(pg){pg.classList.add('on');if(id==='gen')pg.style.display='block';}window.scrollTo(0,0);}
+  else{var pg=document.getElementById('pg-'+id);if(pg){pg.classList.add('on');if(id==='gen'){pg.style.display='block';}else{window.scrollTo(0,0);}}}
 }
 
 function renderChallenges(){
@@ -1620,7 +1694,7 @@ function renderPkgs(){
    +'<ul style="font-size:.7rem;color:var(--muted);line-height:1.85;margin:0 0 .875rem;padding-left:1.1rem">'
    +'<li>Alle 4 Quadranten · 12 Lebensbereiche · ~35 Seiten</li>'
    +'<li>Dein persönlicher Slogan – aus deinem Wesenskern</li>'
-   +'<li>Abschliessender Nordstern-Impuls für deinen Weg</li>'
+   +'<li>Wer bin ich — dein Wesenskern</li>'
    +'<li>Begleitung: Hinweis auf 1:1 Coaching mit Luca</li></ul>'
    +'<button class="btn btn-gold btn-fw" type="button" style="color:#060e18">SeelenKompass sichern · CHF 99.–</button></div>'
 
@@ -1705,7 +1779,7 @@ function renderPkgs(){
    +'<ul style="font-size:.7rem;color:var(--muted);line-height:1.85;margin:0 0 .875rem;padding-left:1.1rem">'
    +'<li>Alle 4 Quadranten · 12 Lebensbereiche · ~35 Seiten</li>'
    +'<li>Dein persönlicher Slogan – aus deinem Wesenskern</li>'
-   +'<li>Abschliessender Nordstern-Impuls für deinen Weg</li>'
+   +'<li>Wer bin ich — dein Wesenskern</li>'
    +'<li>Begleitung: Hinweis auf 1:1 Coaching mit Luca</li></ul>'
    +'<button class="btn btn-gold btn-fw" type="button" style="color:#060e18">SeelenKompass sichern · CHF 99.–</button></div>'
 
@@ -2133,12 +2207,24 @@ function startGen(){
   },1000);
   el('gen-txt').textContent='0 von '+areas.length+' Kapiteln · '+name+' · ca. '+Math.floor(totalSec/60)+'min';
   goPage('gen');
+  // Paket-Animation wechseln
+  var orbWrap=el('orb-pkg');
+  if(orbWrap){
+    var pkg=S.pkg||'gratis';
+    var anims={
+      'gratis':'<div class="orb-wrap"><div class="orb-ring1"><div class="orb-dot1"></div></div><div class="orb-ring2"><div class="orb-dot2"></div></div><div class="orb-center">✦</div></div></div>',
+      'individual':'<div class="orb-wrap-i"><div class="orb-i-r1"><div class="orb-i-d1"></div></div><div class="orb-i-r2"><div class="orb-i-d2"></div></div><div class="orb-i-r3"><div class="orb-i-d3"></div></div><div class="orb-i-center">◈</div></div>',
+      'seelenkompas':'<div class="orb-wrap-s"><div class="orb-s-r1"><div class="orb-s-d1"></div></div><div class="orb-s-r2"><div class="orb-s-d2"></div></div><div class="orb-s-r3"><div class="orb-s-d3"></div></div><div class="orb-s-center">✦</div></div>',
+      'jahreshoroskop':'<div class="orb-wrap-j"><div class="orb-j-r1"><div class="orb-j-d1"></div></div><div class="orb-j-r2"><div class="orb-j-d2"></div></div><div class="orb-j-center">2026</div></div>'
+    };
+    orbWrap.innerHTML=anims[pkg]||anims['gratis'];
+  }
   var _timerSec=0;var _timerEl=el('gen-timer');
   if(_timerEl){_timerEl.textContent='⟳ 0 Sekunden';}
   var _timerInt=setInterval(function(){_timerSec++;if(_timerEl)_timerEl.textContent='⟳ '+_timerSec+' Sekunden';},1000);
   S._timerInt=_timerInt;
   var loadMsg=el('gen-txt');
-  if(loadMsg){loadMsg.textContent='Dein Seelenmuster wird erstellt – bitte warten...';}
+  if(loadMsg){loadMsg.textContent='Dein persönliches Seelenmuster wird jetzt erstellt...';}
 
   runGen(areas,0);
 }
@@ -2240,6 +2326,7 @@ function showResult(){if(S._timerInt){clearInterval(S._timerInt);}
   var summaryAreas = isCombo ? getAreasFor(S.pdfs[0].pkg) : getAreas();
   var totalChapters = isCombo ? S.pdfs.reduce(function(sum,p){return sum+getAreasFor(p.pkg).length;},0) : summaryAreas.length;
   el('res-sub').textContent=S.fd.name+' · AC: '+h.AC.sym+h.AC.sign+' · Sonne: '+h.Sonne.sym+h.Sonne.sign+' · '+totalChapters+' Kapitel'+(isCombo?' · Kombi-Paket':'');
+  var acTxtEl=el('res-ac-text');if(acTxtEl){var acTxt=AC_TEXTE[S.horo.AC.sign]||'Dein Aszendent zeigt deinen einzigartigen Weg.';acTxtEl.textContent='„'+acTxt+'“';}
   var chsHtml='';
   var displayList = isCombo ? [].concat.apply([],S.pdfs.map(function(p){return getAreasFor(p.pkg);})) : summaryAreas;
   for(var i=0;i<displayList.length;i++){
