@@ -671,7 +671,7 @@ html {
 </div>
 </div>
 
-<div id="pg-gen" class="pg" style="background:#192436!important;color:#eeeae0!important;min-height:100vh">
+<div id="pg-gen" class="pg" style="background:linear-gradient(160deg,#0a1520,#192436,#0d1e2e);color:#eeeae0;position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;display:none;overflow-y:auto;align-items:center;justify-content:center">
 <div class="wrap" style="padding-bottom:3.5rem">
   <div class="card" style="margin-top:1.25rem">
     <div style="text-align:center;margin-bottom:2rem">
@@ -1594,10 +1594,24 @@ function makeStar(){
 
 function goPage(id){
   var all=document.querySelectorAll('.pg');
-  for(var i=0;i<all.length;i++) all[i].classList.remove('on');
+  for(var i=0;i<all.length;i++){
+    all[i].classList.remove('on');
+    all[i].style.display='none';
+  }
   var pp=document.getElementById('pdf-pg');if(pp)pp.classList.remove('on');
   if(id==='pdf'){if(pp)pp.classList.add('on');}
-  else{var pg=document.getElementById('pg-'+id);if(pg){pg.classList.add('on');if(id==='gen'){pg.style.display='block';}}}
+  else{
+    var pg=document.getElementById('pg-'+id);
+    if(pg){
+      pg.classList.add('on');
+      if(id==='gen'){
+        pg.style.display='flex';
+        pg.style.flexDirection='column';
+      }else{
+        pg.style.display='block';
+      }
+    }
+  }
 }
 
 function renderChallenges(){
