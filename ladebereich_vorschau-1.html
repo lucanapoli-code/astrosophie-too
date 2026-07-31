@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#192436;color:#b8cdd8;padding:2rem 1rem}
+:root{--teal:#256c86;--gold:#ac9b7f;--serif:'Cormorant Garamond',serif}
+.card{background:#1c2840;border:1px solid rgba(37,108,134,.2);border-radius:14px;padding:1.6rem;max-width:420px;margin:0 auto}
+.prog-wrap{background:rgba(37,108,134,.1);border-radius:100px;height:3px;overflow:hidden;margin-bottom:1.75rem}
+.prog-bar{background:linear-gradient(90deg,var(--teal),var(--gold));height:100%;border-radius:100px;width:0;transition:width .6s ease}
+.gen-item{display:flex;align-items:center;gap:.65rem;padding:.4rem .75rem;border-radius:6px;font-size:.76rem;color:#4a6a7a;margin-bottom:.2rem}
+.gen-item.done{color:#eaf4f8}
+.gen-dot{font-size:.8rem;min-width:16px}
+.spinning{display:inline-block;animation:spin 1.2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+h2{font-family:var(--serif);color:#eaf4f8;font-size:1.3rem;font-weight:300;margin-bottom:.3rem;text-align:center}
+#gen-txt{color:#4a6a7a;font-size:.76rem;font-weight:300;text-align:center;display:block;margin-bottom:1.5rem}
+.pkg-label{font-size:.56rem;color:var(--teal);letter-spacing:.15em;text-transform:uppercase;text-align:center;margin-bottom:1rem}
+.switch-btns{display:flex;gap:.5rem;justify-content:center;margin-bottom:2rem;flex-wrap:wrap}
+.switch-btns button{background:rgba(37,108,134,.15);border:1px solid rgba(37,108,134,.3);border-radius:6px;color:#4a6a7a;font-size:.65rem;padding:.35rem .8rem;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+.switch-btns button.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+</style>
+</head>
+<body>
+
+<p style="text-align:center;color:#4a6a7a;font-size:.7rem;margin-bottom:1.5rem">Ladebereich-Vorschau · Je nach Paket andere Planeten-Animation</p>
+
+<div class="switch-btns">
+  <button onclick="showPkg('gratis')" class="active" id="btn-gratis">Gratis</button>
+  <button onclick="showPkg('individual')" id="btn-individual">Individual</button>
+  <button onclick="showPkg('seelenkompas')" id="btn-seelenkompas">SeelenKompass</button>
+  <button onclick="showPkg('jahreshoroskop')" id="btn-jahreshoroskop">Jahreshoroskop</button>
+</div>
+
+<div class="card">
+  <div id="planet-anim" style="display:flex;align-items:center;justify-content:center;margin:0 auto 1rem"></div>
+  <h2>Dein Seelenmuster wird erstellt</h2>
+  <span id="gen-txt">0 von 1 Kapiteln · Luca · noch ca. 28s</span>
+  <div class="prog-wrap"><div class="prog-bar" id="prog" style="width:8%"></div></div>
+  <div id="gen-list">
+    <div class="gen-item done"><span class="gen-dot" style="color:#256c86">✓</span><span style="color:#256c86">✦ Dein Wesenskern</span></div>
+    <div class="gen-item"><span class="gen-dot" style="color:#ac9b7f">◎</span><span><span class="spinning">⟳</span></span>&nbsp;<span>💎 Werte & Ressourcen</span></div>
+    <div class="gen-item"><span class="gen-dot" style="color:#253545">◯</span><span style="color:#253545">🗣 Kommunikation</span></div>
+  </div>
+</div>
+
+<script>
+var S={pkg:'gratis'};
+
+var configs={
+  gratis:{
+    orbits:[{r:28,dur:3,col:'#256c86',planet:{r:5,col:'#2d9bb5'}}],
+    sun:{r:10,col:'#ac9b7f'},size:80,
+    label:'Gratis · ca. 30 Sek.',
+    chapters:['✦ Dein Wesenskern'],
+    durations:30
+  },
+  individual:{
+    orbits:[
+      {r:26,dur:4,col:'#5a4fa8',planet:{r:5,col:'#7b6fc4'}},
+      {r:44,dur:7,col:'#3a3070',planet:{r:4,col:'#5a4fa8'}}
+    ],
+    sun:{r:9,col:'#7b6fc4'},size:110,
+    label:'Individual · ca. 1–2 Min.',
+    chapters:['✦ Dein Wesenskern','💎 Werte & Ressourcen','🗣 Kommunikation'],
+    durations:90
+  },
+  seelenkompas:{
+    orbits:[
+      {r:24,dur:3.5,col:'#8c6c30',planet:{r:5,col:'#c8a84b'}},
+      {r:40,dur:6,col:'#6a5020',planet:{r:4,col:'#ac9b7f'}},
+      {r:57,dur:11,col:'#4a3810',planet:{r:3,col:'#8c7b5f'}}
+    ],
+    sun:{r:9,col:'#c8a84b'},size:136,
+    label:'SeelenKompass · ca. 3–4 Min.',
+    chapters:['✦ Wesenskern','💎 Werte','🗣 Kommunikation','🏠 Familie','🌟 Kreativität','⚡ Energie','💗 Beziehungen','🌊 Transformation','🌍 Weltanschauung','🎯 Berufung','🌐 Kollektiv','✨ Spirituelle Tiefe'],
+    durations:240
+  },
+  jahreshoroskop:{
+    orbits:[
+      {r:22,dur:3,col:'#1a4f63',planet:{r:5,col:'#2d9bb5'}},
+      {r:37,dur:6.5,col:'#133848',planet:{r:4,col:'#256c86'}},
+      {r:53,dur:12,col:'#0e2a36',planet:{r:3,col:'#1a4f63'}}
+    ],
+    sun:{r:9,col:'#2d9bb5'},size:130,
+    label:'Jahreshoroskop · ca. 2–3 Min.',
+    chapters:['🌊 Überblick 2026','🌊 Januar','🌊 Februar','🌊 März','🌊 April','🌊 Mai','🌊 Juni','🌊 Juli','🌊 August','🌊 September','🌊 Oktober','🌊 November','🌊 Dezember'],
+    durations:150
+  }
+};
+
+var _timer=null, _elapsed=0;
+
+function renderAnim(pkg){
+  var cfg=configs[pkg];
+  var cx=cfg.size/2, cy=cfg.size/2;
+  var svg='<svg width="'+cfg.size+'" height="'+cfg.size+'" viewBox="0 0 '+cfg.size+' '+cfg.size+'" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">';
+  svg+='<defs>';
+  svg+='<filter id="pglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+  svg+='<filter id="sglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+  svg+='<radialGradient id="sungrad" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#fff" stop-opacity=".6"/><stop offset="100%" stop-color="'+cfg.sun.col+'"/></radialGradient>';
+  svg+='</defs>';
+  for(var i=0;i<cfg.orbits.length;i++){
+    var o=cfg.orbits[i];
+    svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+o.r+'" fill="none" stroke="'+o.col+'" stroke-width="0.8" opacity="0.5"/>';
+  }
+  svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(cfg.sun.r+4)+'" fill="'+cfg.sun.col+'" opacity="0.12" filter="url(#sglow)"/>';
+  svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+cfg.sun.r+'" fill="url(#sungrad)" filter="url(#sglow)"/>';
+  for(var j=0;j<cfg.orbits.length;j++){
+    var orb=cfg.orbits[j];
+    svg+='<circle r="'+(orb.planet.r+3)+'" fill="'+orb.planet.col+'" opacity="0.2" filter="url(#pglow)">';
+    svg+='<animateTransform attributeName="transform" type="rotate" from="0 '+cx+' '+cy+'" to="360 '+cx+' '+cy+'" dur="'+orb.dur+'s" repeatCount="indefinite"/>';
+    svg+='<animateTransform attributeName="transform" type="translate" values="'+orb.r+' 0" additive="sum"/>';
+    svg+='</circle>';
+    svg+='<circle r="'+orb.planet.r+'" fill="'+orb.planet.col+'">';
+    svg+='<animateTransform attributeName="transform" type="rotate" from="0 '+cx+' '+cy+'" to="360 '+cx+' '+cy+'" dur="'+orb.dur+'s" repeatCount="indefinite"/>';
+    svg+='<animateTransform attributeName="transform" type="translate" values="'+orb.r+' 0" additive="sum"/>';
+    svg+='</circle>';
+  }
+  svg+='</svg>';
+  document.getElementById('planet-anim').innerHTML=svg;
+}
+
+function renderList(pkg, done){
+  var chs=configs[pkg].chapters;
+  var html='';
+  for(var i=0;i<chs.length;i++){
+    if(i<done){
+      html+='<div class="gen-item done"><span class="gen-dot" style="color:#256c86">✓</span><span style="color:#256c86">'+chs[i]+'</span></div>';
+    } else if(i===done){
+      html+='<div class="gen-item"><span class="gen-dot" style="color:#ac9b7f">◎</span>&nbsp;<span class="spinning">⟳</span>&nbsp;<span>'+chs[i]+'</span></div>';
+    } else {
+      html+='<div class="gen-item"><span class="gen-dot" style="color:#253545">◯</span><span style="color:#4a6a7a">'+chs[i]+'</span></div>';
+    }
+  }
+  document.getElementById('gen-list').innerHTML=html;
+}
+
+function showPkg(pkg){
+  S.pkg=pkg;
+  document.querySelectorAll('.switch-btns button').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('btn-'+pkg).classList.add('active');
+  renderAnim(pkg);
+  _elapsed=0;
+  if(_timer) clearInterval(_timer);
+  var cfg=configs[pkg];
+  var total=cfg.durations;
+  var done=0;
+  var perChap=Math.round(total/cfg.chapters.length);
+  renderList(pkg,done);
+  document.getElementById('prog').style.width='3%';
+  _timer=setInterval(function(){
+    _elapsed++;
+    var rem=Math.max(0,total-_elapsed);
+    var min=Math.floor(rem/60), sec=rem%60;
+    var timeStr=min>0?(min+'min '+sec+'s'):(sec+'s');
+    done=Math.min(cfg.chapters.length-1,Math.floor(_elapsed/perChap));
+    var pct=Math.min(95,Math.round(_elapsed/total*100));
+    document.getElementById('gen-txt').textContent=done+' von '+cfg.chapters.length+' Kapiteln · Luca · noch ca. '+timeStr;
+    document.getElementById('prog').style.width=pct+'%';
+    renderList(pkg,done);
+    if(_elapsed>=total){clearInterval(_timer);}
+  },1000);
+}
+
+showPkg('gratis');
+</script>
+</body>
+</html>
