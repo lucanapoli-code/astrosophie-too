@@ -586,9 +586,9 @@ html {
     <div class="fg" style="margin-bottom:1.1rem">
       <label>Geburtsdatum</label>
       <div style="display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:.5rem">
-        <input type="number" id="f-day" onchange="syncDate()" placeholder="Tag" min="1" max="31" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
-        <input type="number" id="f-month" onchange="syncDate()" placeholder="Monat" min="1" max="12" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
-        <input type="number" id="f-year" onchange="syncDate()" placeholder="Jahr" min="1900" max="2010" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="syncDate()"/>
+        <input type="number" id="f-day" onchange="syncDate()" placeholder="Tag" min="1" max="31" maxlength="2" inputmode="numeric" pattern="[0-9]*" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,2);syncDate()"/>
+        <input type="number" id="f-month" onchange="syncDate()" placeholder="Monat" min="1" max="12" maxlength="2" inputmode="numeric" pattern="[0-9]*" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,2);syncDate()"/>
+        <input type="number" id="f-year" onchange="syncDate()" placeholder="Jahr" min="1900" max="2010" maxlength="4" inputmode="numeric" pattern="[0-9]*" style="text-align:center;padding:.8rem .5rem;background:#fdfaf5;border:1.5px solid rgba(172,155,127,.3);border-radius:10px;font-size:.9rem;color:#192436;outline:none;font-family:'Inter',sans-serif" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,4);syncDate()"/>
       </div>
       <p style="font-size:.65rem;color:#9aabba;margin-top:.3rem;line-height:1.5">Tag · Monat · Jahr — z.B. 15 · 03 · 1990</p>
       <input type="hidden" id="f-date"/>
@@ -673,11 +673,13 @@ html {
 
 
 <div id="pdf-pg">
-  <div style="padding:.5rem 1rem;background:#fdfaf5;border-bottom:1px solid rgba(172,155,127,.15)"><button onclick="goPage('result')" style="background:transparent;border:none;color:#9aabba;font-size:.75rem;cursor:pointer;font-family:'Inter',sans-serif;padding:.3rem 0">← Zurück</button></div>
-    <div style="display:flex;gap:.4rem;flex-shrink:0">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;background:#fdfaf5;border-bottom:1px solid rgba(172,155,127,.15)">
+    <button onclick="goPage('result')" style="background:transparent;border:none;color:#9aabba;font-size:.75rem;cursor:pointer;font-family:'Inter',sans-serif;padding:.3rem .3rem .3rem 0;display:flex;align-items:center;gap:.2rem">← Zurück</button>
+    <div style="display:flex;gap:.5rem;flex-shrink:0">
       <button class="btn btn-teal btn-sm" onclick="printDoc()">🖨 Drucken</button>
       <button class="btn btn-gold btn-sm" style="color:#192436" onclick="dlDoc()">⬇ Speichern</button>
     </div>
+  </div>
   <iframe id="pdf-frame" class="pdf-frame" title="Dein Seelenmuster"></iframe>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js" onerror="window._noAstro=true"></script>
@@ -1556,7 +1558,16 @@ function mkPrompt(id,h,isFirst){
     11:base+'\n'+combo(11)+'\nKAPITEL 11 KOLLEKTIV & VISION: Beschreibe Haus 11 (Gemeinschaft, Zukunftsvision, soziales Engagement - nutze den Hausherrscher von Haus 11 und seine Stellung aus der HAUS-11-Zeile oben), in Polarität zu Haus 5 (wie die persönliche Kreativität/der Selbstausdruck zur Vision für die Gemeinschaft wird). '+W,
 
     // KAPITEL 12: Spirituelle Tiefe / Nordstern -> Haus 12 + Neptun + Polarität Haus 6 (Dienst als gelebte Spiritualität)
-    12:base+'\n'+combo(12)+'\nKAPITEL 12 SPIRITUELLE TIEFE & NORDSTERN: Beschreibe Haus 12 (Unbewusstes, Hingabe, spirituelle Verbindung - nutze den Hausherrscher von Haus 12 und seine Stellung aus der HAUS-12-Zeile oben; falls Haus 12 im Fische steht, ist Neptun '+h.Neptun.sign+' zusätzlich zentral), in Polarität zu Haus 6 (wie sich Spiritualität im Alltag/Dienst konkret manifestieren kann). A:TIEFE (150 Woerter) - PFLICHT darin: unerlöste Variante dieser Energie (mit Beispiel) UND direkt danach die erlöste Lösung dazu (mit Beispiel). B:NORDSTERN - ein abschließender Impuls als persönlicher Leitstern (80 Woerter). PFLICHT als letzter Satz von B:NORDSTERN, IMMER: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten, in dieser Woche umsetzbaren Mini-Uebung (1 Satz). Niemals weglassen.'
+    12:base+'\n'+combo(12)+'\nKAPITEL 12 SPIRITUELLE TIEFE & NORDSTERN: Beschreibe Haus 12 (Unbewusstes, Hingabe, spirituelle Verbindung - nutze den Hausherrscher von Haus 12 und seine Stellung aus der HAUS-12-Zeile oben; falls Haus 12 im Fische steht, ist Neptun '+h.Neptun.sign+' zusätzlich zentral), in Polarität zu Haus 6 (wie sich Spiritualität im Alltag/Dienst konkret manifestieren kann). A:TIEFE (150 Woerter) - PFLICHT darin: unerlöste Variante dieser Energie (mit Beispiel) UND direkt danach die erlöste Lösung dazu (mit Beispiel). B:NORDSTERN - ein abschließender Impuls als persönlicher Leitstern (80 Woerter). PFLICHT als letzter Satz von B:NORDSTERN, IMMER: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten, in dieser Woche umsetzbaren Mini-Uebung (1 Satz). Niemals weglassen.',
+
+    // KAPITEL 'sonne': Der Seelenauftrag - was die Sonne (unabhängig vom AC) von dieser Person will
+    'sonne':base+'\nKAPITEL SONNE - SEELENAUFTRAG: Die Sonne steht in '+sun.sign+'. Erkläre den Unterschied zwischen AC ('+ac.sign+', wie man in die Welt eintritt) und Sonne (Auftrag, wozu die Seele sich entwickeln will). Beschreibe konkret was die Sonne in '+sun.sign+' als Lebensaufgabe mit sich bringt - unabhängig vom Aszendenten. PFLICHT-STRUKTUR: 2 Absätze Fliesstext (je ca. 90 Woerter) über die Sonnen-Qualität in '+sun.sign+' als Entwicklungsaufgabe. Dann ERLÖST (60 Woerter, konkretes Beispiel) und UNERLÖST (60 Woerter, konkretes Beispiel) der Sonne in '+sun.sign+'. Dann 1 Satz "Dein Seelenauftrag:" als konkrete, umsetzbare Formulierung. '+W,
+
+    // KAPITEL 'kombi': AC trifft Sonne - die tiefste Kombinationslesart
+    'kombi':base+'\nKAPITEL KOMBINATION AC×SONNE: AC ist '+ac.sign+' (Eintrittswerkzeug), Sonne ist '+sun.sign+' (Seelenauftrag). Beschreibe wie beide zusammenwirken: Wie das Werkzeug (AC) genutzt wird, um den Auftrag (Sonne) zu erfüllen - oder wo eine Spannung zwischen beiden liegt, wenn die Zeichen sich in ihrer Grundnatur unterscheiden. PFLICHT-STRUKTUR: 2 Absätze Fliesstext (je ca. 90 Woerter) zur Kombination '+ac.sign+' AC × '+sun.sign+' Sonne. Dann ERLÖST (60 Woerter) und UNERLÖST (60 Woerter) dieser spezifischen Kombination, je mit konkretem Beispiel. Dann 1 Satz "Im Alltag bedeutet das:" mit einer konkreten, alltagsnahen Beobachtung wie sich diese Kombination typischerweise zeigt. '+W,
+
+    // KAPITEL 'mc': Finalität - höchste Entwicklung, MC als Ziel des ganzen Weges
+    'mc':base+'\nKAPITEL MC - FINALITÄT: MC steht in '+mc.sign+'. Der MC ist nicht der Beruf, sondern das Ziel der gesamten Entwicklung - was am Ende sichtbar wird, wenn AC ('+ac.sign+') als Tor und Sonne ('+sun.sign+') als Auftrag integriert sind. PFLICHT-STRUKTUR: 2 Absätze Fliesstext (je ca. 90 Woerter) zum MC in '+mc.sign+' als höchstem Entwicklungsziel. Dann 1 Absatz (70 Woerter) der AC ('+ac.sign+'), Sonne ('+sun.sign+') und MC ('+mc.sign+') explizit zu einem Gesamtbild verbindet. Dann ERLÖST (50 Woerter) und UNERLÖST (50 Woerter) des MC in '+mc.sign+'. Dann 3 kurze Sätze "Der vollständige Seelenweg:" - je 1 Satz zu AC, Sonne und MC als zusammenhängender Weg. '+W
   };
   var prompt=t[id]||'';
   if(isFirst && prompt){
@@ -2046,7 +2057,18 @@ function pickQ(id){
 
 function getAreas(){
   if(S.pkg==='gratis')return[QUADS[0].areas[0]];
-  if(S.pkg==='individual'){for(var i=0;i<QUADS.length;i++)if(QUADS[i].id===S.selQ)return QUADS[i].areas;return[];}
+  if(S.pkg==='individual'){
+    for(var i=0;i<QUADS.length;i++){
+      if(QUADS[i].id===S.selQ){
+        return QUADS[i].areas.concat([
+          {id:'sonne',ic:'☀',t:'Deine Lebensaufgabe',s:'Sonne · Seelenauftrag'},
+          {id:'kombi',ic:'✦',t:'AC trifft Sonne',s:'Die grosse Kombination'},
+          {id:'mc',ic:'⊕',t:'Deine Finalität',s:'MC · höchste Entwicklung'}
+        ]);
+      }
+    }
+    return [];
+  }
   if(S.pkg==='jahreshoroskop'){
     var months=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
     var ya=[{id:0,t:'Überblick 2026',ic:'🌊'}];
@@ -2054,6 +2076,11 @@ function getAreas(){
     return ya;
   }
   var all=[];for(var i=0;i<QUADS.length;i++)for(var j=0;j<QUADS[i].areas.length;j++)all.push(QUADS[i].areas[j]);
+  all=all.concat([
+    {id:'sonne',ic:'☀',t:'Deine Lebensaufgabe',s:'Sonne · Seelenauftrag'},
+    {id:'kombi',ic:'✦',t:'AC trifft Sonne',s:'Die grosse Kombination'},
+    {id:'mc',ic:'⊕',t:'Deine Finalität',s:'MC · höchste Entwicklung'}
+  ]);
   return all;
 }
 // Wie getAreas(), aber fuer ein beliebiges Paket ohne S.pkg zu veraendern (z.B. fuer Kombi-Zusammenfassungen)
@@ -2585,7 +2612,7 @@ function runGen(areas,i){
       var sm=text.match(/SLOGAN:\s*"([^"]+)"/i);
       if(sm){ S.slogan=sm[1]; text=text.replace(/SLOGAN:\s*"[^"]+"\s*\n?/i,'').trim(); }
     }
-    S.chapters.push({text:text});
+    S.chapters.push(text);
     var q=null;
     for(var j=0;j<QUADS.length;j++) for(var k=0;k<QUADS[j].areas.length;k++) if(QUADS[j].areas[k].id===areas[i].id) q=QUADS[j];
     if(q) el('gi'+i).style.background=q.col+'0d';
@@ -2817,36 +2844,84 @@ body=body.replace(/Maria Müller/g,name||'Maria Müller');body=body.replace(/Zü
       }
     }
     // Detaillierte Planetenpositionen-Box (falls in der Vorlage vorhanden)
-    var pbAnchor='background:rgba(25,36,54,.95);border-radius:12px;padding:1.1rem;margin:1rem 0';
-    var anchorIdx=body.indexOf(pbAnchor);
-    if(anchorIdx>-1 && h.houses){
-      var pbStart=body.lastIndexOf('<div',anchorIdx);
-      var pbEnd=findMatchingDivEnd(body,pbStart);
-      if(pbStart>-1 && pbEnd>-1){
-        var planetOrder=[
-          ['☉',h.Sonne],['☽',h.Mond],['☿',h.Merkur],['♀',h.Venus],['♂',h.Mars],
-          ['♃',h.Jupiter],['♄',h.Saturn],['♅',h.Uranus],['♆',h.Neptun],['♇',h.Pluto]
-        ];
-        var pplace=fd&&fd.place?fd.place:'';
-        var pdateFmt=bdate;
-        var _pp=bdate?bdate.split('-'):null;
-        var _mnP=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
-        if(_pp&&_pp.length===3) pdateFmt=parseInt(_pp[2])+'. '+_mnP[parseInt(_pp[1])-1]+' '+_pp[0];
-        var grid='<div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">↑ AC</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">'+h.AC.sign+' '+fmtDM(h.AC.deg)+'</span></div>'
-          +(h.MC?('<div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">⊕ MC</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">'+h.MC.sign+' '+fmtDM(h.MC.deg)+' · H10</span></div>'):'');
-        for(var pgi=0;pgi<planetOrder.length;pgi++){
-          var psym=planetOrder[pgi][0], pobj=planetOrder[pgi][1];
-          if(!pobj) continue;
-          var phouse=houseOfPlanet(pobj.raw,h.houses);
-          grid+='<div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">'+psym+'</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">'+pobj.sign+' '+fmtDM(pobj.deg)+' · H'+phouse+'</span></div>';
-        }
-        var newPlanetBox='<div style="'+pbAnchor+';border:1px solid rgba(172,155,127,.18)">\n'
-          +'  <p style="font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:#ac9b7f;margin-bottom:.875rem;text-align:center;font-weight:700">✦ Deine Planetenpositionen · '+pdateFmt+' · '+pplace+' · Placidus</p>\n'
-          +'  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.3rem">'+grid+'</div>\n'
-          +'  <p style="font-size:.58rem;color:rgba(172,155,127,.6);text-align:center;margin-top:.65rem">✦ Berechnet mit Swiss-Ephemeris-Qualität · Placidus-Häusersystem</p>\n'
-          +'</div>';
-        body=body.slice(0,pbStart)+newPlanetBox+body.slice(pbEnd);
+    // ROBUSTHEITS-FIX: manche Vorlagen (z.B. SeelenKompass) enthalten diese Box
+    // ZWEIMAL mit leicht unterschiedlicher Opazität (.95 vs .97) - eine einzelne
+    // indexOf()-Suche fand nur die erste und liess die zweite als Demo-Text
+    // (Fische 14°13' etc.) stehen. Jetzt: Schleife über ALLE Vorkommen der
+    // Überschrift "Deine Planetenpositionen", unabhängig von der exakten Opazität.
+    var headerMarker='Deine Planetenpositionen';
+    var searchFrom=0;
+    var safetyCounter=0;
+    while(h.houses && safetyCounter<10){
+      safetyCounter++;
+      var headerIdx=body.indexOf(headerMarker,searchFrom);
+      if(headerIdx===-1) break;
+      var pbStart=body.lastIndexOf('<div',headerIdx);
+      // Finde den äusseren Container: gehe von headerIdx rückwärts zum divStart
+      // dessen style-Attribut "border-radius" UND "padding" enthält (die Box selbst,
+      // nicht ein umschliessendes <p> oder <span>).
+      var searchBack=headerIdx;
+      var boxStart=-1;
+      for(var bt=0;bt<5;bt++){
+        var cand=body.lastIndexOf('<div',searchBack);
+        if(cand===-1) break;
+        var tagEnd=body.indexOf('>',cand);
+        var tagStr=body.substring(cand,tagEnd);
+        if(tagStr.indexOf('border-radius')>-1 && tagStr.indexOf('padding')>-1){ boxStart=cand; break; }
+        searchBack=cand-1;
       }
+      if(boxStart===-1){ searchFrom=headerIdx+headerMarker.length; continue; }
+      var pbEnd=findMatchingDivEnd(body,boxStart);
+      if(pbEnd===-1){ searchFrom=headerIdx+headerMarker.length; continue; }
+      var planetOrder=[
+        ['☉',h.Sonne],['☽',h.Mond],['☿',h.Merkur],['♀',h.Venus],['♂',h.Mars],
+        ['♃',h.Jupiter],['♄',h.Saturn],['♅',h.Uranus],['♆',h.Neptun],['♇',h.Pluto]
+      ];
+      var pplace=fd&&fd.place?fd.place:'';
+      var pdateFmt=bdate;
+      var _pp=bdate?bdate.split('-'):null;
+      var _mnP=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+      if(_pp&&_pp.length===3) pdateFmt=parseInt(_pp[2])+'. '+_mnP[parseInt(_pp[1])-1]+' '+_pp[0];
+      var grid='<div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">↑ AC</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">'+h.AC.sign+' '+fmtDM(h.AC.deg)+'</span></div>'
+        +(h.MC?('<div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">⊕ MC</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">'+h.MC.sign+' '+fmtDM(h.MC.deg)+' · H10</span></div>'):'');
+      for(var pgi=0;pgi<planetOrder.length;pgi++){
+        var psym=planetOrder[pgi][0], pobj=planetOrder[pgi][1];
+        if(!pobj) continue;
+        var phouse=houseOfPlanet(pobj.raw,h.houses);
+        grid+='<div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">'+psym+'</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">'+pobj.sign+' '+fmtDM(pobj.deg)+' · H'+phouse+'</span></div>';
+      }
+      var newPlanetBox='<div style="background:rgba(25,36,54,.95);border-radius:12px;padding:1.1rem;margin:1rem 0;border:1px solid rgba(172,155,127,.18)">\n'
+        +'  <p style="font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:#ac9b7f;margin-bottom:.875rem;text-align:center;font-weight:700">✦ Deine Planetenpositionen · '+pdateFmt+' · '+pplace+' · Placidus</p>\n'
+        +'  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.3rem">'+grid+'</div>\n'
+        +'  <p style="font-size:.58rem;color:rgba(172,155,127,.6);text-align:center;margin-top:.65rem">✦ Berechnet mit Swiss-Ephemeris-Qualität · Placidus-Häusersystem</p>\n'
+        +'</div>';
+      body=body.slice(0,boxStart)+newPlanetBox+body.slice(pbEnd);
+      searchFrom=boxStart+newPlanetBox.length;
+    }
+    // ── DRITTES SICHERHEITSNETZ: generischer globaler Ersatz ──────────────
+    // Manche Vorlagen (z.B. SeelenKompass) enthalten Planetenpositionen noch
+    // in einer DRITTEN, abweichenden HTML-Struktur (Flexbox-Karten statt Grid),
+    // die die obige Container-Suche nicht erfasst. Statt jede mögliche Struktur
+    // einzeln zu suchen, ersetzen wir hier direkt jeden bekannten festen
+    // Demo-Gradwert (Lucas eigenes Test-Chart) global im gesamten Text durch
+    // den echten, aus h berechneten Wert - unabhängig davon in welcher Box er steht.
+    function escRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+    var demoVals=[
+      ['Fische 14°13',h.AC.sign+' '+fmtDM(h.AC.deg)],
+      ['Schütze 10°',h.MC?h.MC.sign+' '+fmtDM(h.MC.deg):'Schütze 10°'],
+      ['Waage 27°11',h.Sonne.sign+' '+fmtDM(h.Sonne.deg)],
+      ['Krebs 15°52',h.Mond?h.Mond.sign+' '+fmtDM(h.Mond.deg):'Krebs 15°52'],
+      ['Waage 13°22',h.Merkur?h.Merkur.sign+' '+fmtDM(h.Merkur.deg):'Waage 13°22'],
+      ['Schütze 13°15',h.Venus?h.Venus.sign+' '+fmtDM(h.Venus.deg):'Schütze 13°15'],
+      ['Waage 20°16',h.Mars?h.Mars.sign+' '+fmtDM(h.Mars.deg):'Waage 20°16'],
+      ['Krebs 10°45',h.Jupiter?h.Jupiter.sign+' '+fmtDM(h.Jupiter.deg):'Krebs 10°45'],
+      ['Steinbock 8°32',h.Saturn?h.Saturn.sign+' '+fmtDM(h.Saturn.deg):'Steinbock 8°32'],
+      ['Steinbock 2°01',h.Uranus?h.Uranus.sign+' '+fmtDM(h.Uranus.deg):'Steinbock 2°01'],
+      ['Steinbock 9°50',h.Neptun?h.Neptun.sign+' '+fmtDM(h.Neptun.deg):'Steinbock 9°50'],
+      ['Skorpion 14°23',h.Pluto?h.Pluto.sign+' '+fmtDM(h.Pluto.deg):'Skorpion 14°23']
+    ];
+    for(var dv=0;dv<demoVals.length;dv++){
+      body=body.replace(new RegExp(escRe(demoVals[dv][0]),'g'),demoVals[dv][1]);
     }
   }
   if(chapters&&chapters.length>0){
