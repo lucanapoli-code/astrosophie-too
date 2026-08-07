@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><meta name="color-scheme" content="only light"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#fdfaf5;color:#192436}
+:root{
+  --navy:#192436;--gold:#ac9b7f;--goldD:#8c7b5f;
+  --cream:#fdfaf5;--creamD:#f0ebe1;--muted:#6a7a8a;
+  --serif:Georgia,'Times New Roman',serif;
+}
+
+/* ── GRATIS: Gold/Creme ── */
+.pkg-gratis   { --accent:#ac9b7f; --accentL:#c4b396; --accentBg:#f5ede0; }
+/* ── INDIVIDUAL: Violet ── */
+.pkg-individual { --accent:#7b6fc4; --accentL:#9b8fc4; --accentBg:#f0eef8; }
+/* ── SEELENKOMPASS: Teal ── */
+.pkg-seelen   { --accent:#2a7a8a; --accentL:#4a9aaa; --accentBg:#eef5f7; }
+/* ── JAHRESHOROSKOP: Grün ── */
+.pkg-jahr     { --accent:#4a7a4a; --accentL:#6a9e6a; --accentBg:#eef5ee; }
+
+/* NAV */
+nav{background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:.8rem 1.5rem}
+.nav-logo-small{height:28px;width:auto;opacity:.85}
+.nav-btn{font-size:.62rem;padding:.4rem .85rem;background:transparent;border:1px solid rgba(172,155,127,.5);border-radius:6px;color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif}
+
+/* ── TITELSEITE ── */
+.cover{background:var(--navy);padding:2.5rem 1.5rem 2rem;text-align:center;position:relative}
+
+/* Paket-Badge oben */
+.pkg-badge-wrap{display:flex;justify-content:center;margin-bottom:1.25rem}
+.pkg-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .9rem;border-radius:20px;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+
+/* Logo klein, dezent */
+.cover-logo{height:32px;width:auto;opacity:.7;display:block;margin:0 auto .875rem}
+
+.cover-divider{height:1px;max-width:120px;margin:.875rem auto;opacity:.3}
+
+/* Titel */
+.cover h1{font-family:var(--serif);font-size:1.75rem;font-weight:300;color:#eeeae0;line-height:1.2;margin-bottom:.3rem}
+.cover h1 em{font-style:italic}
+.cover-thema{font-family:var(--serif);font-size:1rem;font-weight:300;margin-bottom:.3rem;opacity:.8}
+.cover-person{font-size:.75rem;color:rgba(238,234,224,.45);letter-spacing:.04em;margin-bottom:1.25rem}
+.cover-quote{font-family:var(--serif);font-style:italic;font-size:.78rem;color:rgba(172,155,127,.5);line-height:1.7}
+
+/* ── HOROSKOP ── */
+.horo{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;padding:1.25rem;background:#fff;border-bottom:1px solid rgba(25,36,54,.06)}
+.horo-item{text-align:center;padding:.65rem .4rem;border-radius:10px}
+.horo-label{font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.25rem;display:block;font-weight:600}
+.horo-val{font-family:var(--serif);font-size:.95rem;color:var(--navy);line-height:1.2}
+
+/* ── BERG ── */
+.berg{width:100%;height:220px;position:relative;overflow:hidden}
+.berg img{width:100%;height:100%;object-fit:cover;object-position:center 55%;display:block}
+.berg-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(25,36,54,.15) 0%,transparent 50%,rgba(253,250,245,.95) 100%)}
+.berg-label{position:absolute;bottom:.75rem;left:0;right:0;text-align:center;font-family:var(--serif);font-style:italic;font-size:.72rem;color:rgba(25,36,54,.4);letter-spacing:.03em}
+
+/* ── KAPITEL ── */
+.chapter{padding:1.75rem 1.5rem;border-bottom:1px solid rgba(25,36,54,.06)}
+.chapter-meta{font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem;display:block;text-align:center;font-weight:600}
+.chapter h2{font-family:var(--serif);font-size:1.65rem;font-weight:300;color:var(--navy);line-height:1.15;margin-bottom:.2rem;text-align:center}
+.chapter h2 em{font-style:italic}
+.chapter-sub{font-size:.68rem;color:var(--muted);text-align:center;margin-bottom:1.25rem;letter-spacing:.03em}
+.chapter-body{font-size:.83rem;color:var(--muted);line-height:1.9;margin-bottom:.875rem;text-align:left}
+.chapter-body strong{color:var(--navy);font-weight:600}
+
+/* Beispiel */
+.example{border-left:2px solid var(--gold);padding:.75rem 1rem;margin:.875rem 0;background:var(--creamD);border-radius:0 8px 8px 0}
+.example-label{font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:var(--goldD);font-weight:700;margin-bottom:.3rem;display:block}
+.example p{font-size:.79rem;color:var(--navy);line-height:1.75;font-style:italic}
+
+/* Erlöst/Unerlöst */
+.states{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.875rem 0}
+.state{border-radius:10px;padding:.875rem}
+.state-e{background:#f5f0e8;border:1px solid rgba(172,155,127,.3)}
+.state-u{background:#f0f2f5;border:1px solid rgba(25,36,54,.1)}
+.state-label{font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.35rem;display:block}
+.state-e .state-label{color:var(--goldD)}
+.state-u .state-label{color:var(--navy)}
+.state p{font-size:.76rem;color:var(--muted);line-height:1.7}
+
+/* Zitat */
+.pull-quote{font-family:var(--serif);font-style:italic;font-size:.9rem;color:var(--navy);text-align:center;padding:.875rem 1.25rem;margin:.875rem 0;border-top:1px solid rgba(172,155,127,.2);border-bottom:1px solid rgba(172,155,127,.2);line-height:1.65}
+
+/* Keynote */
+.keynote{background:var(--navy);border-radius:10px;padding:1.1rem 1.25rem;margin:.875rem 0}
+.keynote-label{font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;display:block}
+.keynote h3{font-family:var(--serif);font-size:1.05rem;font-weight:300;color:#eeeae0;margin-bottom:.3rem;line-height:1.3}
+.keynote p{font-size:.78rem;color:rgba(238,234,224,.6);line-height:1.75}
+
+/* Mitnehmen */
+.mitnehmen{border-radius:10px;padding:1rem 1.1rem;margin-top:.875rem;border:1px solid rgba(172,155,127,.25);background:rgba(172,155,127,.07)}
+.mitnehmen-label{font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:var(--goldD);margin-bottom:.3rem;display:block;font-weight:700}
+.mitnehmen p{font-size:.79rem;color:var(--navy);line-height:1.75}
+
+.star{text-align:center;color:var(--gold);font-size:.72rem;letter-spacing:.35rem;margin:1rem 0;opacity:.45}
+
+/* ── PAKET-SPEZIFISCHE AKZENTE ── */
+/* Individual – Violett */
+.pkg-individual .horo-item{background:#f5f0e8;border:1px solid rgba(123,111,196,.15)}
+.pkg-individual .horo-label{color:#7b6fc4}
+.pkg-individual .chapter-meta{color:#7b6fc4}
+.pkg-individual .example{border-left-color:#7b6fc4;background:#f5f3fc}
+.pkg-individual .state-e{background:#f5f0e8;border-color:rgba(123,111,196,.2)}
+.pkg-individual .state-e .state-label{color:#7b6fc4}
+.pkg-individual .pull-quote{border-color:rgba(123,111,196,.2)}
+.pkg-individual .mitnehmen{background:rgba(123,111,196,.06);border-color:rgba(123,111,196,.2)}
+.pkg-individual .mitnehmen-label{color:#7b6fc4}
+.pkg-individual .pkg-badge{background:rgba(123,111,196,.15);color:#7b6fc4;border:1px solid rgba(123,111,196,.3)}
+.pkg-individual .cover-divider{background:#7b6fc4}
+.pkg-individual .cover h1 em{color:#9b8fc4}
+.pkg-individual .cover-thema{color:#9b8fc4}
+</style></head><body>
+
+<nav>
+  <span style="font-family:Georgia,serif;color:#ac9b7f;font-size:.85rem;letter-spacing:.05em">Mental & Spiritual</span><img style="display:none" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" style="display:none" alt="Mental & Spiritual">
+  <button class="nav-btn">ERSTGESPRÄCH ✦</button>
+</nav>
+
+<!-- TITELSEITE -->
+<div class="cover">
+
+  <!-- Paket-Badge: sofort klar was es ist -->  <div class="pkg-badge-wrap">
+    <span class="pkg-badge" style="background:rgba(172,155,127,.15);color:#ac9b7f;border:1px solid rgba(172,155,127,.3)">✦ Gratis-Analyse · Erster Einblick · Kostenlos</span>
+  </div>
+
+  <!-- Symbol -->
+  <div style="display:flex;justify-content:center;margin:.5rem 0 1rem;opacity:.85">
+    <svg viewBox="0 0 80 80" width="72" height="72" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(172,155,127,.25)" stroke-width="1.5"/>
+  <circle cx="40" cy="40" r="26" fill="none" stroke="rgba(172,155,127,.15)" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="40" y1="6" x2="40" y2="18" stroke="#ac9b7f" stroke-width="2"/>
+  <line x1="40" y1="62" x2="40" y2="74" stroke="#8c7b5f" stroke-width="1.5"/>
+  <line x1="6" y1="40" x2="18" y2="40" stroke="#8c7b5f" stroke-width="1.5"/>
+  <line x1="62" y1="40" x2="74" y2="40" stroke="#8c7b5f" stroke-width="1.5"/>
+  <polygon points="40,18 37,40 40,34 43,40" fill="#192436"/>
+  <polygon points="40,62 37,40 40,46 43,40" fill="#ac9b7f" opacity=".7"/>
+  <circle cx="40" cy="40" r="6" fill="#192436" stroke="#ac9b7f" stroke-width="2"/>
+  <circle cx="40" cy="40" r="3" fill="#ac9b7f"/>
+</svg>
+  </div>
+
+  <!-- Logo dezent -->
+  <span style="font-family:Georgia,serif;color:rgba(172,155,127,.6);font-size:.75rem;letter-spacing:.1em;display:block;margin:0 auto .875rem;text-align:center">✦ MENTAL & SPIRITUAL ✦</span><img style="display:none" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" style="display:none" alt="Logo">
+
+  <div class="cover-divider"></div>
+
+  <h1>Dein persönliches<br><em>Seelenmuster</em></h1>
+  <p class="cover-thema" style="color:#ac9b7f">Wesenskern · Aszendent · Erste Orientierung</p>
+  <p class="cover-person">Anna Müller · 12. März 1978 · Zürich</p>
+
+  <div class="cover-divider"></div>
+
+  <p class="cover-quote">„Wissen wir, wie die Schöpfung funktioniert,<br>wissen wir wie unser Leben funktioniert."</p>
+</div>
+
+<!-- HOROSKOP -->
+<div class="horo">
+  <div class="horo-item"><span class="horo-label">Aszendent</span><p class="horo-val">10.86°<br>Fische</p></div>
+  <div class="horo-item"><span class="horo-label">Sonne</span><p class="horo-val">21.29°<br>Fische</p></div>
+  <div class="horo-item"><span class="horo-label">Mond</span><p class="horo-val">0.20°<br>Stier</p></div>
+</div>
+
+<!-- SYMBOL: Kompass – Gratis Paket -->
+<div style="background:#f5f0e8;padding:1.5rem 0;display:flex;justify-content:center;align-items:center">
+  <svg viewBox="0 0 200 200" width="180" height="180" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(172,155,127,.2)" stroke-width="1.5"/>
+    <circle cx="100" cy="100" r="72" fill="none" stroke="rgba(172,155,127,.15)" stroke-width="1" stroke-dasharray="3 3"/>
+    <circle cx="100" cy="100" r="54" fill="none" stroke="rgba(172,155,127,.1)" stroke-width="0.8"/>
+    <line x1="100" y1="10" x2="100" y2="46" stroke="#ac9b7f" stroke-width="1.5"/>
+    <line x1="100" y1="154" x2="100" y2="190" stroke="#8c7b5f" stroke-width="1.5"/>
+    <line x1="10" y1="100" x2="46" y2="100" stroke="#8c7b5f" stroke-width="1.5"/>
+    <line x1="154" y1="100" x2="190" y2="100" stroke="#8c7b5f" stroke-width="1.5"/>
+    <line x1="36" y1="36" x2="54" y2="54" stroke="rgba(172,155,127,.4)" stroke-width="1"/>
+    <line x1="146" y1="146" x2="164" y2="164" stroke="rgba(172,155,127,.4)" stroke-width="1"/>
+    <line x1="164" y1="36" x2="146" y2="54" stroke="rgba(172,155,127,.4)" stroke-width="1"/>
+    <line x1="36" y1="164" x2="54" y2="146" stroke="rgba(172,155,127,.4)" stroke-width="1"/>
+    <text x="96" y="8" font-size="11" fill="#ac9b7f" font-family="Georgia,serif" font-weight="bold">N</text>
+    <text x="96" y="196" font-size="10" fill="#8c7b5f" font-family="Georgia,serif">S</text>
+    <text x="183" y="104" font-size="10" fill="#8c7b5f" font-family="Georgia,serif">O</text>
+    <text x="5" y="104" font-size="10" fill="#8c7b5f" font-family="Georgia,serif">W</text>
+    <polygon points="100,46 94,100 100,88 106,100" fill="#192436"/>
+    <polygon points="100,154 94,100 100,112 106,100" fill="#ac9b7f" opacity=".7"/>
+    <circle cx="100" cy="100" r="9" fill="#192436" stroke="#ac9b7f" stroke-width="2"/>
+    <circle cx="100" cy="100" r="4" fill="#ac9b7f"/>
+  </svg>
+</div>
+
+<div style="background:rgba(25,36,54,.95);border-radius:12px;padding:1.1rem;margin:1rem 0;border:1px solid rgba(172,155,127,.18)">
+  <p style="font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:#ac9b7f;margin-bottom:.875rem;text-align:center;font-weight:700">✦ Deine Planetenpositionen · 12. März 1978 · Zürich · Placidus</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.3rem"><div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">↑ AC</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">Fische 10°52'</span></div><div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">⊕ MC</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">Schütze 19°43' · H10</span></div><div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">☉</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">Fische 21°17' · H1</span></div><div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">☽</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">Stier 0°12' · H1</span></div><div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">☿</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">Widder 3°35' · H1</span></div><div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">♀</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">Widder 3°29' · H1</span></div><div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">♂</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">Krebs 23°10' · H5</span></div><div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">♃</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">Zwillinge 27°02' · H4</span></div><div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">♄</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">Löwe 25°37' · H6</span></div><div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">♅</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">Skorpion 16°33' · H8</span></div><div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">♆</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">Schütze 18°37' · H9</span></div><div style="padding:.4rem .55rem;background:rgba(172,155,127,.07);border-radius:6px"><span style="font-size:.62rem;color:#ac9b7f;font-weight:700">♇</span> <span style="font-size:.72rem;color:#eeeae0;font-weight:600">Waage 16°17' · H7</span></div></div>
+  <p style="font-size:.58rem;color:rgba(172,155,127,.6);text-align:center;margin-top:.65rem">✦ Berechnet mit Swiss-Ephemeris-Qualität · Placidus-Häusersystem</p>
+</div>
+<div class="star" style="color:#ac9b7f">✦ · · · ✦ · · · ✦</div>
+
+<div class="chapter"><h2>Der Fische-Aszendent — Dein Eintrittswerkzeug</h2><p class="chapter-sub">AC Fische · Herrschaft Neptun · Haus 1</p><p class="chapter-body">Hast du dich auch schon gefragt, warum du Räume anders betrittst als andere Menschen? Warum du oft spürst, was gerade wirklich los ist, bevor jemand ein Wort gesagt hat? Dein Aszendent steht in den Fischen — dem letzten Zeichen des Tierkreises, dem Übergang zwischen den Welten. Das ist deine Landkarte zu deinem Inneren: kein Zufall, sondern dein ganz persönliches Eintrittswerkzeug in diese Welt.</p><p class="chapter-body">Herrscher deines Aszendenten ist Neptun — der Planet der Auflösung, der Vision, des Grenzenlosen. Was das für dich bedeutet? Du bist eingeladen, dein Potenzial nicht durch Kontrolle zu entfalten, sondern durch Hingabe an das, was gerade da ist. Klingt das ungewohnt? Das ist es auch — und genau darin liegt deine Kraft.</p><div class="states"><div class="state state-e"><span class="state-label">✦ Erlöst</span><p>Du lebst aus einer inneren Stille heraus, die andere anzieht wie ein ruhiger See. Du hörst wirklich zu — nicht um zu antworten, sondern um zu verstehen. Bewusster, ehrlicher und klarer <span style="filter:blur(4px);user-select:none;display:inline-block">wird dein Umgang</span> <span style="filter:blur(4px);user-select:none;display:inline-block">mit dir selbst,</span> <span style="filter:blur(4px);user-select:none;display:inline-block">je mehr du</span> <span style="filter:blur(4px);user-select:none;display:inline-block">dieser Empfänglichkeit vertraust.</span> <span style="filter:blur(4px);user-select:none;display:inline-block">Sie ist kein</span> <span style="filter:blur(4px);user-select:none;display:inline-block">Zufall — sie</span> <span style="filter:blur(4px);user-select:none;display:inline-block">ist ein Werkzeug,</span> <span style="filter:blur(4px);user-select:none;display:inline-block">das gepflegt werden</span> <span style="filter:blur(4px);user-select:none;display:inline-block">will.</span></p><div style="margin-top:.6rem;padding:.5rem .65rem;background:rgba(172,155,127,.1);border-radius:7px;border:1px dashed rgba(172,155,127,.35)"><p style="font-size:.65rem;color:#8c7b5f;margin:0;text-align:center"><em>🔒 Vollständig in Individual-Analyse oder SeelenKompass</em></p></div></div><div class="state state-u"><span class="state-label">◯ Unerlöst</span><p>Manchmal verlierst du dich in dem, was andere fühlen, und weisst am Ende des Tages selbst nicht mehr, was eigentlich dir <span style="filter:blur(4px);user-select:none;display:inline-block">gehört. Das ist</span> <span style="filter:blur(4px);user-select:none;display:inline-block">keine Schwäche —</span> <span style="filter:blur(4px);user-select:none;display:inline-block">das ist eine</span> <span style="filter:blur(4px);user-select:none;display:inline-block">Einladung, wieder mehr</span> <span style="filter:blur(4px);user-select:none;display:inline-block">Einklang mit dir</span> <span style="filter:blur(4px);user-select:none;display:inline-block">selbst zu finden.</span></p><div style="margin-top:.6rem;padding:.5rem .65rem;background:rgba(25,36,54,.05);border-radius:7px;border:1px dashed rgba(25,36,54,.15)"><p style="font-size:.65rem;color:#6a7a8a;margin:0;text-align:center"><em>🔒 Vollständig in Individual-Analyse oder SeelenKompass</em></p></div></div></div><div class="mitnehmen"><span class="mitnehmen-label">✦ Mitnehmen für deinen Weg</span><p>Nimm dir heute Abend fünf Minuten Stille — nur für dich. Was wäre, wenn genau dort deine grösste Klarheit auf dich wartet?</p></div></div><!-- NEWNAV --><div style="background:#192436;border-radius:20px;padding:32px 24px;margin:32px 0"><div style="margin-bottom:28px"><span style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#ac9b7f;font-weight:700;display:block;margin-bottom:16px">✦ Deine nächste Frage</span><p style="font-family:Georgia,serif;font-size:22px;font-weight:300;color:#eeeae0;line-height:1.7;margin-bottom:16px">Wie würdest du dein Leben in die Hand nehmen — in Beziehungen, Beruf, innerer Freiheit — wenn du genau wüsstest wie du wirklich funktionierst?</p><p style="font-size:15px;color:rgba(238,234,224,.6);line-height:1.7">Im SeelenKompass erhältst du genau das: Die vollständige Analyse aller 12 Lebensbereiche — erlöst und unerlöst, tief und persönlich.</p></div><div style="height:1px;background:rgba(172,155,127,.25);margin-bottom:24px"></div><a href="https://astrosophie-too.vercel.app/?pkg=individual" target="_blank" rel="noopener" onclick="if(window.parent!==window){window.parent.postMessage({openPkg:'individual'},'*');return false;}" style="display:block;background:rgba(123,111,196,.15);color:#c4b8f0;border:2px solid rgba(123,111,196,.5);border-radius:16px;padding:20px 24px;text-decoration:none;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:22px;font-weight:600;margin-bottom:6px">Individual-Analyse · CHF 49.–</div><div style="font-size:15px;color:rgba(196,184,240,.7);line-height:1.6;margin-bottom:8px">1 Quadrant · 3 Lebensbereiche · Dein Schwerpunkt</div><div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(196,184,240,.7)">Jetzt wählen →</div></a><a href="https://astrosophie-too.vercel.app/?pkg=seelenkompas" target="_blank" rel="noopener" onclick="if(window.parent!==window){window.parent.postMessage({openPkg:'seelenkompas'},'*');return false;}" style="display:block;background:rgba(172,155,127,.12);color:#ac9b7f;border:2px solid rgba(172,155,127,.5);border-radius:16px;padding:20px 24px;text-decoration:none;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:22px;font-weight:600;margin-bottom:6px">SeelenKompass · CHF 99.–</div><div style="font-size:15px;color:rgba(172,155,127,.7);line-height:1.6;margin-bottom:8px">4 Quadranten · 12 Lebensbereiche · Das vollständige Bild</div><div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(172,155,127,.7)">Jetzt wählen →</div></a><a href="https://astrosophie-too.vercel.app/?pkg=jahreshoroskop" target="_blank" rel="noopener" onclick="if(window.parent!==window){window.parent.postMessage({openPkg:'jahreshoroskop'},'*');return false;}" style="display:block;background:rgba(74,122,74,.12);color:#7ab87a;border:2px solid rgba(74,122,74,.5);border-radius:16px;padding:20px 24px;text-decoration:none;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:22px;font-weight:600;margin-bottom:6px">Jahreshoroskop 2026 · CHF 99.–</div><div style="font-size:15px;color:rgba(122,184,122,.7);line-height:1.6;margin-bottom:8px">12 Monate · Wie die Energien 2026 auf dich wirken</div><div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(122,184,122,.7)">Jetzt wählen →</div></a></div><!-- /NEWNAV -->
+</body></html>
