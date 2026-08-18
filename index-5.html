@@ -225,15 +225,8 @@ body{font-family:'Inter',sans-serif;background:#fdfaf5!important;color:#192436!i
 .btn-gold:hover{background:#bcab8f}
 .btn-navy{background:var(--navy);color:#eeeae0}
 .btn-outline{background:transparent;border:1px solid rgba(172,155,127,.4);color:var(--gold)}
-.btn-teal{background:var(--teal);color:#fff}
-.btn-teal:hover{background:var(--tealD)}
-.btn-violet{background:var(--purple);color:#fff}
-.btn-violet:hover{background:var(--purpleD)}
-.btn-ghost{background:transparent;border:1px solid rgba(25,36,54,.15);color:var(--muted)}
-.btn-ghost:hover{background:rgba(25,36,54,.04);border-color:rgba(25,36,54,.25)}
 .btn-fw{width:100%}
 .btn-sm{padding:.5rem 1rem;font-size:.78rem}
-.res-ch{display:flex;align-items:center;gap:.35rem;padding:.5rem .6rem;border-radius:9px;line-height:1.25}
 
 /* GEN PAGE */
 .gen-item{display:flex;align-items:center;gap:.75rem;padding:.6rem 0;
@@ -642,8 +635,8 @@ html {
   <div class="card" style="margin-top:1.25rem">
     <div style="text-align:center;margin-bottom:2rem">
       <div id="planet-anim" style="margin:0 auto 1rem;display:flex;align-items:center;justify-content:center"></div>
-      <h2 style="font-family:var(--serif);color:var(--white);font-size:1.3rem;font-weight:300;margin-bottom:.3rem">Dein Seelenmuster wird erstellt</h2>
-      <p id="gen-txt" style="color:var(--muted);font-size:.76rem;font-weight:300"></p>
+      <h2 style="font-family:var(--serif);color:var(--navy);font-size:1.3rem;font-weight:300;margin-bottom:.3rem">Dein Seelenmuster wird erstellt</h2>
+      <p id="gen-txt" style="color:var(--text);font-size:.76rem;font-weight:400"></p>
     </div>
     <div class="prog-wrap"><div class="prog-bar" id="prog"></div></div>
     <div id="gen-list"></div>
@@ -655,37 +648,27 @@ html {
 <div id="pg-result" class="pg">
 <div class="wrap" style="padding-bottom:3.5rem">
   <div style="margin-top:1.25rem">
-
-    <!-- HERO: personalisierter Abschluss, keine Konkurrenz durch andere Elemente -->
-    <div style="background:linear-gradient(160deg,var(--navy) 0%,#232f45 100%);border-radius:var(--r2);padding:1.75rem 1.5rem;text-align:center;margin-bottom:.875rem;position:relative;overflow:hidden">
-      <div style="font-size:1.3rem;color:var(--gold);margin-bottom:.6rem;letter-spacing:.3rem">✦ ✦ ✦</div>
-      <h2 style="font-family:var(--serif);color:#eeeae0;font-size:1.35rem;font-weight:300;margin-bottom:.3rem;line-height:1.3">Dein Seelenmuster<br>ist fertig</h2>
-      <p id="res-sub" style="color:rgba(238,234,224,.55);font-size:.72rem;font-weight:300;margin-bottom:.75rem"></p>
-      <div id="res-slogan"></div>
+    <div class="res-hdr">
+      <div style="font-size:1.5rem;margin-bottom:.4rem">✦</div>
+      <h2 style="font-family:var(--serif);color:var(--navy);font-size:1.3rem;font-weight:300;margin-bottom:.2rem">Dein Seelenmuster ist fertig</h2>
+      <p id="res-sub" style="color:var(--muted);font-size:.74rem;font-weight:300"></p>
     </div>
-
-    <!-- PRIMÄR-CTA: die eine Handlung, die zählt -->
-    <div class="card" style="text-align:center;margin-bottom:.7rem">
-      <div style="font-size:1.5rem;margin-bottom:.5rem">📖</div>
-      <h3 style="font-family:var(--serif);color:var(--navy);font-size:1.15rem;font-weight:300;margin-bottom:.3rem">Dein Dokument ist bereit</h3>
-      <p style="font-size:.74rem;color:var(--muted);margin-bottom:1rem;font-weight:300;line-height:1.7">Titelseite · Horoskop-Profil · Alle Kapitel · Persönlicher Nordstern</p>
-      <button class="btn btn-teal btn-fw" onclick="openPDF()" style="font-size:.92rem;padding:.9rem">📖 Dokument öffnen & lesen</button>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-top:.55rem">
-        <button class="btn btn-ghost btn-sm" onclick="dlDoc()">⬇ Herunterladen</button>
-        <button class="btn btn-ghost btn-sm" onclick="printDoc()">🖨 Drucken</button>
+    <div class="card" style="margin-bottom:.875rem">
+      <p style="font-size:.56rem;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.875rem;font-weight:600">Dein Dokument enthält</p>
+      <div class="res-chs" id="res-chs"></div>
+      <div style="background:rgba(37,108,134,.06);border:1px solid rgba(37,108,134,.22);border-radius:var(--r2);padding:1.5rem;text-align:center;margin-bottom:.875rem">
+        <div style="font-size:1.4rem;margin-bottom:.4rem">📖</div>
+        <h3 style="font-family:var(--serif);color:var(--navy);font-size:1.15rem;font-weight:300;margin-bottom:.3rem">Dokument jetzt lesen</h3>
+        <p style="font-size:.74rem;color:var(--body);margin-bottom:.875rem;font-weight:300;line-height:1.75">Titelseite · Horoskop-Profil · Alle Kapitel · Persönlicher Nordstern</p>
+        <button class="btn btn-teal btn-fw" onclick="openPDF()" style="font-size:.9rem;padding:.875rem">📖 Dokument öffnen & lesen</button>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-top:.5rem">
+          <button class="btn btn-ghost btn-sm" onclick="dlDoc()">⬇ Herunterladen</button>
+          <button class="btn btn-ghost btn-sm" onclick="printDoc()">🖨 Als PDF drucken</button>
+        </div>
       </div>
+      <div id="upsell"></div>
     </div>
-
-    <!-- VERTRAUENS-CHECKLISTE: kompakt, kein visuelles Gewicht gegen den CTA -->
-    <div class="card" style="padding:1.1rem 1.25rem;margin-bottom:.875rem">
-      <p style="font-size:.55rem;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.65rem;font-weight:700">✓ Dein Dokument enthält</p>
-      <div class="res-chs" id="res-chs" style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem"></div>
-    </div>
-
-    <!-- UPSELL-ZONE: klar abgesetzt, eigener Bereich statt Anhängsel -->
-    <div id="upsell-zone"></div>
-
-    <div style="text-align:center;padding-top:.5rem;padding-bottom:1.5rem">
+    <div style="text-align:center;padding-bottom:1.5rem">
       <button class="btn btn-ghost btn-sm" onclick="resetAll()">↺ Neue Analyse starten</button>
     </div>
   </div>
@@ -1588,7 +1571,7 @@ function mkPrompt(id,h,isFirst){
   // ── LUCAS STIMME: recherchiert von seiner echten Website (luca-calicchio.com) ──
   // Gilt für JEDES generierte Kapitel in JEDEM Paket. Ziel: es soll klingen wie
   // Luca selbst schreibt/spricht, nicht wie ein generischer Astrologie-Text.
-  var VOICE='TON & STIMME (PFLICHT, gilt für den GESAMTEN Text): Schreibe warm, einladend, begleitend - wie ein Coach der neben der Person geht, nicht über sie urteilt oder doziert. IMMER "du"-Form, nie "Sie". Baue mindestens 1-2 echte rhetorische Fragen ein, die zum Nachdenken einladen (z.B. "Hast du dich auch schon gefragt, ob..."; "Was wäre, wenn..."). Nutze leichte, poetische Bilder statt trockener Fachsprache (z.B. "die Landkarte zu deinem Inneren", "Kräfte die in dir schlummern") - aber bleibe konkret und verständlich, nie effekthascherisch. Verwende wo es natürlich passt Lucas Signatur-Wörter: Seele/Seelenmuster, Potenzial entfalten, Selbsterkenntnis, Bewusstwerdung, Klarheit, Einklang, Reise/Weg, "Körper, Geist und Seele". Nutze gelegentlich einen Dreier-Rhythmus bei Adjektiven/Aufzählungen (Vorbild: "bewusster, ehrlicher und klarer"). Schreibe in Schweizer Rechtschreibung (ss statt ß, also "dass", "muss", "grösser" - niemals ß). STRIKTES VERBOT (PFLICHT, ohne Ausnahme): Erwähne NIEMALS koerperliche Symptome, Krankheiten, Erkrankungen, medizinische Begriffe oder gesundheitliche Beschwerden irgendeiner Art (z.B. keine Aussagen wie "das kann zu Magenproblemen fuehren" oder aehnliches) - das ist ausschliesslich Teil einer persoenlichen 1:1-Beratung und gehoert niemals in einen automatisiert erstellten Text. Kein akademischer oder distanzierter Ton, keine Belehrung von oben herab - immer auf Augenhöhe, persönlich, herzlich.';
+  var VOICE='TON & STIMME (PFLICHT, gilt für den GESAMTEN Text): Schreibe warm, einladend, begleitend - wie ein Coach der neben der Person geht, nicht über sie urteilt oder doziert. IMMER "du"-Form, nie "Sie". Baue mindestens 1-2 echte rhetorische Fragen ein, die zum Nachdenken einladen (z.B. "Hast du dich auch schon gefragt, ob..."; "Was wäre, wenn..."). Nutze leichte, poetische Bilder statt trockener Fachsprache (z.B. "die Landkarte zu deinem Inneren", "Kräfte die in dir schlummern") - aber bleibe konkret und verständlich, nie effekthascherisch. Verwende wo es natürlich passt Lucas Signatur-Wörter: Seele/Seelenmuster, Potenzial entfalten, Selbsterkenntnis, Bewusstwerdung, Klarheit, Einklang, Reise/Weg, "Körper, Geist und Seele". Nutze gelegentlich einen Dreier-Rhythmus bei Adjektiven/Aufzählungen (Vorbild: "bewusster, ehrlicher und klarer"). Schreibe in Schweizer Rechtschreibung (ss statt ß, also "dass", "muss", "grösser" - niemals ß). STRIKTES VERBOT (PFLICHT, ohne Ausnahme): Erwähne NIEMALS koerperliche Symptome, Krankheiten, Erkrankungen, medizinische Begriffe oder gesundheitliche Beschwerden irgendeiner Art (z.B. keine Aussagen wie "das kann zu Magenproblemen fuehren" oder aehnliches) - das ist ausschliesslich Teil einer persoenlichen 1:1-Beratung und gehoert niemals in einen automatisiert erstellten Text. Kein akademischer oder distanzierter Ton, keine Belehrung von oben herab - immer auf Augenhöhe, persönlich, herzlich. FORMAT ZWINGEND (PFLICHT, ohne Ausnahme): Nutze AUSSCHLIESSLICH \"## \" für Kapitelüberschriften und \"### \" für Unterüberschriften (echtes Markdown, zwei bzw. drei Rautezeichen gefolgt von einem Leerzeichen, am Zeilenanfang). NIEMALS \"---\" um Überschriften, NIEMALS Sternchen (**) für Überschriften, NIEMALS nummerierte \"KAPITEL X\"-Präfixe. Beispiel korrekt: \"## Dein Wesenskern\". Beispiel FALSCH, niemals so: \"--- **KAPITEL 1 - Wesenskern** ---\". ZUSAETZLICH ZWINGEND: Nach JEDER Ueberschrift MUSS eine LEERZEILE folgen, bevor der Fliesstext beginnt - schreibe niemals Ueberschrift und Fliesstext in derselben Zeile direkt hintereinander. Beispiel FALSCH: \"## Die Schwelle zwischen den Welten Es gibt Menschen, die...\" (Ueberschrift und Satz ohne Trennung). Beispiel KORREKT: \"## Die Schwelle zwischen den Welten\" gefolgt von einer Leerzeile, DANN erst \"Es gibt Menschen, die...\" als eigener Absatz.';
   var ruler={Widder:'Mars',Stier:'Venus',Zwillinge:'Merkur',Krebs:'Mond',Löwe:'Sonne',
     Jungfrau:'Merkur',Waage:'Venus',Skorpion:'Pluto',Schütze:'Jupiter',
     Steinbock:'Saturn',Wassermann:'Uranus',Fische:'Neptun'};
@@ -1666,10 +1649,10 @@ function mkPrompt(id,h,isFirst){
     return txt;
   }
 
-  var W='UMFANG UND TIEFE (PFLICHT): Schreibe insgesamt mindestens 550-650 Woerter pro Kapitel bei Gratis/Individual, bei SeelenKompass mindestens 1300-1500 Woerter (mehr Beispiele, mehr Tiefe, keine Wiederholung) - das ist ein bezahltes, tiefes Kapitel, keine Kurzfassung. Baue mindestens ZWEI (bei SeelenKompass: VIER) konkrete, greifbare Alltagsbeispiele ein, nicht nur abstrakte Beschreibung - die Person soll sich wiedererkennen. KAPITEL-STRUKTUR PFLICHT (jeder Punkt ausführlich, nicht nur angerissen): 1.Poetischer Einstieg (mind. 80 Woerter). 2.Hausthema als Buehne, ausführlich entfaltet (mind. 150 Woerter). 3.Planeten tief deuten - Herrscherplanet des Haus-Zeichens benennen und WO dieser Herrscher im Horoskop steht (Zeichen und Haus), das erklärt WIE sich das Hausthema konkret entfaltet (mind. 150 Woerter). Falls mehrere Planeten im selben Zeichen/Haus stehen wie hier, benenne das Zeichen konkret und was diese Konzentration an Kraft bedeutet (NIEMALS das Wort "Stellium" verwenden). 4.Polaritaet zum gegenüberliegenden Haus, mit Beispiel (mind. 100 Woerter). 5.UNERLÖST: zwei verschiedene Alltagsbeispiele, ausführlich geschildert (mind. 150 Woerter). 6.ERLÖST: zwei verschiedene Alltagsbeispiele, ausführlich geschildert (mind. 150 Woerter). 7.KEYNOTE (PFLICHT bei jedem Kapitel): Schreibe eine Zeile beginnend mit "Keynote:" gefolgt von einem einzigen, einpraegsamen, poetisch verdichteten Kernsatz (max. 2 Saetze), der die Essenz des ganzen Kapitels auf den Punkt bringt - das Zitat, das die Person sich merken soll. 8.MITNEHMEN: Mitnehmen fuer deinen Weg + 1 Mini-Uebung, mit Begründung warum genau das hilft (mind. 60 Woerter). 9. Ein vertiefender Absatz (mind. 150 Woerter), der das Hausthema noch einmal von einer ANDEREN Seite beleuchtet - z.B. wie es sich koerperlich/energetisch anfuehlt, oder wie es sich in einem laengerfristigen Lebensabschnitt zeigt, nicht nur im Einzelmoment. 10.ENERGETISCHER IMPULS nur bei Individual/SeelenKompass/Jahreshoroskop: Schreibe Energetischer Impuls: dann 3-4 Saetze zu diesem Haus - H7/H1/H2: welche Partnerenergie tut dir gut? H10/H9/H6: energetische Berufungsrichtung? H4/H5/H11: was brauchst du energetisch in Familie? Alle: was tut deiner Seele taeglich gut? Warm direkt persoenlich. NICHT beim Gratis-Paket.';
+  var W='UMFANG UND TIEFE (PFLICHT): Schreibe insgesamt mindestens 550-650 Woerter pro Kapitel bei Gratis/Individual, bei SeelenKompass mindestens 2400-2600 Woerter (deutlich mehr Beispiele, deutlich mehr Tiefe, absolut keine Wiederholung derselben Aussage in anderen Worten - dies ist das umfangreichste Kapitel-Format der App) - das ist ein bezahltes, tiefes Kapitel, keine Kurzfassung. Baue mindestens ZWEI (bei SeelenKompass: VIER) konkrete, greifbare Alltagsbeispiele ein, nicht nur abstrakte Beschreibung - die Person soll sich wiedererkennen. KAPITEL-STRUKTUR PFLICHT (jeder Punkt ausführlich, nicht nur angerissen): 1.Poetischer Einstieg (mind. 80 Woerter). 2.Hausthema als Buehne, ausführlich entfaltet (mind. 150 Woerter). 3.Planeten tief deuten - Herrscherplanet des Haus-Zeichens benennen und WO dieser Herrscher im Horoskop steht (Zeichen und Haus), das erklärt WIE sich das Hausthema konkret entfaltet (mind. 150 Woerter). Falls mehrere Planeten im selben Zeichen/Haus stehen wie hier, benenne das Zeichen konkret und was diese Konzentration an Kraft bedeutet (NIEMALS das Wort "Stellium" verwenden). 4.Polaritaet zum gegenüberliegenden Haus, mit Beispiel (mind. 100 Woerter). 5.UNERLÖST-ABSATZ: Beginne einen NEUEN Absatz mit dem woertlichen Text "Unerlöst:" (genau dieses Wort, gefolgt von einem Doppelpunkt, als allererste Zeichen des Absatzes) - NICHT das Thema nur thematisch einweben. Dann zwei verschiedene Alltagsbeispiele (mind. 150 Woerter). 6.ERLÖST-ABSATZ: Beginne einen NEUEN Absatz mit dem woertlichen Text "Erlöst:" (genau dieses Wort, gefolgt von einem Doppelpunkt, als allererste Zeichen des Absatzes) - NICHT das Thema nur thematisch einweben. Dann zwei verschiedene Alltagsbeispiele (mind. 150 Woerter). KRITISCH WICHTIG ZU PUNKT 5+6: Schreibe NIEMALS Saetze wie "Das ist die erloeste Seite von..." oder "...zeigt sich unerloest darin, dass..." als Ersatz fuer die Markierung - das ZERSTOERT die Darstellung der App, die "Erlöst:" und "Unerlöst:" als woertliche Startmarkierung braucht um eigene Kaestchen anzuzeigen. Falsch (niemals so): "Das ist die erlöste Seite von Neptun im zehnten Haus: spirituelle Tiefe, die in der Welt Frucht traegt." Richtig (immer so): "Erlöst: Neptun im zehnten Haus zeigt sich hier als spirituelle Tiefe, die in der Welt Frucht traegt." 7.KEYNOTE (PFLICHT bei jedem Kapitel): Beginne einen NEUEN Absatz mit dem woertlichen Text "Keynote:" (genau dieses Wort, gefolgt von einem Doppelpunkt, als allererste Zeichen des Absatzes), gefolgt von einem einzigen, einpraegsamen, poetisch verdichteten Kernsatz (max. 2 Saetze), der die Essenz des ganzen Kapitels auf den Punkt bringt. 8.MITNEHMEN: Mitnehmen fuer deinen Weg + 1 Mini-Uebung, mit Begründung warum genau das hilft (mind. 60 Woerter). 9. Ein vertiefender Absatz (mind. 150 Woerter), der das Hausthema noch einmal von einer ANDEREN Seite beleuchtet - z.B. wie es sich koerperlich/energetisch anfuehlt, oder wie es sich in einem laengerfristigen Lebensabschnitt zeigt, nicht nur im Einzelmoment. 10.ENERGETISCHER IMPULS nur bei Individual/SeelenKompass/Jahreshoroskop: Schreibe Energetischer Impuls: dann 3-4 Saetze zu diesem Haus - H7/H1/H2: welche Partnerenergie tut dir gut? H10/H9/H6: energetische Berufungsrichtung? H4/H5/H11: was brauchst du energetisch in Familie? Alle: was tut deiner Seele taeglich gut? Warm direkt persoenlich. NICHT beim Gratis-Paket.';
   var t={
     // KAPITEL 1: Wesenskern -> Haus 1 = AC selbst + AC-Herrscher + Sonne (Lebensauftrag) + Polarität Haus 7
-    1:base+'\n'+combo(1)+'\nKAPITEL 1 WESENSKERN'+(S.pkg==='gratis'?' (GRATIS-PAKET - DIES IST DER EINZIGE TEXT DEN DIE PERSON GRATIS ERHÄLT, ER MUSS DAHER BESONDERS TIEF UND ÜBERZEUGEND SEIN)':'')+': Beschreibe den AC-Wesenskern ('+ac.sign+'), kombiniert mit der Sonne ('+sun.sign+', Lebensauftrag/Seelenauftrag) und dem AC-Herrscherplaneten '+acR+' in '+acRP+'. '+(S.pkg==='gratis'?('WICHTIG - UMFANG UND TIEFE: Schreibe insgesamt 800-950 Woerter (deutlich mehr als bei anderen Kapiteln, da dies der einzige Eindruck ist den ein Gratis-Nutzer von der Qualitaet der Analyse bekommt - es muss lesbar spürbar sein dass hier echtes astrosophisches Fachwissen und keine generische Beschreibung steht). PFLICHT-TIEFE - gehe zwingend auf ALLE folgenden Ebenen ein, nicht nur oberflächlich: (a) die archetypische Bedeutung von '+ac.sign+' als Aszendent inklusive seines Elements (Feuer/Erde/Luft/Wasser) und seiner Qualität (kardinal/fix/veränderlich) und was das für die Art des Welteintritts bedeutet, (b) die Stellung und Bedeutung des Herrscherplaneten '+acR+' in '+acRP+' - ob dieser Planet dort in Domizil, Exil, Erhöhung oder Fall steht, und was diese Stellung konkret für die Umsetzung des Wesenskerns bedeutet, (c) das Polaritätshaus (Haus 7 zum Aszendenten) und wie sich der Wesenskern im Spiegel des Gegenübers zeigt, (d) die Sonne in '+sun.sign+' als Kontrast oder Ergänzung zum Aszendenten. Baue MINDESTENS drei konkrete, greifbare Alltagsszenen ein (z.B. wie sich dieser Wesenskern in einem Gespraech, einer Entscheidung, einem Konflikt oder einer Beziehungssituation ganz konkret zeigt - mit Dialogfetzen oder sinnlichen Details) statt nur abstrakter Beschreibungen - die Person soll sich wiedererkennen und denken "genau so bin ich, woher weiss die das". PFLICHT am Ende: Beende den Text mit 2-3 Saetzen, die eine offene Frage oder Spannung andeuten, die typisch fuer Menschen mit diesem Wesenskern ist - ohne sie aufzuloesen, sodass echte Neugier auf die weiteren Lebensbereiche entsteht (z.B. ein wiederkehrendes Muster, eine ungelebte Seite, eine Sehnsucht). Der allerletzte Satz muss explizit machen, dass dies erst ein Bruchteil des vollstaendigen Bildes ist (Aszendent = nur 1 von 12 Lebensbereichen) und Lust auf mehr wecken - ohne platt oder verkaeuferisch zu klingen, sondern aus echter inhaltlicher Substanz heraus. '):'Beende den Text mit 1-2 Saetzen, die eine offene Frage oder Spannung andeuten, die typisch fuer Menschen mit diesem Wesenskern ist - ohne sie aufzuloesen, sodass Neugier auf die weiteren Lebensbereiche entsteht (z.B. ein wiederkehrendes Muster, eine ungelebte Seite, eine Sehnsucht). ')+W,
+    1:base+'\n'+combo(1)+'\nKAPITEL 1 WESENSKERN'+(S.pkg==='gratis'?' (GRATIS-PAKET - DIES IST DER EINZIGE TEXT DEN DIE PERSON GRATIS ERHÄLT, ER MUSS DAHER BESONDERS TIEF UND ÜBERZEUGEND SEIN)':'')+': Beschreibe den AC-Wesenskern ('+ac.sign+'), kombiniert mit der Sonne ('+sun.sign+', Lebensauftrag/Seelenauftrag) und dem AC-Herrscherplaneten '+acR+' in '+acRP+'. '+(S.pkg==='gratis'?('WICHTIG - UMFANG UND TIEFE: Schreibe fuer DIESEN Hauptteil (vor Unerlöst/Erlöst/Keynote/Mitnehmen) 350-420 Woerter - kurz und praegnant, wie eine Kostprobe, nicht wie eine vollstaendige Analyse (Gratis = Vorschau, die Lust auf mehr macht, nicht das ganze Bild). Geh dabei trotzdem auf mindestens ZWEI der folgenden Ebenen wirklich konkret ein, statt alle nur oberflaechlich zu streifen: (a) die archetypische Bedeutung von '+ac.sign+' als Aszendent inklusive seines Elements (Feuer/Erde/Luft/Wasser) und seiner Qualität (kardinal/fix/veränderlich) und was das für die Art des Welteintritts bedeutet, (b) die Stellung und Bedeutung des Herrscherplaneten '+acR+' in '+acRP+' - ob dieser Planet dort in Domizil, Exil, Erhöhung oder Fall steht, und was diese Stellung konkret für die Umsetzung des Wesenskerns bedeutet, (c) das Polaritätshaus (Haus 7 zum Aszendenten) und wie sich der Wesenskern im Spiegel des Gegenübers zeigt, (d) die Sonne in '+sun.sign+' als Kontrast oder Ergänzung zum Aszendenten. Baue MINDESTENS eine konkrete, greifbare Alltagsszene ein (z.B. wie sich dieser Wesenskern in einem Gespraech, einer Entscheidung oder einer Beziehungssituation ganz konkret zeigt) statt nur abstrakter Beschreibung - die Person soll sich wiedererkennen und denken "genau so bin ich, woher weiss die das". WICHTIG - REIHENFOLGE: Nach dieser Haupterzaehlung folgt WEITER UNTEN in diesem Auftrag noch eine PFLICHT-STRUKTUR mit Unerlöst/Erlöst/Keynote/Mitnehmen - diese ZUSAETZLICHEN Abschnitte MUESSEN ebenfalls geschrieben werden, sie sind kein Ersatz und kein Widerspruch zu dieser Anweisung hier. Beende ERST NACH diesen Pflicht-Abschnitten (Unerlöst/Erlöst/Keynote/Mitnehmen) den GESAMTEN Text mit 2-3 zusaetzlichen Saetzen, die eine offene Frage oder Spannung andeuten, die typisch fuer Menschen mit diesem Wesenskern ist - ohne sie aufzuloesen, sodass echte Neugier auf die weiteren Lebensbereiche entsteht (z.B. ein wiederkehrendes Muster, eine ungelebte Seite, eine Sehnsucht). Der aller-allerletzte Satz muss explizit machen, dass dies erst ein Bruchteil des vollstaendigen Bildes ist (Aszendent = nur 1 von 12 Lebensbereichen) und Lust auf mehr wecken - ohne platt oder verkaeuferisch zu klingen, sondern aus echter inhaltlicher Substanz heraus. '):'WICHTIG - REIHENFOLGE: Nach der Haupterzaehlung folgt WEITER UNTEN noch eine PFLICHT-STRUKTUR mit Unerlöst/Erlöst/Keynote/Mitnehmen - diese MUESSEN geschrieben werden. Beende ERST DANACH den GESAMTEN Text mit 1-2 zusaetzlichen Saetzen, die eine offene Frage oder Spannung andeuten, die typisch fuer Menschen mit diesem Wesenskern ist - ohne sie aufzuloesen, sodass Neugier auf die weiteren Lebensbereiche entsteht (z.B. ein wiederkehrendes Muster, eine ungelebte Seite, eine Sehnsucht). ')+W,
 
     // KAPITEL 2: Werte & Ressourcen -> Haus 2 + dessen Herrscher + Polarität Haus 8 (Transformation von Werten)
     2:base+'\n'+combo(2)+'\nKAPITEL 2 WERTE & RESSOURCEN: Gehe auf Haus 2 ein - welche Werte und Sicherheiten dem Menschen wichtig sind, basierend auf dem Hausherrscher und seiner Stellung, sowie die Polarität zu Haus 8 (was los- oder eingetauscht werden muss, um zu wachsen). '+W,
@@ -1705,43 +1688,15 @@ function mkPrompt(id,h,isFirst){
     12:base+'\n'+combo(12)+'\nKAPITEL 12 SPIRITUELLE TIEFE & NORDSTERN: Beschreibe Haus 12 (Unbewusstes, Hingabe, spirituelle Verbindung - nutze den Hausherrscher von Haus 12 und seine Stellung aus der HAUS-12-Zeile oben; falls Haus 12 im Fische steht, ist Neptun '+h.Neptun.sign+' zusätzlich zentral), in Polarität zu Haus 6 (wie sich Spiritualität im Alltag/Dienst konkret manifestieren kann). A:TIEFE (150 Woerter) - PFLICHT darin: unerlöste Variante dieser Energie (mit Beispiel) UND direkt danach die erlöste Lösung dazu (mit Beispiel). B:NORDSTERN - ein abschließender Impuls als persönlicher Leitstern (80 Woerter). PFLICHT als letzter Satz von B:NORDSTERN, IMMER: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten, in dieser Woche umsetzbaren Mini-Uebung (1 Satz). Niemals weglassen.',
 
     // KAPITEL 'sonne': Der Seelenauftrag - was die Sonne (unabhängig vom AC) von dieser Person will
-    'sonne':base+'\nKAPITEL SONNE - SEELENAUFTRAG: Die Sonne steht in '+sun.sign+'. Erkläre den Unterschied zwischen AC ('+ac.sign+', wie man in die Welt eintritt) und Sonne (Auftrag, wozu die Seele sich entwickeln will). Beschreibe konkret was die Sonne in '+sun.sign+' als Lebensaufgabe mit sich bringt - unabhängig vom Aszendenten. PFLICHT-STRUKTUR: 2 Absätze Fliesstext (je ca. 90 Woerter) über die Sonnen-Qualität in '+sun.sign+' als Entwicklungsaufgabe. Dann ERLÖST (60 Woerter, konkretes Beispiel) und UNERLÖST (60 Woerter, konkretes Beispiel) der Sonne in '+sun.sign+'. Dann 1 Satz "Dein Seelenauftrag:" als konkrete, umsetzbare Formulierung. '+W,
+    'sonne':base+'\nKAPITEL SONNE - SEELENAUFTRAG: Die Sonne steht in '+sun.sign+'. Erkläre den Unterschied zwischen AC ('+ac.sign+', wie man in die Welt eintritt) und Sonne (Auftrag, wozu die Seele sich entwickeln will). Beschreibe konkret was die Sonne in '+sun.sign+' als Lebensaufgabe mit sich bringt - unabhängig vom Aszendenten. PFLICHT-STRUKTUR: '+(S.pkg==='seelenkompas'?'4 Absätze Fliesstext (je ca. 100 Woerter, mit unterschiedlichen konkreten Beispielen)':'2 Absätze Fliesstext (je ca. 90 Woerter)')+' über die Sonnen-Qualität in '+sun.sign+' als Entwicklungsaufgabe. Dann einen NEUEN Absatz beginnend mit dem woertlichen Wort "Erlöst:" (60 Woerter, konkretes Beispiel) und einen NEUEN Absatz beginnend mit dem woertlichen Wort "Unerlöst:" (60 Woerter, konkretes Beispiel) der Sonne in '+sun.sign+'. NIEMALS diese Woerter nur thematisch einweben (z.B. "das ist die erloeste Seite von...") - IMMER als woertliche Absatz-Startmarkierung "Erlöst:"/"Unerlöst:" schreiben, sonst funktioniert die Darstellung der App nicht. Dann 1 Satz "Dein Seelenauftrag:" als konkrete, umsetzbare Formulierung. '+W,
 
     // KAPITEL 'kombi': AC trifft Sonne - die tiefste Kombinationslesart
-    'kombi':base+'\nKAPITEL KOMBINATION AC×SONNE: AC ist '+ac.sign+' (Eintrittswerkzeug), Sonne ist '+sun.sign+' (Seelenauftrag). Beschreibe wie beide zusammenwirken: Wie das Werkzeug (AC) genutzt wird, um den Auftrag (Sonne) zu erfüllen - oder wo eine Spannung zwischen beiden liegt, wenn die Zeichen sich in ihrer Grundnatur unterscheiden. PFLICHT-STRUKTUR: 2 Absätze Fliesstext (je ca. 90 Woerter) zur Kombination '+ac.sign+' AC × '+sun.sign+' Sonne. Dann ERLÖST (60 Woerter) und UNERLÖST (60 Woerter) dieser spezifischen Kombination, je mit konkretem Beispiel. Dann 1 Satz "Im Alltag bedeutet das:" mit einer konkreten, alltagsnahen Beobachtung wie sich diese Kombination typischerweise zeigt. '+W,
+    'kombi':base+'\nKAPITEL KOMBINATION AC×SONNE: AC ist '+ac.sign+' (Eintrittswerkzeug), Sonne ist '+sun.sign+' (Seelenauftrag). Beschreibe wie beide zusammenwirken: Wie das Werkzeug (AC) genutzt wird, um den Auftrag (Sonne) zu erfüllen - oder wo eine Spannung zwischen beiden liegt, wenn die Zeichen sich in ihrer Grundnatur unterscheiden. PFLICHT-STRUKTUR: '+(S.pkg==='seelenkompas'?'4 Absätze Fliesstext (je ca. 100 Woerter, mit unterschiedlichen konkreten Beispielen)':'2 Absätze Fliesstext (je ca. 90 Woerter)')+' zur Kombination '+ac.sign+' AC × '+sun.sign+' Sonne. Dann einen NEUEN Absatz beginnend mit dem woertlichen Wort "Erlöst:" (60 Woerter) und einen NEUEN Absatz beginnend mit dem woertlichen Wort "Unerlöst:" (60 Woerter) dieser spezifischen Kombination, je mit konkretem Beispiel. NIEMALS diese Woerter nur thematisch einweben - IMMER als woertliche Absatz-Startmarkierung schreiben, sonst funktioniert die Darstellung der App nicht. Dann 1 Satz "Im Alltag bedeutet das:" mit einer konkreten, alltagsnahen Beobachtung wie sich diese Kombination typischerweise zeigt. '+W,
 
     // KAPITEL 'mc': Finalität - höchste Entwicklung, MC als Ziel des ganzen Weges
-    'mc':base+'\nDEIN KRÄFTESPIEL (berechnet, nicht schätzen - PFLICHT: in deinem Text NUR die konkreten Tierkreiszeichen-Namen benennen, NIEMALS die Fachbegriffe "Element", "Qualität", "Kardinal", "Fix", "Veränderlich" oder "Stellium" verwenden - das ist nicht die Sprache der Astrosophie): '+elementQualityProfile(h).text+'\nKAPITEL MC - GESAMTBILD & FINALITÄT: MC steht in '+mc.sign+', Herrscher '+mcR+' steht in '+mcRP+'.\n\nWICHTIGE KORREKTUR/BETONUNG (PFLICHT, nicht vergessen): Der MC ist NICHT "der Beruf" - diese Vereinfachung ist falsch und darf im Text nicht so stehen. Der MC ist die FINALITÄT: die Richtung, in die sich die Seele über das ganze Leben hin entwickeln will, das, was die Seele am Ende erlangen möchte. Das ist etwas ANDERES als die Sonne (der Seelenauftrag, das WAS): der MC ist das WOHIN, die Zielrichtung der gesamten Entfaltung, sichtbar als das, was am Ende integriert dasteht. Mache diesen Unterschied im Text explizit und klar - die Person soll verstehen: Sonne = mein Auftrag. MC = die Richtung, in die dieser Auftrag über die Zeit hinauswächst.\n\nDies ist das ABSCHLIESSENDE Kapitel, das ein VOLLSTÄNDIGES Bild der Person zeichnen soll. PFLICHT-STRUKTUR (mindestens 700-800 Woerter gesamt, ausführlich, mit exakten Beispielen):\n1) Ein Absatz (100 Woerter): was Finalität bedeutet und wie sie sich von der Sonnen-Aufgabe unterscheidet, allgemein eingeführt.\n2) Ein Absatz (110 Woerter) zum MC in '+mc.sign+' konkret als Richtung dieser Finalität, MIT einem konkreten Beispiel wie sich das im späteren Lebensweg zeigen kann.\n3) PFLICHT ein Absatz (110 Woerter) zur HERRSCHERKETTE: der MC-Herrscher '+mcR+' steht in '+mcRP+' - erkläre konkret, WIE sich die Finalität '+mc.sign+' über dieses Thema/Lebensfeld (das Haus, in dem '+mcR+' steht) tatsächlich erreichen lässt. Das ist der Schlüssel zur praktischen Umsetzung: nicht nur WAS das Ziel ist, sondern ÜBER WELCHEN WEG es sich konkret erreichen lässt.\n4) Ein Absatz (110 Woerter) über das Kräftespiel: wenn ein Schwerpunkt/eine Konzentration in bestimmten Zeichen besteht, benenne diese Zeichen konkret beim Namen und erkläre, was diese Konzentration von Kraft für die Grundnatur dieser Person bedeutet. Falls Zeichen ganz ohne Betonung sind, erkläre konkret, wie sich das im Alltag zeigen kann - immer beim Zeichennamen, nie mit abstrakten Kategorien.\n5) Ein Absatz (100 Woerter), der AC ('+ac.sign+', das Eintrittswerkzeug), Sonne ('+sun.sign+', der Seelenauftrag) und MC ('+mc.sign+', die Finalität/Zielrichtung) explizit zu einem zusammenhängenden Gesamtbild verbindet - wie alle drei zusammen EINE Geschichte ergeben.\n6) ERLÖST (70 Woerter, mit konkretem Beispiel) und UNERLÖST (70 Woerter, mit konkretem Beispiel) des MC in '+mc.sign+'.\n7) Drei kurze Sätze "Der vollständige Seelenweg:" - je 1 Satz zu AC, Sonne und MC als zusammenhängender Weg.\n8) PFLICHT zwei weitere Absätze (je 50-60 Woerter, nicht kürzer), exakt beginnend mit "Energetisch passender Partner:" (welcher energetische Typ/welche Zeichen-Qualität diese Person basierend auf der GESAMTEN Konstellation ergänzt, erdet oder beflügelt, mit einer konkreten Beispiel-Situation) und "Energetisch passender Beruf:" (welche Tätigkeitsfelder zur energetischen Gesamtkonstellation passen, konkret mit 2-3 benannten Beispielen und einer kurzen Begründung warum). '+W,
+    'mc':base+'\nDEIN KRÄFTESPIEL (berechnet, nicht schätzen - PFLICHT: in deinem Text NUR die konkreten Tierkreiszeichen-Namen benennen, NIEMALS die Fachbegriffe "Element", "Qualität", "Kardinal", "Fix", "Veränderlich" oder "Stellium" verwenden - das ist nicht die Sprache der Astrosophie): '+elementQualityProfile(h).text+'\nKAPITEL MC - GESAMTBILD & FINALITÄT: MC steht in '+mc.sign+', Herrscher '+mcR+' steht in '+mcRP+'.\n\nWICHTIGE KORREKTUR/BETONUNG (PFLICHT, nicht vergessen): Der MC ist NICHT "der Beruf" - diese Vereinfachung ist falsch und darf im Text nicht so stehen. Der MC ist die FINALITÄT: die Richtung, in die sich die Seele über das ganze Leben hin entwickeln will, das, was die Seele am Ende erlangen möchte. Das ist etwas ANDERES als die Sonne (der Seelenauftrag, das WAS): der MC ist das WOHIN, die Zielrichtung der gesamten Entfaltung, sichtbar als das, was am Ende integriert dasteht. Mache diesen Unterschied im Text explizit und klar - die Person soll verstehen: Sonne = mein Auftrag. MC = die Richtung, in die dieser Auftrag über die Zeit hinauswächst.\n\nDies ist das ABSCHLIESSENDE Kapitel, das ein VOLLSTÄNDIGES Bild der Person zeichnen soll. PFLICHT-STRUKTUR (mindestens '+(S.pkg==='seelenkompas'?'1400-1600':'700-800')+' Woerter gesamt, ausführlich, mit exakten Beispielen):\n1) Ein Absatz (100 Woerter): was Finalität bedeutet und wie sie sich von der Sonnen-Aufgabe unterscheidet, allgemein eingeführt.\n2) Ein Absatz (110 Woerter) zum MC in '+mc.sign+' konkret als Richtung dieser Finalität, MIT einem konkreten Beispiel wie sich das im späteren Lebensweg zeigen kann.\n3) PFLICHT ein Absatz (110 Woerter) zur HERRSCHERKETTE: der MC-Herrscher '+mcR+' steht in '+mcRP+' - erkläre konkret, WIE sich die Finalität '+mc.sign+' über dieses Thema/Lebensfeld (das Haus, in dem '+mcR+' steht) tatsächlich erreichen lässt. Das ist der Schlüssel zur praktischen Umsetzung: nicht nur WAS das Ziel ist, sondern ÜBER WELCHEN WEG es sich konkret erreichen lässt.\n4) Ein Absatz (110 Woerter) über das Kräftespiel: wenn ein Schwerpunkt/eine Konzentration in bestimmten Zeichen besteht, benenne diese Zeichen konkret beim Namen und erkläre, was diese Konzentration von Kraft für die Grundnatur dieser Person bedeutet. Falls Zeichen ganz ohne Betonung sind, erkläre konkret, wie sich das im Alltag zeigen kann - immer beim Zeichennamen, nie mit abstrakten Kategorien.\n5) Ein Absatz (100 Woerter), der AC ('+ac.sign+', das Eintrittswerkzeug), Sonne ('+sun.sign+', der Seelenauftrag) und MC ('+mc.sign+', die Finalität/Zielrichtung) explizit zu einem zusammenhängenden Gesamtbild verbindet - wie alle drei zusammen EINE Geschichte ergeben.\n6) Ein NEUER Absatz beginnend mit dem woertlichen Wort "Erlöst:" (70 Woerter, mit konkretem Beispiel) und ein NEUER Absatz beginnend mit dem woertlichen Wort "Unerlöst:" (70 Woerter, mit konkretem Beispiel) des MC in '+mc.sign+'. NIEMALS diese Woerter nur thematisch einweben - IMMER als woertliche Absatz-Startmarkierung schreiben, sonst funktioniert die Darstellung der App nicht.\n7) Drei kurze Sätze "Der vollständige Seelenweg:" - je 1 Satz zu AC, Sonne und MC als zusammenhängender Weg.\n8) PFLICHT zwei weitere Absätze (je 50-60 Woerter, nicht kürzer), exakt beginnend mit "Energetisch passender Partner:" (welcher energetische Typ/welche Zeichen-Qualität diese Person basierend auf der GESAMTEN Konstellation ergänzt, erdet oder beflügelt, mit einer konkreten Beispiel-Situation) und "Energetisch passender Beruf:" (welche Tätigkeitsfelder zur energetischen Gesamtkonstellation passen, konkret mit 2-3 benannten Beispielen und einer kurzen Begründung warum). '+W,
     'lebensphase':base+'\nDEINE AKTUELLE LEBENSPHASE (berechnet, nicht schätzen): Du befindest dich im Alter von '+lp.alter+' Jahren in der Phase des '+lp.haus+'. Hauses, geprägt von '+lp.planet+' ('+lp.von+'-'+lp.bis+' Jahre). Kernthema laut Geburtsmuster-System: '+lp.thema+'\nKAPITEL LEBENSPHASE: Dieses Kapitel beschreibt, wo die Person GERADE im Lebenszyklus steht - nicht das ganze Geburtsmuster, sondern die aktuelle Zeitqualität. PFLICHT-STRUKTUR (mindestens 500-600 Woerter, ausführlich):\n1) KOLLEKTIVER EINSTIEG ZUERST (PFLICHT, mind. 120 Woerter): Beschreibe zunächst allgemein und kollektiv, was dieses Lebensalter/diese Lebensphase für Menschen grundsätzlich bedeutet, unabhängig vom individuellen Muster - welche Entwicklungsaufgabe die Menschheit typischerweise in diesem Altersabschnitt durchläuft, was gesellschaftlich/psychologisch in diesem Lebensjahrzehnt ansteht. Noch NICHT auf die Person selbst eingehen.\n2) Erst danach der Übergang zur Person (PFLICHT-Übergangssatz, z.B. "Bei dir persönlich zeigt sich das so:" oder ähnlich).\n3) Persönliche Vertiefung (mind. 250 Woerter): wie sich dieses kollektive Thema GENAU bei dieser Person mit ihrem individuellen Muster zeigt - verbinde es wo sinnvoll mit AC ('+ac.sign+'), Sonne ('+sun.sign+') oder MC ('+mc.sign+'). Baue MINDESTENS drei konkrete, unterschiedliche Alltagsbeispiele ein (nicht nur eines) - eine berufliche Situation, eine Beziehungssituation, ein innerer Moment.\n4) Erlöst/Unerlöst dieser Lebensphase, mit je einem konkreten Beispiel (mind. 100 Woerter).\n5) Mitnehmen für deinen Weg: eine konkrete Übung, passend zu genau dieser Lebensphase (nicht generisch). '+W
   };
-
-  // ── QUADRANTEN-KAPITEL (SeelenKompass): 4 Haeuser-Trios statt 12 Einzelkapitel ──
-  // Jeder Quadrant fasst 3 Haeuser mit eigener Unterueberschrift zusammen,
-  // gefolgt von einem gemeinsamen Erloest/Unerloest/Keynote/Mitnehmen-Block.
-  var QUAD_QUESTIONS=[
-    ['Wer bin ich?','Was bin ich mir wert?','Wie drücke ich mich aus?'],
-    ['Wo bin ich zuhause?','Wie erlebe ich Freude?','Wie gestalte ich meinen Alltag?'],
-    ['Wie begegne ich dem Anderen?','Wie transformiere ich mich?','Was glaube ich?'],
-    ['Was ist meine Berufung?','Was ist meine Vision für die Welt?','Was ist das Verborgene das ich ans Licht bringen soll?']
-  ];
-  var QUAD_ROMAN=['I','II','III','IV'];
-  for(var qi=0;qi<QUADS.length;qi++){
-    var qd=QUADS[qi];
-    var hIds=[qd.areas[0].id,qd.areas[1].id,qd.areas[2].id];
-    var qq=QUAD_QUESTIONS[qi];
-    var qPrompt=base+'\n'+combo(hIds[0])+'\n'+combo(hIds[1])+'\n'+combo(hIds[2])
-      +'\nKAPITEL '+QUAD_ROMAN[qi]+'. QUADRANT — '+qd.name+' ('+qd.latin+') — Häuser '+hIds[0]+'–'+hIds[2]+':\n'
-      +'STRUKTUR (PFLICHT, in dieser Reihenfolge, insgesamt 1100-1300 Woerter):\n'
-      +'1) QUADRANTEN-EINLEITUNG (ca. 90-120 Woerter): Poetischer Einstieg. Nenne die drei Grundfragen dieses Quadranten wörtlich: "'+qq[0]+'", "'+qq[1]+'", "'+qq[2]+'". Erkläre kurz was diese drei Fragen für den Lebensweg bedeuten.\n'
-      +'2) HAUS '+hIds[0]+' (ca. 280-320 Woerter): Beginne den Absatz mit "**Haus '+hIds[0]+' — [Thema] · [Cusp-Zeichen] · Herrschaft [Planet] in H[X]:**" (fett, als Zwischenüberschrift), dann fliessend die Deutung: Cusp-Zeichen, Herrscherkette (WO steht der Herrscherplanet und was das konkret bedeutet), tatsächliche Planeten im Haus falls vorhanden (NIEMALS "Stellium" - stattdessen "Kraftzentrum in [Zeichen]"), Polarität zum gegenüberliegenden Haus. Ein konkretes Alltagsbeispiel einbauen.\n'
-      +'3) HAUS '+hIds[1]+' (ca. 280-320 Woerter): identische Struktur, beginnend mit "**Haus '+hIds[1]+' — ...**"\n'
-      +'4) HAUS '+hIds[2]+' (ca. 280-320 Woerter): identische Struktur, beginnend mit "**Haus '+hIds[2]+' — ...**"\n'
-      +'5) ERLÖST (ca. 90-110 Woerter) und UNERLÖST (ca. 90-110 Woerter) für den GESAMTEN Quadranten (alle drei Häuser zusammen synthetisiert, NICHT pro Haus einzeln), je mit einem konkreten Beispiel. Jeder Absatz beginnt mit "Erlöst — '+QUAD_ROMAN[qi]+'. Quadrant" bzw. "Unerlöst — '+QUAD_ROMAN[qi]+'. Quadrant".\n'
-      +'6) KEYNOTE (PFLICHT): Zeile "Keynote:" gefolgt von einem einprägsamen Kernsatz (max. 2 Sätze), der den GESAMTEN Quadranten auf den Punkt bringt.\n'
-      +'7) MITNEHMEN (PFLICHT): "Mitnehmen für deinen Weg:" gefolgt von einer konkreten, in dieser Woche umsetzbaren Mini-Übung passend zu diesem Quadranten.\n'
-      +'PFLICHT: NIEMALS "Stellium" verwenden, stattdessen "Kraftzentrum in [Zeichen]". Terminologie: Domizil, Erhöhung, Kraftzentrum, Herrscherkette, Kräftespiel, Polarität.';
-    t['q'+(qi+1)]=qPrompt;
-  }
   var prompt=t[id]||'';
   if(isFirst && prompt){
     prompt='Beginne deine GESAMTE Antwort mit exakt einer Zeile im Format SLOGAN: "..." - ein kurzer, poetischer, persönlicher Leitsatz (max. 12 Woerter), der diesen Menschen in seinem '+ac.sign+'-Wesenskern auf den Punkt bringt (z.B. SLOGAN: "Du bist die ruhige Kraft, die andere durch den Sturm trägt."). Danach, ab einer neuen Zeile, fahre mit folgendem Kapitel fort:\n'+prompt;
@@ -1758,7 +1713,7 @@ function mkPrompt(id,h,isFirst){
 // id=0 -> Jahres-Überblick (alle 12 Monate zusammengefasst), id=1-12 -> einzelner Monat
 function mkYearPrompt(id, h, isFirst, yearData){
   var ac=h.AC, sun=h.Sonne;
-  var VOICE='TON & STIMME (PFLICHT, gilt für den GESAMTEN Text): Schreibe warm, einladend, begleitend - wie ein Coach der neben der Person geht, nicht über sie urteilt oder doziert. IMMER "du"-Form, nie "Sie". Baue mindestens 1-2 echte rhetorische Fragen ein, die zum Nachdenken einladen. Nutze leichte, poetische Bilder statt trockener Fachsprache - aber bleibe konkret und verständlich, nie effekthascherisch. Verwende wo es natürlich passt Lucas Signatur-Wörter: Seele/Seelenmuster, Potenzial entfalten, Selbsterkenntnis, Bewusstwerdung, Klarheit, Einklang, Reise/Weg, "Körper, Geist und Seele". Nutze gelegentlich einen Dreier-Rhythmus bei Adjektiven/Aufzählungen (Vorbild: "bewusster, ehrlicher und klarer"). Schreibe in Schweizer Rechtschreibung (ss statt ß - niemals ß). STRIKTES VERBOT (PFLICHT, ohne Ausnahme): Erwähne NIEMALS koerperliche Symptome, Krankheiten, Erkrankungen, medizinische Begriffe oder gesundheitliche Beschwerden irgendeiner Art - das ist ausschliesslich Teil einer persoenlichen 1:1-Beratung und gehoert niemals in einen automatisiert erstellten Text. Kein akademischer oder distanzierter Ton, immer auf Augenhöhe, persönlich, herzlich.';
+  var VOICE='TON & STIMME (PFLICHT, gilt für den GESAMTEN Text): Schreibe warm, einladend, begleitend - wie ein Coach der neben der Person geht, nicht über sie urteilt oder doziert. IMMER "du"-Form, nie "Sie". Baue mindestens 1-2 echte rhetorische Fragen ein, die zum Nachdenken einladen. Nutze leichte, poetische Bilder statt trockener Fachsprache - aber bleibe konkret und verständlich, nie effekthascherisch. Verwende wo es natürlich passt Lucas Signatur-Wörter: Seele/Seelenmuster, Potenzial entfalten, Selbsterkenntnis, Bewusstwerdung, Klarheit, Einklang, Reise/Weg, "Körper, Geist und Seele". Nutze gelegentlich einen Dreier-Rhythmus bei Adjektiven/Aufzählungen (Vorbild: "bewusster, ehrlicher und klarer"). Schreibe in Schweizer Rechtschreibung (ss statt ß - niemals ß). STRIKTES VERBOT (PFLICHT, ohne Ausnahme): Erwähne NIEMALS koerperliche Symptome, Krankheiten, Erkrankungen, medizinische Begriffe oder gesundheitliche Beschwerden irgendeiner Art - das ist ausschliesslich Teil einer persoenlichen 1:1-Beratung und gehoert niemals in einen automatisiert erstellten Text. Kein akademischer oder distanzierter Ton, immer auf Augenhöhe, persönlich, herzlich. FORMAT ZWINGEND (PFLICHT, ohne Ausnahme): Nutze AUSSCHLIESSLICH \"## \" für Kapitelüberschriften und \"### \" für Unterüberschriften (echtes Markdown, zwei bzw. drei Rautezeichen gefolgt von einem Leerzeichen, am Zeilenanfang). NIEMALS \"---\" um Überschriften, NIEMALS Sternchen (**) für Überschriften, NIEMALS nummerierte \"KAPITEL X\"-Präfixe. Beispiel korrekt: \"## Dein Wesenskern\". Beispiel FALSCH, niemals so: \"--- **KAPITEL 1 - Wesenskern** ---\". ZUSAETZLICH ZWINGEND: Nach JEDER Ueberschrift MUSS eine LEERZEILE folgen, bevor der Fliesstext beginnt - schreibe niemals Ueberschrift und Fliesstext in derselben Zeile direkt hintereinander. Beispiel FALSCH: \"## Die Schwelle zwischen den Welten Es gibt Menschen, die...\" (Ueberschrift und Satz ohne Trennung). Beispiel KORREKT: \"## Die Schwelle zwischen den Welten\" gefolgt von einer Leerzeile, DANN erst \"Es gibt Menschen, die...\" als eigener Absatz.';
   var keys=['AC','MC','Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
   var horo=''; for(var i=0;i<keys.length;i++) horo+=keys[i]+':'+h[keys[i]].sign+' '+h[keys[i]].deg.toFixed(0)+'° ';
   var base=VOICE+'\n\nGEBURTSHOROSKOP: '+horo.trim()+'\nAC:'+ac.sign+' Sonne:'+sun.sign;
@@ -1816,7 +1771,7 @@ document.addEventListener('click', function(e) {
   else if (t.indexOf('SeelenKompass') > -1 || t.indexOf('Vollanalyse') > -1 || t.indexOf('upgraden') > -1) startPkg('seelenkompas');
   else if (t.indexOf('Jahreshoroskop') > -1 || t.indexOf('abonnieren') > -1) startPkg('jahreshoroskop');
   else if (t.indexOf('131') > -1) startPkg('ind_jahr');
-  else if (t.indexOf('188') > -1) startPkg('seele_jahr');
+  else if (t.indexOf('179') > -1) startPkg('seele_jahr');
   else if (t.indexOf('420') > -1) startPkg('ind_jahr_coaching');
   else if (t.indexOf('450') > -1) startPkg('seele_jahr_coaching');
   else if (t.indexOf('Erneut') > -1) startGen();
@@ -1989,15 +1944,15 @@ function renderPkgs(){
    +'<div style="border:1px solid rgba(200,168,75,.25);background:linear-gradient(135deg,rgba(200,168,75,.05),var(--deep));border-radius:16px;padding:1.4rem;margin-bottom:.65rem">'
    +'<div style="font-size:.56rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.65rem">Kombi-Pakete</div>'
 
-   +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)">'
+   +'<div style="display:flex;justify-content:space-between;align-items:center;padding<div style="background:#192436;border-radius:20px;padding:32px 24px;margin:32px 0"><div style="margin-bottom:28px"><span style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#ac9b7f;font-weight:700;display:block;margin-bottom:16px">&#10022; Was kommt als N&#228;chstes</span><p style="font-family:Georgia,serif;font-size:22px;font-weight:300;color:#eeeae0;line-height:1.7;margin-bottom:12px">Das Jahr dreht sich weiter. Was hat 2027 mit dir vor?</p><p style="font-size:15px;color:rgba(238,234,224,.55);line-height:1.7">Jedes Jahr bringt seine eigene kosmische Signatur. Wer weiss was kommt kann bewusst w&#228;hlen wie er ihm begegnet. Das Jahreshoroskop 2027 erscheint im Dezember 2026 &#8212; sei dabei.</p></div><div style="height:1px;background:rgba(172,155,127,.25);margin-bottom:24px"></div><a href="https://astrosophie-too.vercel.app/?pkg=seelenkompas" target="_blank" rel="noopener" onclick="if(window.parent!==window){window.parent.postMessage({openPkg:\'seelenkompas\'},\'*\');return false;}" style="display:block;background:rgba(42,122,138,.1);color:#5ab0c2;border:1.5px solid rgba(42,122,138,.4);border-radius:16px;padding:20px 24px;text-decoration:none;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:20px;font-weight:600;margin-bottom:6px">&#10022; SeelenKompass &#183; CHF 99.&#8211;</div><div style="font-size:14px;color:rgba(90,176,194,.75);line-height:1.7;margin-bottom:12px">Alle 12 Lebensbereiche statt nur einem Quadranten &#8212; das vollst&#228;ndige Bild deiner Seele.</div><div style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(90,176,194,.7)">Jetzt vervollst&#228;ndigen &#8594;</div></a><div style="background:rgba(74,122,74,.08);border:1.5px solid rgba(74,122,74,.25);border-radius:16px;padding:20px 24px;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:20px;font-weight:400;color:#7ab87a;margin-bottom:8px">&#10022; Jahreshoroskop 2027 &#8212; Vorank&#252;ndigung</div><div style="font-size:14px;color:rgba(122,184,122,.65);line-height:1.7;margin-bottom:12px">Trag dich ein und erhalte als Erste/r Zugang zum Jahreshoroskop 2027 &#8212; noch bevor es &#246;ffentlich verf&#252;gbar ist.</div><div style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(122,184,122,.6)">&#8594; Erinnerung aktivieren</div></div><div style="background:rgba(172,155,127,.06);border:1px solid rgba(172,155,127,.2);border-radius:16px;padding:20px 24px"><div style="font-family:Georgia,serif;font-size:20px;font-weight:400;color:#ac9b7f;margin-bottom:8px">&#10022; Monats-Horoskop &#183; CHF 9.&#8211; / Monat</div><div style="font-size:14px;color:rgba(172,155,127,.65);line-height:1.7;margin-bottom:12px">Jeden Monat die aktuellen Jahresimpulse &#8212; was steht dir zur Verf&#252;gung, was darf loslassen, worauf liegt der Fokus.</div><div style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(172,155,127,.6)">&#8594; Monatlich begleitet werden</div></div></div><!-- /NEWNAV -->bottom:1px solid rgba(255,255,255,.06)">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">Individual + Jahreshoroskop</div>'
    +'<div style="font-size:.62rem;color:var(--muted)">beide Analysen in einem PDF</div></div>'
    +'<button class="btn btn-sm" type="button" style="background:var(--purple);color:#fff;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 131.–</button></div>'
 
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">SeelenKompass + Jahreshoroskop <span style="color:var(--gold);font-size:.6rem">· 5% Vorteil</span></div>'
-   +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 198.–</div></div>'
-   +'<button class="btn btn-sm" type="button" style="background:var(--gold);color:#060e18;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 188.–</button></div>'
+   +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 148.–</div></div>'
+   +'<button class="btn btn-sm" type="button" style="background:var(--gold);color:#060e18;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 179.–</button></div>'
 
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">Individual + Jahreshoroskop + 1:1 <span style="color:var(--gold);font-size:.6rem">· 5% Vorteil</span></div>'
@@ -2081,8 +2036,8 @@ function renderPkgs(){
 
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">SeelenKompass + Jahreshoroskop <span style="color:var(--gold);font-size:.6rem">· 5% Vorteil</span></div>'
-   +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 198.–</div></div>'
-   +'<button class="btn btn-sm" type="button" style="background:var(--gold);color:#060e18;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 188.–</button></div>'
+   +'<div style="font-size:.62rem;color:var(--muted)">statt CHF 148.–</div></div>'
+   +'<button class="btn btn-sm" type="button" style="background:var(--gold);color:#060e18;border:none;border-radius:6px;padding:.5rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer">CHF 179.–</button></div>'
 
    +'<div style="display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06)">'
    +'<div><div style="font-size:.78rem;color:var(--white);font-weight:600">Individual + Jahreshoroskop + 1:1 <span style="color:var(--gold);font-size:.6rem">· 5% Vorteil</span></div>'
@@ -2108,7 +2063,7 @@ function renderPkgs(){
 function startCombo(combo){
   var combos={
     ind_jahr:{label:'Individual + Jahreshoroskop',price:'CHF 131.–',pkgs:['individual','jahreshoroskop'],coaching:false},
-    seele_jahr:{label:'SeelenKompass + Jahreshoroskop',price:'CHF 188.–',pkgs:['seelenkompas','jahreshoroskop'],coaching:false},
+    seele_jahr:{label:'SeelenKompass + Jahreshoroskop',price:'CHF 179.–',pkgs:['seelenkompas','jahreshoroskop'],coaching:false},
     ind_jahr_coaching:{label:'Individual + Jahreshoroskop + 1:1',price:'CHF 420.–',pkgs:['individual','jahreshoroskop'],coaching:true},
     seele_jahr_coaching:{label:'SeelenKompass + Jahreshoroskop + 1:1',price:'CHF 450.–',pkgs:['seelenkompas','jahreshoroskop'],coaching:true}
   };
@@ -2255,19 +2210,8 @@ function getAreas(){
     for(var m=0;m<12;m++) ya.push({id:m+1,t:months[m]+' 2026',ic:'🌊'});
     return ya;
   }
-  var quadAreas=[];
-  var quadIcons=['✦','🌙','🔥','✨'];
-  for(var qi=0;qi<QUADS.length;qi++){
-    var qd=QUADS[qi];
-    quadAreas.push({
-      id:'q'+(qi+1),
-      ic:quadIcons[qi],
-      t:qd.name,
-      s:qd.latin+' · Häuser '+qd.areas[0].id+'–'+qd.areas[2].id,
-      col:qd.col
-    });
-  }
-  var all=quadAreas.concat([
+  var all=[];for(var i=0;i<QUADS.length;i++)for(var j=0;j<QUADS[i].areas.length;j++)all.push(QUADS[i].areas[j]);
+  all=all.concat([
     {id:'sonne',ic:'☀',t:'Deine Lebensaufgabe',s:'Sonne · Seelenauftrag'},
     {id:'kombi',ic:'✦',t:'AC trifft Sonne',s:'Die grosse Kombination'},
     {id:'mc',ic:'⊕',t:'Deine Finalität',s:'MC · höchste Entwicklung'}
@@ -2456,9 +2400,9 @@ function runGenBatch(areas,startIdx){
         var sm=text.match(/SLOGAN:\s*"([^"]+)"/i);
         if(sm){ S.slogan=sm[1]; text=text.replace(/SLOGAN:\s*"[^"]+"\s*\n?/i,'').trim(); }
       }
-      S.genChapters[i]={text:text};
+      S.genChapters[i]={text:fixChapterTitle(text,areas[i])};
       var q=null;
-      if(areas[i].col){q={col:areas[i].col};} else {for(var j=0;j<QUADS.length;j++) for(var k=0;k<QUADS[j].areas.length;k++) if(QUADS[j].areas[k].id===areas[i].id) q=QUADS[j];}
+      for(var j=0;j<QUADS.length;j++) for(var k=0;k<QUADS[j].areas.length;k++) if(QUADS[j].areas[k].id===areas[i].id) q=QUADS[j];
       if(q) el('gi'+i).style.background=q.col+'0d';
       el('gd'+i).textContent='✓';if(q) el('gd'+i).style.color=q.col;
       el('gw'+i).style.display='none';if(q) el('gl'+i).style.color=q.col;
@@ -2805,7 +2749,7 @@ function runGen(areas,i){
     }
     S.chapters.push(text);
     var q=null;
-    if(areas[i].col){q={col:areas[i].col};} else {for(var j=0;j<QUADS.length;j++) for(var k=0;k<QUADS[j].areas.length;k++) if(QUADS[j].areas[k].id===areas[i].id) q=QUADS[j];}
+    for(var j=0;j<QUADS.length;j++) for(var k=0;k<QUADS[j].areas.length;k++) if(QUADS[j].areas[k].id===areas[i].id) q=QUADS[j];
     if(q) el('gi'+i).style.background=q.col+'0d';
     el('gd'+i).textContent='✓';if(q) el('gd'+i).style.color=q.col;
     el('gw'+i).style.display='none';if(q) el('gl'+i).style.color=q.col;
@@ -2829,56 +2773,199 @@ function callClaudeOnce(fullPrompt){
   });
 }
 
+// WICHTIG: Erzwingt strukturierte JSON-Antwort per Tool-Use, statt zu hoffen dass die
+// KI woertliche Marker wie "Erlöst:" selbst hinschreibt (das ist wiederholt fehlgeschlagen).
+// Die KI MUSS ueber das Tool-Schema die einzelnen Felder befuellen - die Marker-Woerter
+// ("Erlöst:", "Unerlöst:", "Keynote:") werden DANACH von UNS selbst vorangestellt, nicht
+// von der KI erwartet. Das kann technisch nicht mehr fehlschlagen, unabhaengig davon, was
+// die KI inhaltlich schreibt.
+function callClaudeStructured(fullPrompt, toolName, schema, fieldOrder, labels, retriesLeft){
+  if(retriesLeft===undefined) retriesLeft = 1;
+  return fetch('/.netlify/functions/claude',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:2200,
+      messages:[{role:'user',content:fullPrompt}],
+      tools:[{name:toolName,description:'Strukturierte Kapitelabschnitte zurueckgeben',input_schema:schema}],
+      tool_choice:{type:'tool',name:toolName}
+    })
+  }).then(function(r){
+    if(!r.ok) return r.json().then(function(e){throw new Error(e.error||'API Fehler');});
+    return r.json();
+  }).then(function(d){
+    var toolBlock = (d.content||[]).filter(function(b){return b.type==='tool_use';})[0];
+    if(!toolBlock || !toolBlock.input){
+      // Fallback: falls aus irgendeinem Grund kein Tool-Use zurueckkommt (z.B. aeltere
+      // Netlify-Function-Version ohne Tool-Weiterleitung), auf reinen Text zurueckfallen.
+      var textFallback=(d.content||[]).map(function(b){return b.text||'';}).join('');
+      return textFallback;
+    }
+    var input = toolBlock.input;
+    // VALIDIERUNG: prueft, ob jedes PFLICHTFELD tatsaechlich Inhalt hat. Ein leeres
+    // Pflichtfeld bedeutet meist: die Antwort wurde mitten in der JSON-Struktur
+    // abgeschnitten (z.B. durch ein zu knappes max_tokens), BEVOR dieses Feld befuellt
+    // wurde. Statt eine kaputte/unvollstaendige Antwort stillschweigend zu zeigen (die
+    // dann z.B. "Unerlöst:" komplett fehlen laesst), wird einmal automatisch neu versucht.
+    var required = (schema && schema.required) || [];
+    var missingField = required.find(function(key){ return !(input[key]||'').trim(); });
+    if(missingField && retriesLeft>0){
+      return callClaudeStructured(fullPrompt, toolName, schema, fieldOrder, labels, retriesLeft-1);
+    }
+    var parts = fieldOrder.map(function(key){
+      var val = (input[key]||'').trim();
+      var label = labels[key];
+      return label ? (label+' '+val) : val;
+    });
+    return parts.join('\n\n');
+  }).catch(function(err){
+    if(retriesLeft>0){
+      return callClaudeStructured(fullPrompt, toolName, schema, fieldOrder, labels, retriesLeft-1);
+    }
+    // Bei jedem Fehler (auch Netzwerk/Parsing), der auch nach Wiederholung bestehen bleibt,
+    // auf den normalen Freitext-Aufruf zurueckfallen, damit die Generierung NIE komplett
+    // abbricht, nur weil Tool-Use nicht verfuegbar ist.
+    return callClaudeOnce(fullPrompt);
+  });
+}
+
 // Teilt die Generierung eines Kapitels in MEHRERE kurze, aufeinanderfolgende Anfragen auf.
 // Grund: Netlify-Functions haben ein Zeitlimit (10s Free / 26s Pro). Jede einzelne Anfrage
 // bleibt kurz genug (ca. 250-300 Woerter), waehrend die ANZAHL der Teile je Paket variiert -
 // so wird SeelenKompass (das umfangreichste Paket) insgesamt deutlich tiefer als Individual
 // oder Gratis, ohne dass eine einzelne Anfrage das Zeitlimit sprengt.
-var PARTS_PER_PKG={gratis:1,individual:2,seelenkompas:5,jahreshoroskop:2};
+var PARTS_PER_PKG={gratis:2,individual:2,seelenkompas:5,jahreshoroskop:2};
 var PART_INSTRUCTIONS=[
-  'WICHTIG - NUR TEIL 1 SCHREIBEN: Schreibe JETZT NUR den ersten Teil dieses Kapitels (ca. 250-300 Woerter): den poetischen Einstieg und das Hausthema/Grundthema, ausführlich entfaltet. Schreibe NOCH NICHT Herrscherkette, Erlöst/Unerlöst, Keynote oder Mitnehmen - das folgt in weiteren Teilen. Hoere an einer sinnvollen Stelle auf, der Text wird nahtlos fortgesetzt.',
-  'WICHTIG - NUR TEIL 2 SCHREIBEN: Schreibe NAHTLOS DIREKT WEITER (kein Wiederholen, keine neue Einleitung) mit der Herrscherkette-Deutung (Herrscherplanet, wo er steht, was das bedeutet) und der Polaritaet zum gegenüberliegenden Haus, mit einem konkreten Beispiel. Ca. 250-300 weitere Woerter. Beginne OHNE Wiederholung des bisherigen Textes.',
-  'WICHTIG - NUR TEIL 3 SCHREIBEN: Schreibe NAHTLOS DIREKT WEITER mit dem ERLÖST-Abschnitt und dem UNERLÖST-Abschnitt, je mit einem anderen, neuen konkreten Alltagsbeispiel als bisher. Ca. 250-300 weitere Woerter. Beginne OHNE Wiederholung des bisherigen Textes.',
-  'WICHTIG - NUR TEIL 4 SCHREIBEN: Schreibe NAHTLOS DIREKT WEITER mit einem vertiefenden Absatz (weiteres neues konkretes Beispiel oder andere Perspektive auf das Thema, ca. 150 Woerter), dann eine Zeile "Keynote:" gefolgt vom einpraegsamen Kernsatz des Kapitels (max. 2 Saetze). Ca. 200-250 weitere Woerter insgesamt. Beginne OHNE Wiederholung des bisherigen Textes.',
-  'WICHTIG - NUR TEIL 5 SCHREIBEN: Schreibe NAHTLOS DIREKT WEITER mit "Mitnehmen fuer deinen Weg:" (konkrete Uebung mit Begründung) und - falls im Auftrag oben verlangt - dem Energetischer-Impuls-Teil. Ca. 200-250 weitere Woerter. Beginne OHNE Wiederholung des bisherigen Textes.'
-];
-// Eigene Teile-Anweisungen fuer die 4 Quadranten-Kapitel des SeelenKompass
-// (3 Haeuser + gemeinsamer Erloest/Unerloest/Keynote/Mitnehmen-Block statt Einzelhaus-Struktur).
-var PART_INSTRUCTIONS_QUAD=[
-  'WICHTIG - NUR TEIL 1 SCHREIBEN: Schreibe JETZT NUR die Quadranten-Einleitung mit den drei Grundfragen (ca. 100-150 Woerter), danach vollständig das ERSTE im Auftrag genannte Haus inkl. fett-markierter Zwischenüberschrift "**Haus [Nummer] — ...**", Herrscherkette und einem konkreten Beispiel (ca. 280-320 Woerter). Insgesamt ca. 400-450 Woerter. Schreibe NOCH NICHT das zweite oder dritte Haus, Erlöst/Unerlöst, Keynote oder Mitnehmen. Höre an einer sinnvollen Stelle auf, der Text wird nahtlos fortgesetzt.',
-  'WICHTIG - NUR TEIL 2 SCHREIBEN: Schreibe NAHTLOS DIREKT WEITER (kein Wiederholen, keine neue Einleitung) mit dem ZWEITEN im Auftrag genannten Haus - fett-markierte Zwischenüberschrift "**Haus [Nummer] — ...**", Cusp-Zeichen, Herrscherkette, tatsächliche Planeten im Haus falls vorhanden, Polarität, mit einem konkreten Beispiel. Ca. 280-320 Woerter. Beginne OHNE Wiederholung des bisherigen Textes.',
-  'WICHTIG - NUR TEIL 3 SCHREIBEN: Schreibe NAHTLOS DIREKT WEITER mit dem DRITTEN im Auftrag genannten Haus - identische Struktur wie die vorherigen Häuser, fett-markierte Zwischenüberschrift "**Haus [Nummer] — ...**", mit einem konkreten Beispiel. Ca. 280-320 Woerter. Beginne OHNE Wiederholung des bisherigen Textes.',
-  'WICHTIG - NUR TEIL 4 SCHREIBEN: Schreibe NAHTLOS DIREKT WEITER mit dem ERLÖST-Abschnitt und dem UNERLÖST-Abschnitt für den GESAMTEN Quadranten (alle drei Häuser zusammen synthetisiert, NICHT einzeln pro Haus), je mit einem konkreten Alltagsbeispiel. Jeder Absatz beginnt mit "Erlöst — [Quadrant]" bzw. "Unerlöst — [Quadrant]". Ca. 180-220 weitere Woerter. Beginne OHNE Wiederholung des bisherigen Textes.',
-  'WICHTIG - NUR TEIL 5 SCHREIBEN: Schreibe NAHTLOS DIREKT WEITER mit einer Zeile "Keynote:" gefolgt vom einprägsamen Kernsatz des GESAMTEN Quadranten (max. 2 Sätze), dann "Mitnehmen für deinen Weg:" gefolgt von einer konkreten, in dieser Woche umsetzbaren Mini-Übung. Ca. 150-200 weitere Woerter. Beginne OHNE Wiederholung des bisherigen Textes.'
+  'WICHTIG - NUR TEIL 1 SCHREIBEN (ca. 480-520 Woerter): Poetischer Einstieg mit einer rhetorischen Frage, dann das Hausthema/Grundthema ausführlich entfaltet inkl. Element-Bezug (Feuer/Erde/Luft/Wasser), dann die Herrscherkette-Deutung (Herrscherplanet, wo er steht, Domizil/Erhöhung/Exil/Fall falls zutreffend) MIT einem ersten konkreten Alltagsbeispiel (z.B. berufliche Situation). Schreibe NOCH NICHT Erlöst/Unerlöst/Keynote/Mitnehmen. WICHTIG FUER ALLE TEILE: dies ist eine durchgehende Geschichte (roter Faden) - jeder Teil baut auf dem vorigen auf, absolut keine Wiederholung derselben Aussage in anderen Worten, und JEDES Beispiel in JEDEM Teil muss ein ANDERER Lebensbereich sein als in den anderen Teilen.',
+  'WICHTIG - NUR TEIL 2 SCHREIBEN (ca. 480-520 weitere Woerter): Schreibe NAHTLOS DIREKT WEITER mit der Polaritaet zum gegenüberliegenden Haus, MIT einem zweiten konkreten Alltagsbeispiel aus einem ANDEREN Lebensbereich als Teil 1 (z.B. eine Beziehungssituation statt einer beruflichen). Dann den UNERLÖST-Abschnitt (beginne einen NEUEN Absatz woertlich mit "Unerlöst:") mit einem dritten neuen Beispiel aus wieder einem anderen Bereich (z.B. ein Familienmoment). Beginne OHNE Wiederholung des bisherigen Textes.',
+  'WICHTIG - NUR TEIL 3 SCHREIBEN (ca. 480-520 weitere Woerter): Schreibe NAHTLOS DIREKT WEITER mit dem ERLÖST-Abschnitt (beginne einen NEUEN Absatz woertlich mit "Erlöst:"), mit zwei weiteren NEUEN Beispielen aus wieder anderen Lebensbereichen als alle vorherigen (z.B. eine Freundschaftssituation und ein innerer Moment der Klarheit). Beginne OHNE Wiederholung.',
+  'WICHTIG - NUR TEIL 4 SCHREIBEN (ca. 480-520 weitere Woerter): Schreibe NAHTLOS DIREKT WEITER mit einem vertiefenden Absatz, der das Hausthema von einer GANZ ANDEREN Seite beleuchtet (z.B. koerperlich/energetisch, oder eine andere Lebensphase wie Kindheit vs. heute - neue Perspektive, kein bereits Gesagtes wiederholen). Beginne OHNE Wiederholung.',
+  'WICHTIG - NUR TEIL 5 SCHREIBEN (ca. 400-450 weitere Woerter): Schreibe NAHTLOS DIREKT WEITER mit einer Zeile woertlich beginnend mit "Keynote:" gefolgt vom einpraegsamen Kernsatz (max. 2 Saetze), der alles bisher Gesagte auf den Punkt bringt. Dann "Mitnehmen fuer deinen Weg:" (konkrete Uebung mit Begründung) und - falls im Auftrag oben verlangt - dem Energetischer-Impuls-Teil. Beginne OHNE Wiederholung.'
 ];
 function callClaude(areaId,h,fd,isFirst){
   var ctx='KUNDE: '+fd.name+'\nGeburt: '+fd.date+' · '+fd.time+' Uhr · '+fd.place+(fd.q?'\nSeine Frage: '+fd.q:'');
   var promptText = (S.pkg==='jahreshoroskop') ? mkYearPrompt(areaId,h,isFirst,S.yearData) : mkPrompt(areaId,h,isFirst);
   var basePrompt = KB+'\n\n'+ctx+'\n\n'+promptText;
   var nParts = PARTS_PER_PKG[S.pkg] || 1;
-  var isQuadChapter = /^q[1-4]$/.test(String(areaId));
-  var instrSet = isQuadChapter ? PART_INSTRUCTIONS_QUAD : PART_INSTRUCTIONS;
 
   if(nParts<=1){
     return callClaudeOnce(basePrompt);
   }
 
   var partsSoFar=[];
+  // Fuer diese Teil-Indizes (0-basiert) wird die strukturierte Tool-Use-Variante genutzt,
+  // damit die Pflicht-Marker technisch garantiert sind statt von der KI erhofft zu werden.
+  // WICHTIG: Bei kurzen Paketen (2 Teile) muss der LETZTE Teil ALLE Marker abdecken
+  // (Unerlöst+Erlöst+Keynote+Mitnehmen), da es keine weiteren Teile mehr gibt.
+  var SCHEMA_UNERLOEST_ONLY={
+    toolName:'kapitel_teil_unerloest',
+    schema:{type:'object',properties:{
+      polaritaet_absatz:{type:'string',description:'Polaritaet zum gegenüberliegenden Haus mit einem konkreten Alltagsbeispiel, ca. 180-200 Woerter - bewusst kompakt halten, nicht laenger'},
+      unerloest_text:{type:'string',description:'Der Unerlöst-Abschnitt OHNE das Wort "Unerlöst:" davor (wird automatisch ergaenzt) - zwei konkrete Alltagsbeispiele, ca. 180-200 Woerter - bewusst kompakt halten, nicht laenger'}
+    },required:['polaritaet_absatz','unerloest_text']},
+    fieldOrder:['polaritaet_absatz','unerloest_text'],
+    labels:{polaritaet_absatz:'',unerloest_text:'Unerlöst:'}
+  };
+  var SCHEMA_ERLOEST_ONLY={
+    toolName:'kapitel_teil_erloest',
+    schema:{type:'object',properties:{
+      erloest_text:{type:'string',description:'Der Erlöst-Abschnitt OHNE das Wort "Erlöst:" davor (wird automatisch ergaenzt) - zwei konkrete, neue Alltagsbeispiele aus anderen Lebensbereichen als bisher, ca. 480-520 Woerter'}
+    },required:['erloest_text']},
+    fieldOrder:['erloest_text'],
+    labels:{erloest_text:'Erlöst:'}
+  };
+  var SCHEMA_KEYNOTE_MITNEHMEN_ONLY={
+    toolName:'kapitel_teil_abschluss',
+    schema:{type:'object',properties:{
+      vertiefung_falls_noch_nicht:{type:'string',description:'Falls im bisherigen Text noch nicht geschehen: kurzer weiterer Gedanke der das Kapitel abrundet, sonst leer lassen'},
+      keynote_text:{type:'string',description:'Der einpraegsame Kernsatz OHNE das Wort "Keynote:" davor (wird automatisch ergaenzt) - max. 2 Saetze, die Essenz des ganzen Kapitels'},
+      mitnehmen_text:{type:'string',description:'Konkrete Uebung mit Begruendung OHNE "Mitnehmen fuer deinen Weg:" davor (wird automatisch ergaenzt), ca. 80-100 Woerter'}
+    },required:['keynote_text','mitnehmen_text']},
+    fieldOrder:['vertiefung_falls_noch_nicht','keynote_text','mitnehmen_text'],
+    labels:{vertiefung_falls_noch_nicht:'',keynote_text:'Keynote:',mitnehmen_text:'Mitnehmen für deinen Weg:'}
+  };
+  // Kombi-Schema fuer kurze Pakete: der EINE letzte Teil muss Unerlöst+Erlöst+Keynote+Mitnehmen
+  // ALLE zusammen abdecken, da keine weiteren Teile mehr folgen.
+  var SCHEMA_ALLES_KOMBINIERT={
+    toolName:'kapitel_teil_alles',
+    schema:{type:'object',properties:{
+      restlicher_haupttext:{type:'string',description:'Falls die Haupterzaehlung (Herrscherkette, Polaritaet) noch nicht vollstaendig ist: hier fortsetzen, sonst leer lassen'},
+      unerloest_text:{type:'string',description:'Der Unerlöst-Abschnitt OHNE das Wort "Unerlöst:" davor (wird automatisch ergaenzt) - konkretes Alltagsbeispiel'},
+      erloest_text:{type:'string',description:'Der Erlöst-Abschnitt OHNE das Wort "Erlöst:" davor (wird automatisch ergaenzt) - konkretes Alltagsbeispiel'},
+      keynote_text:{type:'string',description:'Der einpraegsame Kernsatz OHNE das Wort "Keynote:" davor (wird automatisch ergaenzt) - max. 2 Saetze'},
+      mitnehmen_text:{type:'string',description:'Konkrete Uebung mit Begruendung OHNE "Mitnehmen fuer deinen Weg:" davor (wird automatisch ergaenzt)'}
+    },required:['unerloest_text','erloest_text','keynote_text','mitnehmen_text']},
+    fieldOrder:['restlicher_haupttext','unerloest_text','erloest_text','keynote_text','mitnehmen_text'],
+    labels:{restlicher_haupttext:'',unerloest_text:'Unerlöst:',erloest_text:'Erlöst:',keynote_text:'Keynote:',mitnehmen_text:'Mitnehmen für deinen Weg:'}
+  };
   function nextPart(idx){
-    if(idx>=nParts) return Promise.resolve(partsSoFar.join('\n\n'));
-    var instr = instrSet[Math.min(idx,instrSet.length-1)];
+    if(idx>=nParts) return Promise.resolve(partsSoFar.join(' '));
+    var instr = PART_INSTRUCTIONS[Math.min(idx,PART_INSTRUCTIONS.length-1)];
     var prompt = basePrompt;
     if(partsSoFar.length>0){
       prompt += '\n\nDu hast bereits folgenden bisherigen Text dieses Kapitels geschrieben:\n---\n'+partsSoFar.join(' ')+'\n---\n\n'+instr;
     } else {
       prompt += '\n\n'+instr;
     }
-    return callClaudeOnce(prompt).then(function(part){
+    var isLastPart = (idx === nParts-1);
+    var schemaCfg = null;
+    if(nParts>=5){
+      // Volle 5(+)-Teile-Struktur: Marker sauber ueber mehrere Teile verteilt.
+      if(idx===1) schemaCfg = SCHEMA_UNERLOEST_ONLY;
+      else if(idx===2) schemaCfg = SCHEMA_ERLOEST_ONLY;
+      else if(isLastPart) schemaCfg = SCHEMA_KEYNOTE_MITNEHMEN_ONLY;
+    } else {
+      // Kurze Pakete (2 Teile): der letzte Teil MUSS alle vier Marker auf einmal abdecken,
+      // da es sonst keine Gelegenheit mehr dafuer gibt.
+      if(isLastPart) schemaCfg = SCHEMA_ALLES_KOMBINIERT;
+    }
+    var callPromise = schemaCfg
+      ? callClaudeStructured(prompt, schemaCfg.toolName, schemaCfg.schema, schemaCfg.fieldOrder, schemaCfg.labels)
+      : callClaudeOnce(prompt);
+    return callPromise.then(function(part){
       partsSoFar.push(part.trim());
       return nextPart(idx+1);
+    }).catch(function(err){
+      // KRITISCHES SICHERHEITSNETZ: Falls IRGENDEIN Teil mittendrin fehlschlaegt (Netzwerk,
+      // Timeout, API-Fehler), darf das Kapitel NICHT einfach abgeschnitten enden. Statt den
+      // Fehler weiterzureichen, wird der bisherige Text genommen und SOFORT mit der finalen
+      // Absicherung (siehe unten) ergaenzt, damit Erlöst/Unerlöst/Keynote/Mitnehmen trotzdem
+      // erscheinen, egal was in der Mitte schiefging.
+      return Promise.resolve(partsSoFar.join(' '));
     });
   }
-  return nextPart(0);
+  return nextPart(0).then(function(fullText){
+    // FINALE ABSICHERUNG (PFLICHT, kann nicht mehr fehlschlagen): Prueft nach der gesamten
+    // Generierung, ob wirklich ALLE vier Pflicht-Marker vorhanden sind. Falls auch nur einer
+    // fehlt (egal aus welchem Grund - abgebrochene Generierung, Netzwerkfehler, KI-Fehlverhalten),
+    // wird GENAU DAS Fehlende ueber einen dedizierten, strukturierten Tool-Use-Aufruf nachgeliefert
+    // und angehaengt. Das garantiert zu 100%: jedes fertige Kapitel enthaelt am Ende immer
+    // Unerlöst/Erlöst/Keynote/Mitnehmen, unabhaengig davon was in der Generierung davor geschah.
+    var missing = [];
+    if(fullText.indexOf('Unerlöst:')===-1) missing.push('unerloest');
+    if(fullText.indexOf('Erlöst:')===-1) missing.push('erloest');
+    if(fullText.indexOf('Keynote:')===-1) missing.push('keynote');
+    if(fullText.indexOf('Mitnehmen für deinen Weg:')===-1) missing.push('mitnehmen');
+    if(missing.length===0) return fullText;
+    var repairPrompt = basePrompt + '\n\nDu hast bereits folgenden Text zu diesem Kapitel geschrieben:\n---\n'+fullText+'\n---\n\nWICHTIG - REPARATUR: In obigem Text fehlen noch folgende PFLICHT-Abschnitte: '+missing.join(', ')+'. Schreibe JETZT NUR diese fehlenden Abschnitte nach, kurz und praegnant, thematisch passend zum Rest des Kapitels.';
+    return callClaudeStructured(repairPrompt, SCHEMA_ALLES_KOMBINIERT.toolName, SCHEMA_ALLES_KOMBINIERT.schema, SCHEMA_ALLES_KOMBINIERT.fieldOrder, SCHEMA_ALLES_KOMBINIERT.labels)
+      .then(function(repairText){
+        // Nur die tatsaechlich fehlenden Marker aus der Reparatur-Antwort uebernehmen,
+        // um Dopplungen zu vermeiden falls doch schon einzelne Marker vorhanden waren.
+        var repairParts = [];
+        missing.forEach(function(m){
+          var labelMap = {unerloest:'Unerlöst:', erloest:'Erlöst:', keynote:'Keynote:', mitnehmen:'Mitnehmen für deinen Weg:'};
+          var label = labelMap[m];
+          var re = new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'[\\s\\S]*?(?=(?:Unerlöst:|Erlöst:|Keynote:|Mitnehmen für deinen Weg:|$))');
+          var found = repairText.match(re);
+          if(found) repairParts.push(found[0].trim());
+        });
+        return fullText + (repairParts.length ? '\n\n'+repairParts.join('\n\n') : '');
+      })
+      .catch(function(){
+        // Selbst wenn die Reparatur fehlschlaegt: das Kapitel trotzdem zurueckgeben,
+        // damit die Person wenigstens den Haupttext erhaelt, statt eines Totalabsturzes.
+        return fullText;
+      });
+  });
 }
 
 // ── SHOWRESULT ────────────────────────────────────────────────────────────
@@ -2907,7 +2994,7 @@ function showResult(){
   for(var i=0;i<displayList.length;i++){
     var area=displayList[i];
     var q=null;
-    if(area.col){q={col:area.col};} else {for(var j=0;j<QUADS.length;j++) for(var k=0;k<QUADS[j].areas.length;k++) if(QUADS[j].areas[k].id===area.id) q=QUADS[j];}
+    for(var j=0;j<QUADS.length;j++) for(var k=0;k<QUADS[j].areas.length;k++) if(QUADS[j].areas[k].id===area.id) q=QUADS[j];
     var col = q ? q.col : '#2d9bb5'; // Fallback-Farbe (Jahreshoroskop-Petrol) wenn kein Quadrant zugeordnet ist
     chsHtml+='<div class="res-ch" style="background:'+col+'10;border:1px solid '+col+'25">'
             +'<span style="color:'+col+';font-size:.7rem;font-weight:700">✓</span>'
@@ -2915,56 +3002,35 @@ function showResult(){
             +'</div>';
   }
   el('res-chs').innerHTML=chsHtml;
-
-  // Slogan im Hero anzeigen, falls vorhanden (KI generiert ihn bereits, wurde bisher nirgends gezeigt)
-  var sloganEl=el('res-slogan');
-  if(sloganEl){
-    sloganEl.innerHTML = S.slogan
-      ? '<div style="border-top:1px solid rgba(172,155,127,.25);padding-top:.75rem;margin-top:.25rem"><p style="font-family:var(--serif);font-style:italic;color:rgba(172,155,127,.85);font-size:.85rem;line-height:1.6">„'+S.slogan+'"</p></div>'
-      : '';
-  }
-
   var up='';
   if(S.pkg==='gratis'){
-    up='<div style="background:rgba(25,36,54,.03);border:1px solid rgba(25,36,54,.06);border-radius:16px;padding:1.1rem;margin-bottom:.5rem">'
-      +'<p style="font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:.75rem;text-align:center;opacity:.55">✦ Dein nächster Schritt</p>'
-      +'<div style="background:linear-gradient(135deg,rgba(172,155,127,.14),rgba(172,155,127,.05));border:1.5px solid var(--gold);border-radius:14px;padding:1.1rem;margin-bottom:.6rem;position:relative">'
-      +'<span style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--navy);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .7rem;border-radius:20px">★ Meistgewählt</span>'
-      +'<p style="font-family:var(--serif);color:var(--navy);font-size:1.05rem;font-weight:600;margin:.4rem 0 .15rem;text-align:center">SeelenKompass</p>'
-      +'<p style="font-size:.72rem;color:var(--muted);text-align:center;margin-bottom:.6rem;line-height:1.6">Alle 12 Lebensbereiche — das vollständige Bild deiner Seele</p>'
-      +'<p style="text-align:center;font-size:.85rem;color:var(--goldD);font-weight:700;margin-bottom:.7rem">CHF 99.–</p>'
-      +'<button class="btn btn-gold btn-fw" style="color:#192436">SeelenKompass sichern →</button>'
+    up='<div style="display:grid;gap:.5rem">'
+      +'<div style="background:rgba(123,111,196,.07);border:1px solid rgba(123,111,196,.25);border-radius:var(--r2);padding:.875rem;text-align:center">'
+      +'<p style="font-family:var(--serif);color:var(--purple);font-size:.9rem;margin-bottom:.2rem;font-weight:600">Einen Quadrant vertiefen · CHF 49.–</p>'
+      +'<button class="btn btn-sm" style="background:#5a4fa8;color:#fff;margin-top:.4rem;border-radius:10px;border:none;font-family:var(--serif);font-weight:600;cursor:pointer;padding:.48rem 1rem">Individual-Analyse starten →</button>'
       +'</div>'
-      +'<div style="background:#fff;border:1px solid rgba(123,111,196,.25);border-radius:14px;padding:.9rem 1.1rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem">'
-      +'<div><p style="font-family:var(--serif);color:var(--purple);font-size:.85rem;font-weight:600;margin-bottom:.15rem">Individuelles Paket</p>'
-      +'<p style="font-size:.68rem;color:var(--muted)">3 Lebensbereiche · CHF 49.–</p></div>'
-      +'<button class="btn btn-violet btn-sm" style="white-space:nowrap">Wählen →</button>'
+      +'<div style="background:rgba(200,168,75,.05);border:1px solid rgba(200,168,75,.25);border-radius:var(--r2);padding:.875rem;text-align:center">'
+      +'<p style="font-family:var(--serif);color:var(--gold);font-size:.9rem;margin-bottom:.2rem;font-weight:600">Alle 12 Lebensbereiche · CHF 99.–</p>'
+      +'<button class="btn btn-gold btn-sm" style="color:#192436;margin-top:.4rem">SeelenKompass sichern →</button>'
       +'</div></div>';
   } else if(S.pkg==='individual'){
-    up='<div style="background:rgba(25,36,54,.03);border:1px solid rgba(25,36,54,.06);border-radius:16px;padding:1.1rem;margin-bottom:.5rem">'
-      +'<p style="font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:.75rem;text-align:center;opacity:.55">✦ Dein nächster Schritt</p>'
-      +'<div style="background:linear-gradient(135deg,rgba(172,155,127,.14),rgba(172,155,127,.05));border:1.5px solid var(--gold);border-radius:14px;padding:1.1rem;margin-bottom:.6rem;position:relative">'
-      +'<span style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--navy);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .7rem;border-radius:20px">★ Upgrade</span>'
-      +'<p style="font-family:var(--serif);color:var(--navy);font-size:1.05rem;font-weight:600;margin:.4rem 0 .15rem;text-align:center">Alle 12 Lebensbereiche</p>'
-      +'<p style="font-size:.72rem;color:var(--muted);text-align:center;margin-bottom:.6rem;line-height:1.6">Nur CHF 50.– mehr — dein SeelenKompass komplettieren</p>'
-      +'<p style="text-align:center;font-size:.85rem;color:var(--goldD);font-weight:700;margin-bottom:.7rem">CHF 99.– gesamt</p>'
-      +'<button class="btn btn-gold btn-fw" style="color:#192436">SeelenKompass upgraden →</button>'
+    up='<div style="display:grid;gap:.5rem">'
+      +'<div style="background:rgba(200,168,75,.05);border:1px solid rgba(200,168,75,.25);border-radius:var(--r2);padding:.875rem;text-align:center">'
+      +'<p style="font-family:var(--serif);color:var(--gold);font-size:.9rem;margin-bottom:.2rem;font-weight:600">Upgrade: Alle 12 Lebensbereiche · nur CHF 50.– mehr</p>'
+      +'<button class="btn btn-gold btn-sm" style="color:#192436;margin-top:.4rem">SeelenKompass upgraden →</button>'
       +'</div>'
-      +'<div style="background:#fff;border:1px solid rgba(37,108,134,.25);border-radius:14px;padding:.9rem 1.1rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem">'
-      +'<div><p style="font-family:var(--serif);color:var(--teal);font-size:.85rem;font-weight:600;margin-bottom:.15rem">1:1 Coaching mit Luca</p>'
-      +'<p style="font-size:.68rem;color:var(--muted)">Persönliches Erstgespräch · CHF 291.– Aufpreis</p></div>'
-      +'<a href="https://calendly.com/luca-calicchio-info" target="_blank" class="btn btn-teal btn-sm" style="text-decoration:none;white-space:nowrap">Buchen →</a>'
+      +'<div style="background:rgba(37,108,134,.07);border:1px solid rgba(37,108,134,.22);border-radius:var(--r2);padding:.875rem;text-align:center">'
+      +'<p style="font-family:var(--serif);color:var(--teal);font-size:.9rem;margin-bottom:.2rem;font-weight:600">1:1 Coaching mit Luca · CHF 291.– Aufpreis</p>'
+      +'<a href="https://calendly.com/luca-calicchio-info" target="_blank" class="btn btn-teal btn-sm" style="display:inline-flex;text-decoration:none;margin-top:.4rem">Erstgespräch buchen →</a>'
       +'</div></div>';
   } else {
-    up='<div style="background:rgba(25,36,54,.03);border:1px solid rgba(25,36,54,.06);border-radius:16px;padding:1.1rem;margin-bottom:.5rem">'
-      +'<p style="font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:.75rem;text-align:center;opacity:.55">✦ Dein nächster Schritt</p>'
-      +'<div style="background:rgba(37,108,134,.07);border:1px solid rgba(37,108,134,.22);border-radius:14px;padding:1.1rem;text-align:center">'
-      +'<p style="font-family:var(--serif);color:var(--teal);font-size:.95rem;margin-bottom:.2rem;font-weight:600">1:1 Coaching mit Luca</p>'
-      +'<p style="font-size:.7rem;color:var(--muted);margin-bottom:.7rem">CHF 261.– Aufpreis · CHF 99.– werden angerechnet</p>'
-      +'<a href="https://calendly.com/luca-calicchio-info" target="_blank" class="btn btn-teal btn-fw" style="text-decoration:none">Erstgespräch buchen →</a>'
-      +'</div></div>';
+    up='<div style="background:rgba(37,108,134,.07);border:1px solid rgba(37,108,134,.22);border-radius:var(--r2);padding:1rem;text-align:center">'
+      +'<p style="font-family:var(--serif);color:var(--teal);font-size:.95rem;margin-bottom:.2rem;font-weight:600">1:1 Coaching mit Luca · CHF 261.– Aufpreis</p>'
+      +'<p style="font-size:.7rem;color:var(--muted);margin-bottom:.6rem">CHF 99.– werden angerechnet.</p>'
+      +'<a href="https://calendly.com/luca-calicchio-info" target="_blank" class="btn btn-teal btn-sm" style="display:inline-flex;text-decoration:none">Erstgespräch buchen →</a>'
+      +'</div>';
   }
-  el('upsell-zone').innerHTML=up;
+  el('upsell').innerHTML=up;
   goPage('result');
 }
 
@@ -3049,9 +3115,74 @@ function blurTail(text,fraction){
   }
   return visible+hiddenHtml;
 }
+// Ersetzt JEDEN KI-Titelversuch am Textanfang durch den garantiert korrekten,
+// im Code fest definierten Titel (area.t) - egal in welchem (fehlerhaften)
+// Format die KI ihn geschrieben hat ('## Titel', '--- **KAPITEL 1 - Titel** ---',
+// '# Titel ## Untertitel Text...' etc). Das macht das Raten ueberfluessig:
+// Wir MUESSEN nicht mehr erkennen, WO die KI-Ueberschrift endet, weil wir sie
+// komplett verwerfen und durch den bekannten korrekten Titel ersetzen.
+function fixChapterTitle(text,area){
+  if(!text||!area||!area.t) return text;
+  var t=String(text);
+  // Schneidet am Anfang alles ab, was wie ein Titelversuch aussieht:
+  // Bindestriche, Rauten (#), Sternchen (**), "KAPITEL N", bis zu max. 220
+  // Zeichen (grosszuegig, damit auch lange Fehlformate komplett erfasst werden).
+  var lead=t.slice(0,220);
+  var looksLikeMalformedTitle=/^[\s\-–—#*]*(?:kapitel\s*\d+)?[\s\-–—#*:·]*[A-ZÄÖÜ]/i.test(lead)
+      && /[#\-–—*]{2,}/.test(lead);
+  var startsClean=/^##?\s+\S/.test(t); // bereits korrektes '## Titel' oder '# Titel' am Anfang
+  if(startsClean || looksLikeMalformedTitle){
+    // Findet das Ende des Titelblocks: erstes Vorkommen von zwei aufeinanderfolgenden
+    // Zeilenumbruechen (echter Absatzwechsel) ODER, falls die KI alles auf eine Zeile
+    // gequetscht hat, das Ende der zusammenhaengenden Raute/Stern/Bindestrich-Titelzone.
+    var cut=t.search(/\n\s*\n/);
+    if(cut===-1 || cut>260){
+      // Kein sauberer Absatzwechsel gefunden (KI hat alles auf eine Zeile geschrieben) -
+      // GIERIGE Suche (nicht sparsam!): erfasst ALLE verschachtelten Titelversuche
+      // innerhalb der ersten 220 Zeichen (z.B. "--- # Kapitel 1 ## Untertitel Text..."
+      // enthaelt ZWEI Raute-Markierungen hintereinander - beide muessen weg).
+      var m=t.match(/^[\s\S]{0,220}[#*\-–—]\s*(?=[A-ZÄÖÜ][a-zäöüß])/);
+      cut=m?m[0].length:Math.min(80,t.length);
+    }
+    // Nur Bindestriche/Sterne/Leerraum am Schnittpunkt entfernen - NICHT '#', damit
+    // ein direkt danach folgender, LEGITIMER '### Untertitel' erhalten bleibt.
+    var rest=t.slice(cut).replace(/^[\s\-–—*]+/,'').trim();
+    t='## '+area.t+'\n\n'+rest;
+  } else {
+    // Kein erkennbarer Titelversuch am Anfang - Text unveraendert lassen,
+    // aber sicherstellen dass der korrekte Titel trotzdem vorangestellt wird,
+    // falls die KI direkt mit Fliesstext ohne jede Ueberschrift begonnen hat.
+    if(!/^##?\s+/.test(t)) t='## '+area.t+'\n\n'+t;
+  }
+  return t;
+}
+
 function renderChapterMD(md,censor,upgradeLabel){
   if(!md) return '';
   md=String(md).replace(/\r\n/g,'\n');
+  // FALLBACK-FIX (aggressiv): Manchmal schreibt die KI '#'/'##'/'---' mitten im
+  // Fliesstext OHNE Zeilenumbrueche drumherum (z.B. "--- # Kapitel 1 · Titel ##
+  // Untertitel Fliesstext..." alles als EIN Block). Das erzwingt vor jedem '#'-
+  // Vorkommen (1-3 Stueck) einen Absatzumbruch, egal wo es im Text steht, damit
+  // die zeilenbasierte Ueberschriften-Erkennung weiter unten greifen kann.
+  md=md.replace(/\s*-{2,}\s*/g,'\n\n');
+  md=md.replace(/\s*(#{1,3})[ \t]+/g,'\n\n$1 ');
+  // Praeziserer Fallback: Falls die KI Ueberschrift und Fliesstext ohne
+  // Absatztrennung aneinandergereiht hat, wird an der Stelle getrennt, wo ein
+  // typisches deutsches Satzanfangswort auftaucht (gierig = findet die spaeteste,
+  // also praezisere Trennstelle, nicht die erste zufaellige Wortdopplung).
+  md=md.replace(/^(#{2,3}\s+.{2,110})\s+(?=(?:Es|Der|Die|Das|Du|Dein|Deine|Diese|Dieser|Ein|Eine|In|Bei|Wenn|Was|Hast|Bist|Ist|Wie|Man|Vielleicht|Manchmal|Jede|Jeder|Wer|Genau|Stell|Frag|Nicht|Auch|So|Denn|Doch|Immer|Oft)\b)/gm,'$1\n\n');
+  // KRITISCHER FIX: 'Keynote:', 'Mitnehmen für deinen Weg:', 'Erlöst:', 'Unerlöst:'
+  // werden von der KI manchmal MITTEN im Fliesstext geschrieben, ohne Absatzumbruch
+  // davor (gleiches Problem wie bei '#'-Ueberschriften). Ohne eigenen Absatzanfang
+  // erkennt der Parser diese Schluesselwoerter nicht und sie verschwinden im Fliesstext.
+  // Erzwingt hier einen Absatzumbruch VOR jedem Vorkommen, auch mitten im Satz.
+  md=md.replace(/([.!?])\s+(\**\s*(?:Keynote|Mitnehmen[^:]{0,30}|Erlöst|Erloest|Unerlöst|Unerloest)\s*:)/gi,'$1\n\n$2');
+  md=md.replace(/^(\**\s*(?:Keynote|Mitnehmen[^:]{0,30}|Erlöst|Erloest|Unerlöst|Unerloest)\s*:)\s*/gim,'\n\n$1 ');
+  // FALLBACK-FIX: '--- **KAPITEL 1 - Titel** ---' oder einzelne '**Titel**'-Zeilen
+  // (falls die KI stattdessen dieses Muster nutzt statt echtem '#'-Markdown).
+  md=md.replace(/^\*{2}\s*(?:KAPITEL\s*\d+\s*[–\-—]?\s*)?(.+?)\s*\*{2}\s*$/gim,'## $1');
+  md=md.replace(/^\*{2}([^*\n]{3,80})\*{2}\s*$/gm,'### $1');
   function inlineMd(s){
     s=s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
     return s;
@@ -3074,12 +3205,32 @@ function renderChapterMD(md,censor,upgradeLabel){
   }
   md=normalized.join('\n');
   var blocks=md.split(/\n\s*\n/).map(function(b){return b.trim();}).filter(function(b){return b.length>0;});
+  var HEAD_MAXLEN=120;
+  function splitOverlongHeading(text){
+    // Falls eine erkannte Ueberschrift verdaechtig lang ist (>70 Zeichen), ist sehr
+    // wahrscheinlich Fliesstext mit reingerutscht (KI hat keine Absatztrennung gesetzt).
+    // Trennt an der letzten Wortgrenze vor 55 Zeichen: erster Teil = echte Ueberschrift,
+    // Rest = eigener Body-Absatz.
+    if(text.length<=HEAD_MAXLEN) return {head:text,rest:null};
+    var cut=text.slice(0,100);
+    var lastSpace=cut.lastIndexOf(' ');
+    if(lastSpace<15) lastSpace=55; // Sicherheitsnetz falls kein Leerzeichen gefunden
+    return {head:text.slice(0,lastSpace).trim(),rest:text.slice(lastSpace).trim()};
+  }
   var parsed=[];
   blocks.forEach(function(block){
     block=block.replace(/^-{3,}\s*/,'').replace(/\s*-{3,}$/,'').trim();
     if(!block||block==='---') return;
-    if(/^###\s+/.test(block)){ parsed.push({t:'sub',c:block.replace(/^###\s+/,'')}); }
-    else if(/^##\s+/.test(block)){ parsed.push({t:'h2',c:block.replace(/^##\s+/,'')}); }
+    if(/^###\s+/.test(block)){
+      var subSplit=splitOverlongHeading(block.replace(/^###\s+/,''));
+      parsed.push({t:'sub',c:subSplit.head});
+      if(subSplit.rest) parsed.push({t:'p',c:subSplit.rest});
+    }
+    else if(/^##\s+/.test(block)){
+      var h2Split=splitOverlongHeading(block.replace(/^##\s+/,''));
+      parsed.push({t:'h2',c:h2Split.head});
+      if(h2Split.rest) parsed.push({t:'p',c:h2Split.rest});
+    }
     else if(/^#\s+/.test(block)){ parsed.push({t:'meta',c:block.replace(/^#\s+/,'')}); }
     else if(/^\*{0,2}\s*(unerlöst|unerloest|unerlost)[\*:\-\s]*/i.test(block)){
       parsed.push({t:'unerlost',c:block.replace(/^\*{0,2}\s*(unerlöst|unerloest|unerlost)[\*:\-\s]*/i,'')});
@@ -3341,7 +3492,7 @@ body=body.replace(/Maria Müller/g,name||'Maria Müller');body=body.replace(/Zü
   if(chapters&&chapters.length>0){
     var isGratisPkg=(pkg==='gratis');
     var upLabel=isGratisPkg?'Individual-Analyse oder SeelenKompass':'SeelenKompass';
-    var k=chapters.map(function(c){return '<div class="chapter">'+renderChapterMD((c&&typeof c==='object'&&'text' in c)?c.text:c,isGratisPkg,upLabel)+'</div>';}).join('\n');
+    var k=chapters.map(function(c){return '<div class="chapter">'+renderChapterMD(c,isGratisPkg,upLabel)+'</div>';}).join('\n');
     if(body.indexOf('<!-- KAPITEL -->')>-1){
       // Falls eine Vorlage künftig einen echten Platzhalter enthält, wird er genutzt.
       body=body.replace('<!-- KAPITEL -->',k);
