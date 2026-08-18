@@ -635,8 +635,8 @@ html {
   <div class="card" style="margin-top:1.25rem">
     <div style="text-align:center;margin-bottom:2rem">
       <div id="planet-anim" style="margin:0 auto 1rem;display:flex;align-items:center;justify-content:center"></div>
-      <h2 style="font-family:var(--serif);color:var(--white);font-size:1.3rem;font-weight:300;margin-bottom:.3rem">Dein Seelenmuster wird erstellt</h2>
-      <p id="gen-txt" style="color:var(--muted);font-size:.76rem;font-weight:300"></p>
+      <h2 style="font-family:var(--serif);color:var(--navy);font-size:1.3rem;font-weight:300;margin-bottom:.3rem">Dein Seelenmuster wird erstellt</h2>
+      <p id="gen-txt" style="color:var(--text);font-size:.76rem;font-weight:400"></p>
     </div>
     <div class="prog-wrap"><div class="prog-bar" id="prog"></div></div>
     <div id="gen-list"></div>
@@ -1649,10 +1649,10 @@ function mkPrompt(id,h,isFirst){
     return txt;
   }
 
-  var W='UMFANG UND TIEFE (PFLICHT): Schreibe insgesamt mindestens 550-650 Woerter pro Kapitel bei Gratis/Individual, bei SeelenKompass mindestens 1300-1500 Woerter (mehr Beispiele, mehr Tiefe, keine Wiederholung) - das ist ein bezahltes, tiefes Kapitel, keine Kurzfassung. Baue mindestens ZWEI (bei SeelenKompass: VIER) konkrete, greifbare Alltagsbeispiele ein, nicht nur abstrakte Beschreibung - die Person soll sich wiedererkennen. KAPITEL-STRUKTUR PFLICHT (jeder Punkt ausführlich, nicht nur angerissen): 1.Poetischer Einstieg (mind. 80 Woerter). 2.Hausthema als Buehne, ausführlich entfaltet (mind. 150 Woerter). 3.Planeten tief deuten - Herrscherplanet des Haus-Zeichens benennen und WO dieser Herrscher im Horoskop steht (Zeichen und Haus), das erklärt WIE sich das Hausthema konkret entfaltet (mind. 150 Woerter). Falls mehrere Planeten im selben Zeichen/Haus stehen wie hier, benenne das Zeichen konkret und was diese Konzentration an Kraft bedeutet (NIEMALS das Wort "Stellium" verwenden). 4.Polaritaet zum gegenüberliegenden Haus, mit Beispiel (mind. 100 Woerter). 5.UNERLÖST: zwei verschiedene Alltagsbeispiele, ausführlich geschildert (mind. 150 Woerter). 6.ERLÖST: zwei verschiedene Alltagsbeispiele, ausführlich geschildert (mind. 150 Woerter). 7.KEYNOTE (PFLICHT bei jedem Kapitel): Schreibe eine Zeile beginnend mit "Keynote:" gefolgt von einem einzigen, einpraegsamen, poetisch verdichteten Kernsatz (max. 2 Saetze), der die Essenz des ganzen Kapitels auf den Punkt bringt - das Zitat, das die Person sich merken soll. 8.MITNEHMEN: Mitnehmen fuer deinen Weg + 1 Mini-Uebung, mit Begründung warum genau das hilft (mind. 60 Woerter). 9. Ein vertiefender Absatz (mind. 150 Woerter), der das Hausthema noch einmal von einer ANDEREN Seite beleuchtet - z.B. wie es sich koerperlich/energetisch anfuehlt, oder wie es sich in einem laengerfristigen Lebensabschnitt zeigt, nicht nur im Einzelmoment. 10.ENERGETISCHER IMPULS nur bei Individual/SeelenKompass/Jahreshoroskop: Schreibe Energetischer Impuls: dann 3-4 Saetze zu diesem Haus - H7/H1/H2: welche Partnerenergie tut dir gut? H10/H9/H6: energetische Berufungsrichtung? H4/H5/H11: was brauchst du energetisch in Familie? Alle: was tut deiner Seele taeglich gut? Warm direkt persoenlich. NICHT beim Gratis-Paket.';
+  var W='UMFANG UND TIEFE (PFLICHT): Schreibe insgesamt mindestens 550-650 Woerter pro Kapitel bei Gratis/Individual, bei SeelenKompass mindestens 2400-2600 Woerter (deutlich mehr Beispiele, deutlich mehr Tiefe, absolut keine Wiederholung derselben Aussage in anderen Worten - dies ist das umfangreichste Kapitel-Format der App) - das ist ein bezahltes, tiefes Kapitel, keine Kurzfassung. Baue mindestens ZWEI (bei SeelenKompass: VIER) konkrete, greifbare Alltagsbeispiele ein, nicht nur abstrakte Beschreibung - die Person soll sich wiedererkennen. KAPITEL-STRUKTUR PFLICHT (jeder Punkt ausführlich, nicht nur angerissen): 1.Poetischer Einstieg (mind. 80 Woerter). 2.Hausthema als Buehne, ausführlich entfaltet (mind. 150 Woerter). 3.Planeten tief deuten - Herrscherplanet des Haus-Zeichens benennen und WO dieser Herrscher im Horoskop steht (Zeichen und Haus), das erklärt WIE sich das Hausthema konkret entfaltet (mind. 150 Woerter). Falls mehrere Planeten im selben Zeichen/Haus stehen wie hier, benenne das Zeichen konkret und was diese Konzentration an Kraft bedeutet (NIEMALS das Wort "Stellium" verwenden). 4.Polaritaet zum gegenüberliegenden Haus, mit Beispiel (mind. 100 Woerter). 5.UNERLÖST-ABSATZ: Beginne einen NEUEN Absatz mit dem woertlichen Text "Unerlöst:" (genau dieses Wort, gefolgt von einem Doppelpunkt, als allererste Zeichen des Absatzes) - NICHT das Thema nur thematisch einweben. Dann zwei verschiedene Alltagsbeispiele (mind. 150 Woerter). 6.ERLÖST-ABSATZ: Beginne einen NEUEN Absatz mit dem woertlichen Text "Erlöst:" (genau dieses Wort, gefolgt von einem Doppelpunkt, als allererste Zeichen des Absatzes) - NICHT das Thema nur thematisch einweben. Dann zwei verschiedene Alltagsbeispiele (mind. 150 Woerter). KRITISCH WICHTIG ZU PUNKT 5+6: Schreibe NIEMALS Saetze wie "Das ist die erloeste Seite von..." oder "...zeigt sich unerloest darin, dass..." als Ersatz fuer die Markierung - das ZERSTOERT die Darstellung der App, die "Erlöst:" und "Unerlöst:" als woertliche Startmarkierung braucht um eigene Kaestchen anzuzeigen. Falsch (niemals so): "Das ist die erlöste Seite von Neptun im zehnten Haus: spirituelle Tiefe, die in der Welt Frucht traegt." Richtig (immer so): "Erlöst: Neptun im zehnten Haus zeigt sich hier als spirituelle Tiefe, die in der Welt Frucht traegt." 7.KEYNOTE (PFLICHT bei jedem Kapitel): Beginne einen NEUEN Absatz mit dem woertlichen Text "Keynote:" (genau dieses Wort, gefolgt von einem Doppelpunkt, als allererste Zeichen des Absatzes), gefolgt von einem einzigen, einpraegsamen, poetisch verdichteten Kernsatz (max. 2 Saetze), der die Essenz des ganzen Kapitels auf den Punkt bringt. 8.MITNEHMEN: Mitnehmen fuer deinen Weg + 1 Mini-Uebung, mit Begründung warum genau das hilft (mind. 60 Woerter). 9. Ein vertiefender Absatz (mind. 150 Woerter), der das Hausthema noch einmal von einer ANDEREN Seite beleuchtet - z.B. wie es sich koerperlich/energetisch anfuehlt, oder wie es sich in einem laengerfristigen Lebensabschnitt zeigt, nicht nur im Einzelmoment. 10.ENERGETISCHER IMPULS nur bei Individual/SeelenKompass/Jahreshoroskop: Schreibe Energetischer Impuls: dann 3-4 Saetze zu diesem Haus - H7/H1/H2: welche Partnerenergie tut dir gut? H10/H9/H6: energetische Berufungsrichtung? H4/H5/H11: was brauchst du energetisch in Familie? Alle: was tut deiner Seele taeglich gut? Warm direkt persoenlich. NICHT beim Gratis-Paket.';
   var t={
     // KAPITEL 1: Wesenskern -> Haus 1 = AC selbst + AC-Herrscher + Sonne (Lebensauftrag) + Polarität Haus 7
-    1:base+'\n'+combo(1)+'\nKAPITEL 1 WESENSKERN'+(S.pkg==='gratis'?' (GRATIS-PAKET - DIES IST DER EINZIGE TEXT DEN DIE PERSON GRATIS ERHÄLT, ER MUSS DAHER BESONDERS TIEF UND ÜBERZEUGEND SEIN)':'')+': Beschreibe den AC-Wesenskern ('+ac.sign+'), kombiniert mit der Sonne ('+sun.sign+', Lebensauftrag/Seelenauftrag) und dem AC-Herrscherplaneten '+acR+' in '+acRP+'. '+(S.pkg==='gratis'?('WICHTIG - UMFANG UND TIEFE: Schreibe insgesamt 800-950 Woerter (deutlich mehr als bei anderen Kapiteln, da dies der einzige Eindruck ist den ein Gratis-Nutzer von der Qualitaet der Analyse bekommt - es muss lesbar spürbar sein dass hier echtes astrosophisches Fachwissen und keine generische Beschreibung steht). PFLICHT-TIEFE - gehe zwingend auf ALLE folgenden Ebenen ein, nicht nur oberflächlich: (a) die archetypische Bedeutung von '+ac.sign+' als Aszendent inklusive seines Elements (Feuer/Erde/Luft/Wasser) und seiner Qualität (kardinal/fix/veränderlich) und was das für die Art des Welteintritts bedeutet, (b) die Stellung und Bedeutung des Herrscherplaneten '+acR+' in '+acRP+' - ob dieser Planet dort in Domizil, Exil, Erhöhung oder Fall steht, und was diese Stellung konkret für die Umsetzung des Wesenskerns bedeutet, (c) das Polaritätshaus (Haus 7 zum Aszendenten) und wie sich der Wesenskern im Spiegel des Gegenübers zeigt, (d) die Sonne in '+sun.sign+' als Kontrast oder Ergänzung zum Aszendenten. Baue MINDESTENS drei konkrete, greifbare Alltagsszenen ein (z.B. wie sich dieser Wesenskern in einem Gespraech, einer Entscheidung, einem Konflikt oder einer Beziehungssituation ganz konkret zeigt - mit Dialogfetzen oder sinnlichen Details) statt nur abstrakter Beschreibungen - die Person soll sich wiedererkennen und denken "genau so bin ich, woher weiss die das". PFLICHT am Ende: Beende den Text mit 2-3 Saetzen, die eine offene Frage oder Spannung andeuten, die typisch fuer Menschen mit diesem Wesenskern ist - ohne sie aufzuloesen, sodass echte Neugier auf die weiteren Lebensbereiche entsteht (z.B. ein wiederkehrendes Muster, eine ungelebte Seite, eine Sehnsucht). Der allerletzte Satz muss explizit machen, dass dies erst ein Bruchteil des vollstaendigen Bildes ist (Aszendent = nur 1 von 12 Lebensbereichen) und Lust auf mehr wecken - ohne platt oder verkaeuferisch zu klingen, sondern aus echter inhaltlicher Substanz heraus. '):'Beende den Text mit 1-2 Saetzen, die eine offene Frage oder Spannung andeuten, die typisch fuer Menschen mit diesem Wesenskern ist - ohne sie aufzuloesen, sodass Neugier auf die weiteren Lebensbereiche entsteht (z.B. ein wiederkehrendes Muster, eine ungelebte Seite, eine Sehnsucht). ')+W,
+    1:base+'\n'+combo(1)+'\nKAPITEL 1 WESENSKERN'+(S.pkg==='gratis'?' (GRATIS-PAKET - DIES IST DER EINZIGE TEXT DEN DIE PERSON GRATIS ERHÄLT, ER MUSS DAHER BESONDERS TIEF UND ÜBERZEUGEND SEIN)':'')+': Beschreibe den AC-Wesenskern ('+ac.sign+'), kombiniert mit der Sonne ('+sun.sign+', Lebensauftrag/Seelenauftrag) und dem AC-Herrscherplaneten '+acR+' in '+acRP+'. '+(S.pkg==='gratis'?('WICHTIG - UMFANG UND TIEFE: Schreibe fuer DIESEN Hauptteil (vor Unerlöst/Erlöst/Keynote/Mitnehmen) 350-420 Woerter - kurz und praegnant, wie eine Kostprobe, nicht wie eine vollstaendige Analyse (Gratis = Vorschau, die Lust auf mehr macht, nicht das ganze Bild). Geh dabei trotzdem auf mindestens ZWEI der folgenden Ebenen wirklich konkret ein, statt alle nur oberflaechlich zu streifen: (a) die archetypische Bedeutung von '+ac.sign+' als Aszendent inklusive seines Elements (Feuer/Erde/Luft/Wasser) und seiner Qualität (kardinal/fix/veränderlich) und was das für die Art des Welteintritts bedeutet, (b) die Stellung und Bedeutung des Herrscherplaneten '+acR+' in '+acRP+' - ob dieser Planet dort in Domizil, Exil, Erhöhung oder Fall steht, und was diese Stellung konkret für die Umsetzung des Wesenskerns bedeutet, (c) das Polaritätshaus (Haus 7 zum Aszendenten) und wie sich der Wesenskern im Spiegel des Gegenübers zeigt, (d) die Sonne in '+sun.sign+' als Kontrast oder Ergänzung zum Aszendenten. Baue MINDESTENS eine konkrete, greifbare Alltagsszene ein (z.B. wie sich dieser Wesenskern in einem Gespraech, einer Entscheidung oder einer Beziehungssituation ganz konkret zeigt) statt nur abstrakter Beschreibung - die Person soll sich wiedererkennen und denken "genau so bin ich, woher weiss die das". WICHTIG - REIHENFOLGE: Nach dieser Haupterzaehlung folgt WEITER UNTEN in diesem Auftrag noch eine PFLICHT-STRUKTUR mit Unerlöst/Erlöst/Keynote/Mitnehmen - diese ZUSAETZLICHEN Abschnitte MUESSEN ebenfalls geschrieben werden, sie sind kein Ersatz und kein Widerspruch zu dieser Anweisung hier. Beende ERST NACH diesen Pflicht-Abschnitten (Unerlöst/Erlöst/Keynote/Mitnehmen) den GESAMTEN Text mit 2-3 zusaetzlichen Saetzen, die eine offene Frage oder Spannung andeuten, die typisch fuer Menschen mit diesem Wesenskern ist - ohne sie aufzuloesen, sodass echte Neugier auf die weiteren Lebensbereiche entsteht (z.B. ein wiederkehrendes Muster, eine ungelebte Seite, eine Sehnsucht). Der aller-allerletzte Satz muss explizit machen, dass dies erst ein Bruchteil des vollstaendigen Bildes ist (Aszendent = nur 1 von 12 Lebensbereichen) und Lust auf mehr wecken - ohne platt oder verkaeuferisch zu klingen, sondern aus echter inhaltlicher Substanz heraus. '):'WICHTIG - REIHENFOLGE: Nach der Haupterzaehlung folgt WEITER UNTEN noch eine PFLICHT-STRUKTUR mit Unerlöst/Erlöst/Keynote/Mitnehmen - diese MUESSEN geschrieben werden. Beende ERST DANACH den GESAMTEN Text mit 1-2 zusaetzlichen Saetzen, die eine offene Frage oder Spannung andeuten, die typisch fuer Menschen mit diesem Wesenskern ist - ohne sie aufzuloesen, sodass Neugier auf die weiteren Lebensbereiche entsteht (z.B. ein wiederkehrendes Muster, eine ungelebte Seite, eine Sehnsucht). ')+W,
 
     // KAPITEL 2: Werte & Ressourcen -> Haus 2 + dessen Herrscher + Polarität Haus 8 (Transformation von Werten)
     2:base+'\n'+combo(2)+'\nKAPITEL 2 WERTE & RESSOURCEN: Gehe auf Haus 2 ein - welche Werte und Sicherheiten dem Menschen wichtig sind, basierend auf dem Hausherrscher und seiner Stellung, sowie die Polarität zu Haus 8 (was los- oder eingetauscht werden muss, um zu wachsen). '+W,
@@ -1688,13 +1688,13 @@ function mkPrompt(id,h,isFirst){
     12:base+'\n'+combo(12)+'\nKAPITEL 12 SPIRITUELLE TIEFE & NORDSTERN: Beschreibe Haus 12 (Unbewusstes, Hingabe, spirituelle Verbindung - nutze den Hausherrscher von Haus 12 und seine Stellung aus der HAUS-12-Zeile oben; falls Haus 12 im Fische steht, ist Neptun '+h.Neptun.sign+' zusätzlich zentral), in Polarität zu Haus 6 (wie sich Spiritualität im Alltag/Dienst konkret manifestieren kann). A:TIEFE (150 Woerter) - PFLICHT darin: unerlöste Variante dieser Energie (mit Beispiel) UND direkt danach die erlöste Lösung dazu (mit Beispiel). B:NORDSTERN - ein abschließender Impuls als persönlicher Leitstern (80 Woerter). PFLICHT als letzter Satz von B:NORDSTERN, IMMER: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten, in dieser Woche umsetzbaren Mini-Uebung (1 Satz). Niemals weglassen.',
 
     // KAPITEL 'sonne': Der Seelenauftrag - was die Sonne (unabhängig vom AC) von dieser Person will
-    'sonne':base+'\nKAPITEL SONNE - SEELENAUFTRAG: Die Sonne steht in '+sun.sign+'. Erkläre den Unterschied zwischen AC ('+ac.sign+', wie man in die Welt eintritt) und Sonne (Auftrag, wozu die Seele sich entwickeln will). Beschreibe konkret was die Sonne in '+sun.sign+' als Lebensaufgabe mit sich bringt - unabhängig vom Aszendenten. PFLICHT-STRUKTUR: 2 Absätze Fliesstext (je ca. 90 Woerter) über die Sonnen-Qualität in '+sun.sign+' als Entwicklungsaufgabe. Dann ERLÖST (60 Woerter, konkretes Beispiel) und UNERLÖST (60 Woerter, konkretes Beispiel) der Sonne in '+sun.sign+'. Dann 1 Satz "Dein Seelenauftrag:" als konkrete, umsetzbare Formulierung. '+W,
+    'sonne':base+'\nKAPITEL SONNE - SEELENAUFTRAG: Die Sonne steht in '+sun.sign+'. Erkläre den Unterschied zwischen AC ('+ac.sign+', wie man in die Welt eintritt) und Sonne (Auftrag, wozu die Seele sich entwickeln will). Beschreibe konkret was die Sonne in '+sun.sign+' als Lebensaufgabe mit sich bringt - unabhängig vom Aszendenten. PFLICHT-STRUKTUR: '+(S.pkg==='seelenkompas'?'4 Absätze Fliesstext (je ca. 100 Woerter, mit unterschiedlichen konkreten Beispielen)':'2 Absätze Fliesstext (je ca. 90 Woerter)')+' über die Sonnen-Qualität in '+sun.sign+' als Entwicklungsaufgabe. Dann einen NEUEN Absatz beginnend mit dem woertlichen Wort "Erlöst:" (60 Woerter, konkretes Beispiel) und einen NEUEN Absatz beginnend mit dem woertlichen Wort "Unerlöst:" (60 Woerter, konkretes Beispiel) der Sonne in '+sun.sign+'. NIEMALS diese Woerter nur thematisch einweben (z.B. "das ist die erloeste Seite von...") - IMMER als woertliche Absatz-Startmarkierung "Erlöst:"/"Unerlöst:" schreiben, sonst funktioniert die Darstellung der App nicht. Dann 1 Satz "Dein Seelenauftrag:" als konkrete, umsetzbare Formulierung. '+W,
 
     // KAPITEL 'kombi': AC trifft Sonne - die tiefste Kombinationslesart
-    'kombi':base+'\nKAPITEL KOMBINATION AC×SONNE: AC ist '+ac.sign+' (Eintrittswerkzeug), Sonne ist '+sun.sign+' (Seelenauftrag). Beschreibe wie beide zusammenwirken: Wie das Werkzeug (AC) genutzt wird, um den Auftrag (Sonne) zu erfüllen - oder wo eine Spannung zwischen beiden liegt, wenn die Zeichen sich in ihrer Grundnatur unterscheiden. PFLICHT-STRUKTUR: 2 Absätze Fliesstext (je ca. 90 Woerter) zur Kombination '+ac.sign+' AC × '+sun.sign+' Sonne. Dann ERLÖST (60 Woerter) und UNERLÖST (60 Woerter) dieser spezifischen Kombination, je mit konkretem Beispiel. Dann 1 Satz "Im Alltag bedeutet das:" mit einer konkreten, alltagsnahen Beobachtung wie sich diese Kombination typischerweise zeigt. '+W,
+    'kombi':base+'\nKAPITEL KOMBINATION AC×SONNE: AC ist '+ac.sign+' (Eintrittswerkzeug), Sonne ist '+sun.sign+' (Seelenauftrag). Beschreibe wie beide zusammenwirken: Wie das Werkzeug (AC) genutzt wird, um den Auftrag (Sonne) zu erfüllen - oder wo eine Spannung zwischen beiden liegt, wenn die Zeichen sich in ihrer Grundnatur unterscheiden. PFLICHT-STRUKTUR: '+(S.pkg==='seelenkompas'?'4 Absätze Fliesstext (je ca. 100 Woerter, mit unterschiedlichen konkreten Beispielen)':'2 Absätze Fliesstext (je ca. 90 Woerter)')+' zur Kombination '+ac.sign+' AC × '+sun.sign+' Sonne. Dann einen NEUEN Absatz beginnend mit dem woertlichen Wort "Erlöst:" (60 Woerter) und einen NEUEN Absatz beginnend mit dem woertlichen Wort "Unerlöst:" (60 Woerter) dieser spezifischen Kombination, je mit konkretem Beispiel. NIEMALS diese Woerter nur thematisch einweben - IMMER als woertliche Absatz-Startmarkierung schreiben, sonst funktioniert die Darstellung der App nicht. Dann 1 Satz "Im Alltag bedeutet das:" mit einer konkreten, alltagsnahen Beobachtung wie sich diese Kombination typischerweise zeigt. '+W,
 
     // KAPITEL 'mc': Finalität - höchste Entwicklung, MC als Ziel des ganzen Weges
-    'mc':base+'\nDEIN KRÄFTESPIEL (berechnet, nicht schätzen - PFLICHT: in deinem Text NUR die konkreten Tierkreiszeichen-Namen benennen, NIEMALS die Fachbegriffe "Element", "Qualität", "Kardinal", "Fix", "Veränderlich" oder "Stellium" verwenden - das ist nicht die Sprache der Astrosophie): '+elementQualityProfile(h).text+'\nKAPITEL MC - GESAMTBILD & FINALITÄT: MC steht in '+mc.sign+', Herrscher '+mcR+' steht in '+mcRP+'.\n\nWICHTIGE KORREKTUR/BETONUNG (PFLICHT, nicht vergessen): Der MC ist NICHT "der Beruf" - diese Vereinfachung ist falsch und darf im Text nicht so stehen. Der MC ist die FINALITÄT: die Richtung, in die sich die Seele über das ganze Leben hin entwickeln will, das, was die Seele am Ende erlangen möchte. Das ist etwas ANDERES als die Sonne (der Seelenauftrag, das WAS): der MC ist das WOHIN, die Zielrichtung der gesamten Entfaltung, sichtbar als das, was am Ende integriert dasteht. Mache diesen Unterschied im Text explizit und klar - die Person soll verstehen: Sonne = mein Auftrag. MC = die Richtung, in die dieser Auftrag über die Zeit hinauswächst.\n\nDies ist das ABSCHLIESSENDE Kapitel, das ein VOLLSTÄNDIGES Bild der Person zeichnen soll. PFLICHT-STRUKTUR (mindestens 700-800 Woerter gesamt, ausführlich, mit exakten Beispielen):\n1) Ein Absatz (100 Woerter): was Finalität bedeutet und wie sie sich von der Sonnen-Aufgabe unterscheidet, allgemein eingeführt.\n2) Ein Absatz (110 Woerter) zum MC in '+mc.sign+' konkret als Richtung dieser Finalität, MIT einem konkreten Beispiel wie sich das im späteren Lebensweg zeigen kann.\n3) PFLICHT ein Absatz (110 Woerter) zur HERRSCHERKETTE: der MC-Herrscher '+mcR+' steht in '+mcRP+' - erkläre konkret, WIE sich die Finalität '+mc.sign+' über dieses Thema/Lebensfeld (das Haus, in dem '+mcR+' steht) tatsächlich erreichen lässt. Das ist der Schlüssel zur praktischen Umsetzung: nicht nur WAS das Ziel ist, sondern ÜBER WELCHEN WEG es sich konkret erreichen lässt.\n4) Ein Absatz (110 Woerter) über das Kräftespiel: wenn ein Schwerpunkt/eine Konzentration in bestimmten Zeichen besteht, benenne diese Zeichen konkret beim Namen und erkläre, was diese Konzentration von Kraft für die Grundnatur dieser Person bedeutet. Falls Zeichen ganz ohne Betonung sind, erkläre konkret, wie sich das im Alltag zeigen kann - immer beim Zeichennamen, nie mit abstrakten Kategorien.\n5) Ein Absatz (100 Woerter), der AC ('+ac.sign+', das Eintrittswerkzeug), Sonne ('+sun.sign+', der Seelenauftrag) und MC ('+mc.sign+', die Finalität/Zielrichtung) explizit zu einem zusammenhängenden Gesamtbild verbindet - wie alle drei zusammen EINE Geschichte ergeben.\n6) ERLÖST (70 Woerter, mit konkretem Beispiel) und UNERLÖST (70 Woerter, mit konkretem Beispiel) des MC in '+mc.sign+'.\n7) Drei kurze Sätze "Der vollständige Seelenweg:" - je 1 Satz zu AC, Sonne und MC als zusammenhängender Weg.\n8) PFLICHT zwei weitere Absätze (je 50-60 Woerter, nicht kürzer), exakt beginnend mit "Energetisch passender Partner:" (welcher energetische Typ/welche Zeichen-Qualität diese Person basierend auf der GESAMTEN Konstellation ergänzt, erdet oder beflügelt, mit einer konkreten Beispiel-Situation) und "Energetisch passender Beruf:" (welche Tätigkeitsfelder zur energetischen Gesamtkonstellation passen, konkret mit 2-3 benannten Beispielen und einer kurzen Begründung warum). '+W,
+    'mc':base+'\nDEIN KRÄFTESPIEL (berechnet, nicht schätzen - PFLICHT: in deinem Text NUR die konkreten Tierkreiszeichen-Namen benennen, NIEMALS die Fachbegriffe "Element", "Qualität", "Kardinal", "Fix", "Veränderlich" oder "Stellium" verwenden - das ist nicht die Sprache der Astrosophie): '+elementQualityProfile(h).text+'\nKAPITEL MC - GESAMTBILD & FINALITÄT: MC steht in '+mc.sign+', Herrscher '+mcR+' steht in '+mcRP+'.\n\nWICHTIGE KORREKTUR/BETONUNG (PFLICHT, nicht vergessen): Der MC ist NICHT "der Beruf" - diese Vereinfachung ist falsch und darf im Text nicht so stehen. Der MC ist die FINALITÄT: die Richtung, in die sich die Seele über das ganze Leben hin entwickeln will, das, was die Seele am Ende erlangen möchte. Das ist etwas ANDERES als die Sonne (der Seelenauftrag, das WAS): der MC ist das WOHIN, die Zielrichtung der gesamten Entfaltung, sichtbar als das, was am Ende integriert dasteht. Mache diesen Unterschied im Text explizit und klar - die Person soll verstehen: Sonne = mein Auftrag. MC = die Richtung, in die dieser Auftrag über die Zeit hinauswächst.\n\nDies ist das ABSCHLIESSENDE Kapitel, das ein VOLLSTÄNDIGES Bild der Person zeichnen soll. PFLICHT-STRUKTUR (mindestens '+(S.pkg==='seelenkompas'?'1400-1600':'700-800')+' Woerter gesamt, ausführlich, mit exakten Beispielen):\n1) Ein Absatz (100 Woerter): was Finalität bedeutet und wie sie sich von der Sonnen-Aufgabe unterscheidet, allgemein eingeführt.\n2) Ein Absatz (110 Woerter) zum MC in '+mc.sign+' konkret als Richtung dieser Finalität, MIT einem konkreten Beispiel wie sich das im späteren Lebensweg zeigen kann.\n3) PFLICHT ein Absatz (110 Woerter) zur HERRSCHERKETTE: der MC-Herrscher '+mcR+' steht in '+mcRP+' - erkläre konkret, WIE sich die Finalität '+mc.sign+' über dieses Thema/Lebensfeld (das Haus, in dem '+mcR+' steht) tatsächlich erreichen lässt. Das ist der Schlüssel zur praktischen Umsetzung: nicht nur WAS das Ziel ist, sondern ÜBER WELCHEN WEG es sich konkret erreichen lässt.\n4) Ein Absatz (110 Woerter) über das Kräftespiel: wenn ein Schwerpunkt/eine Konzentration in bestimmten Zeichen besteht, benenne diese Zeichen konkret beim Namen und erkläre, was diese Konzentration von Kraft für die Grundnatur dieser Person bedeutet. Falls Zeichen ganz ohne Betonung sind, erkläre konkret, wie sich das im Alltag zeigen kann - immer beim Zeichennamen, nie mit abstrakten Kategorien.\n5) Ein Absatz (100 Woerter), der AC ('+ac.sign+', das Eintrittswerkzeug), Sonne ('+sun.sign+', der Seelenauftrag) und MC ('+mc.sign+', die Finalität/Zielrichtung) explizit zu einem zusammenhängenden Gesamtbild verbindet - wie alle drei zusammen EINE Geschichte ergeben.\n6) Ein NEUER Absatz beginnend mit dem woertlichen Wort "Erlöst:" (70 Woerter, mit konkretem Beispiel) und ein NEUER Absatz beginnend mit dem woertlichen Wort "Unerlöst:" (70 Woerter, mit konkretem Beispiel) des MC in '+mc.sign+'. NIEMALS diese Woerter nur thematisch einweben - IMMER als woertliche Absatz-Startmarkierung schreiben, sonst funktioniert die Darstellung der App nicht.\n7) Drei kurze Sätze "Der vollständige Seelenweg:" - je 1 Satz zu AC, Sonne und MC als zusammenhängender Weg.\n8) PFLICHT zwei weitere Absätze (je 50-60 Woerter, nicht kürzer), exakt beginnend mit "Energetisch passender Partner:" (welcher energetische Typ/welche Zeichen-Qualität diese Person basierend auf der GESAMTEN Konstellation ergänzt, erdet oder beflügelt, mit einer konkreten Beispiel-Situation) und "Energetisch passender Beruf:" (welche Tätigkeitsfelder zur energetischen Gesamtkonstellation passen, konkret mit 2-3 benannten Beispielen und einer kurzen Begründung warum). '+W,
     'lebensphase':base+'\nDEINE AKTUELLE LEBENSPHASE (berechnet, nicht schätzen): Du befindest dich im Alter von '+lp.alter+' Jahren in der Phase des '+lp.haus+'. Hauses, geprägt von '+lp.planet+' ('+lp.von+'-'+lp.bis+' Jahre). Kernthema laut Geburtsmuster-System: '+lp.thema+'\nKAPITEL LEBENSPHASE: Dieses Kapitel beschreibt, wo die Person GERADE im Lebenszyklus steht - nicht das ganze Geburtsmuster, sondern die aktuelle Zeitqualität. PFLICHT-STRUKTUR (mindestens 500-600 Woerter, ausführlich):\n1) KOLLEKTIVER EINSTIEG ZUERST (PFLICHT, mind. 120 Woerter): Beschreibe zunächst allgemein und kollektiv, was dieses Lebensalter/diese Lebensphase für Menschen grundsätzlich bedeutet, unabhängig vom individuellen Muster - welche Entwicklungsaufgabe die Menschheit typischerweise in diesem Altersabschnitt durchläuft, was gesellschaftlich/psychologisch in diesem Lebensjahrzehnt ansteht. Noch NICHT auf die Person selbst eingehen.\n2) Erst danach der Übergang zur Person (PFLICHT-Übergangssatz, z.B. "Bei dir persönlich zeigt sich das so:" oder ähnlich).\n3) Persönliche Vertiefung (mind. 250 Woerter): wie sich dieses kollektive Thema GENAU bei dieser Person mit ihrem individuellen Muster zeigt - verbinde es wo sinnvoll mit AC ('+ac.sign+'), Sonne ('+sun.sign+') oder MC ('+mc.sign+'). Baue MINDESTENS drei konkrete, unterschiedliche Alltagsbeispiele ein (nicht nur eines) - eine berufliche Situation, eine Beziehungssituation, ein innerer Moment.\n4) Erlöst/Unerlöst dieser Lebensphase, mit je einem konkreten Beispiel (mind. 100 Woerter).\n5) Mitnehmen für deinen Weg: eine konkrete Übung, passend zu genau dieser Lebensphase (nicht generisch). '+W
   };
   var prompt=t[id]||'';
@@ -2773,18 +2773,72 @@ function callClaudeOnce(fullPrompt){
   });
 }
 
+// WICHTIG: Erzwingt strukturierte JSON-Antwort per Tool-Use, statt zu hoffen dass die
+// KI woertliche Marker wie "Erlöst:" selbst hinschreibt (das ist wiederholt fehlgeschlagen).
+// Die KI MUSS ueber das Tool-Schema die einzelnen Felder befuellen - die Marker-Woerter
+// ("Erlöst:", "Unerlöst:", "Keynote:") werden DANACH von UNS selbst vorangestellt, nicht
+// von der KI erwartet. Das kann technisch nicht mehr fehlschlagen, unabhaengig davon, was
+// die KI inhaltlich schreibt.
+function callClaudeStructured(fullPrompt, toolName, schema, fieldOrder, labels, retriesLeft){
+  if(retriesLeft===undefined) retriesLeft = 1;
+  return fetch('/.netlify/functions/claude',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:2200,
+      messages:[{role:'user',content:fullPrompt}],
+      tools:[{name:toolName,description:'Strukturierte Kapitelabschnitte zurueckgeben',input_schema:schema}],
+      tool_choice:{type:'tool',name:toolName}
+    })
+  }).then(function(r){
+    if(!r.ok) return r.json().then(function(e){throw new Error(e.error||'API Fehler');});
+    return r.json();
+  }).then(function(d){
+    var toolBlock = (d.content||[]).filter(function(b){return b.type==='tool_use';})[0];
+    if(!toolBlock || !toolBlock.input){
+      // Fallback: falls aus irgendeinem Grund kein Tool-Use zurueckkommt (z.B. aeltere
+      // Netlify-Function-Version ohne Tool-Weiterleitung), auf reinen Text zurueckfallen.
+      var textFallback=(d.content||[]).map(function(b){return b.text||'';}).join('');
+      return textFallback;
+    }
+    var input = toolBlock.input;
+    // VALIDIERUNG: prueft, ob jedes PFLICHTFELD tatsaechlich Inhalt hat. Ein leeres
+    // Pflichtfeld bedeutet meist: die Antwort wurde mitten in der JSON-Struktur
+    // abgeschnitten (z.B. durch ein zu knappes max_tokens), BEVOR dieses Feld befuellt
+    // wurde. Statt eine kaputte/unvollstaendige Antwort stillschweigend zu zeigen (die
+    // dann z.B. "Unerlöst:" komplett fehlen laesst), wird einmal automatisch neu versucht.
+    var required = (schema && schema.required) || [];
+    var missingField = required.find(function(key){ return !(input[key]||'').trim(); });
+    if(missingField && retriesLeft>0){
+      return callClaudeStructured(fullPrompt, toolName, schema, fieldOrder, labels, retriesLeft-1);
+    }
+    var parts = fieldOrder.map(function(key){
+      var val = (input[key]||'').trim();
+      var label = labels[key];
+      return label ? (label+' '+val) : val;
+    });
+    return parts.join('\n\n');
+  }).catch(function(err){
+    if(retriesLeft>0){
+      return callClaudeStructured(fullPrompt, toolName, schema, fieldOrder, labels, retriesLeft-1);
+    }
+    // Bei jedem Fehler (auch Netzwerk/Parsing), der auch nach Wiederholung bestehen bleibt,
+    // auf den normalen Freitext-Aufruf zurueckfallen, damit die Generierung NIE komplett
+    // abbricht, nur weil Tool-Use nicht verfuegbar ist.
+    return callClaudeOnce(fullPrompt);
+  });
+}
+
 // Teilt die Generierung eines Kapitels in MEHRERE kurze, aufeinanderfolgende Anfragen auf.
 // Grund: Netlify-Functions haben ein Zeitlimit (10s Free / 26s Pro). Jede einzelne Anfrage
 // bleibt kurz genug (ca. 250-300 Woerter), waehrend die ANZAHL der Teile je Paket variiert -
 // so wird SeelenKompass (das umfangreichste Paket) insgesamt deutlich tiefer als Individual
 // oder Gratis, ohne dass eine einzelne Anfrage das Zeitlimit sprengt.
-var PARTS_PER_PKG={gratis:1,individual:2,seelenkompas:5,jahreshoroskop:2};
+var PARTS_PER_PKG={gratis:2,individual:2,seelenkompas:5,jahreshoroskop:2};
 var PART_INSTRUCTIONS=[
-  'WICHTIG - NUR TEIL 1 SCHREIBEN: Schreibe JETZT NUR den ersten Teil dieses Kapitels (ca. 250-300 Woerter): den poetischen Einstieg und das Hausthema/Grundthema, ausführlich entfaltet. Schreibe NOCH NICHT Herrscherkette, Erlöst/Unerlöst, Keynote oder Mitnehmen - das folgt in weiteren Teilen. Hoere an einer sinnvollen Stelle auf, der Text wird nahtlos fortgesetzt.',
-  'WICHTIG - NUR TEIL 2 SCHREIBEN: Schreibe NAHTLOS DIREKT WEITER (kein Wiederholen, keine neue Einleitung) mit der Herrscherkette-Deutung (Herrscherplanet, wo er steht, was das bedeutet) und der Polaritaet zum gegenüberliegenden Haus, mit einem konkreten Beispiel. Ca. 250-300 weitere Woerter. Beginne OHNE Wiederholung des bisherigen Textes.',
-  'WICHTIG - NUR TEIL 3 SCHREIBEN: Schreibe NAHTLOS DIREKT WEITER mit dem ERLÖST-Abschnitt und dem UNERLÖST-Abschnitt, je mit einem anderen, neuen konkreten Alltagsbeispiel als bisher. Ca. 250-300 weitere Woerter. Beginne OHNE Wiederholung des bisherigen Textes.',
-  'WICHTIG - NUR TEIL 4 SCHREIBEN: Schreibe NAHTLOS DIREKT WEITER mit einem vertiefenden Absatz (weiteres neues konkretes Beispiel oder andere Perspektive auf das Thema, ca. 150 Woerter), dann eine Zeile "Keynote:" gefolgt vom einpraegsamen Kernsatz des Kapitels (max. 2 Saetze). Ca. 200-250 weitere Woerter insgesamt. Beginne OHNE Wiederholung des bisherigen Textes.',
-  'WICHTIG - NUR TEIL 5 SCHREIBEN: Schreibe NAHTLOS DIREKT WEITER mit "Mitnehmen fuer deinen Weg:" (konkrete Uebung mit Begründung) und - falls im Auftrag oben verlangt - dem Energetischer-Impuls-Teil. Ca. 200-250 weitere Woerter. Beginne OHNE Wiederholung des bisherigen Textes.'
+  'WICHTIG - NUR TEIL 1 SCHREIBEN (ca. 480-520 Woerter): Poetischer Einstieg mit einer rhetorischen Frage, dann das Hausthema/Grundthema ausführlich entfaltet inkl. Element-Bezug (Feuer/Erde/Luft/Wasser), dann die Herrscherkette-Deutung (Herrscherplanet, wo er steht, Domizil/Erhöhung/Exil/Fall falls zutreffend) MIT einem ersten konkreten Alltagsbeispiel (z.B. berufliche Situation). Schreibe NOCH NICHT Erlöst/Unerlöst/Keynote/Mitnehmen. WICHTIG FUER ALLE TEILE: dies ist eine durchgehende Geschichte (roter Faden) - jeder Teil baut auf dem vorigen auf, absolut keine Wiederholung derselben Aussage in anderen Worten, und JEDES Beispiel in JEDEM Teil muss ein ANDERER Lebensbereich sein als in den anderen Teilen.',
+  'WICHTIG - NUR TEIL 2 SCHREIBEN (ca. 480-520 weitere Woerter): Schreibe NAHTLOS DIREKT WEITER mit der Polaritaet zum gegenüberliegenden Haus, MIT einem zweiten konkreten Alltagsbeispiel aus einem ANDEREN Lebensbereich als Teil 1 (z.B. eine Beziehungssituation statt einer beruflichen). Dann den UNERLÖST-Abschnitt (beginne einen NEUEN Absatz woertlich mit "Unerlöst:") mit einem dritten neuen Beispiel aus wieder einem anderen Bereich (z.B. ein Familienmoment). Beginne OHNE Wiederholung des bisherigen Textes.',
+  'WICHTIG - NUR TEIL 3 SCHREIBEN (ca. 480-520 weitere Woerter): Schreibe NAHTLOS DIREKT WEITER mit dem ERLÖST-Abschnitt (beginne einen NEUEN Absatz woertlich mit "Erlöst:"), mit zwei weiteren NEUEN Beispielen aus wieder anderen Lebensbereichen als alle vorherigen (z.B. eine Freundschaftssituation und ein innerer Moment der Klarheit). Beginne OHNE Wiederholung.',
+  'WICHTIG - NUR TEIL 4 SCHREIBEN (ca. 480-520 weitere Woerter): Schreibe NAHTLOS DIREKT WEITER mit einem vertiefenden Absatz, der das Hausthema von einer GANZ ANDEREN Seite beleuchtet (z.B. koerperlich/energetisch, oder eine andere Lebensphase wie Kindheit vs. heute - neue Perspektive, kein bereits Gesagtes wiederholen). Beginne OHNE Wiederholung.',
+  'WICHTIG - NUR TEIL 5 SCHREIBEN (ca. 400-450 weitere Woerter): Schreibe NAHTLOS DIREKT WEITER mit einer Zeile woertlich beginnend mit "Keynote:" gefolgt vom einpraegsamen Kernsatz (max. 2 Saetze), der alles bisher Gesagte auf den Punkt bringt. Dann "Mitnehmen fuer deinen Weg:" (konkrete Uebung mit Begründung) und - falls im Auftrag oben verlangt - dem Energetischer-Impuls-Teil. Beginne OHNE Wiederholung.'
 ];
 function callClaude(areaId,h,fd,isFirst){
   var ctx='KUNDE: '+fd.name+'\nGeburt: '+fd.date+' · '+fd.time+' Uhr · '+fd.place+(fd.q?'\nSeine Frage: '+fd.q:'');
@@ -2797,6 +2851,51 @@ function callClaude(areaId,h,fd,isFirst){
   }
 
   var partsSoFar=[];
+  // Fuer diese Teil-Indizes (0-basiert) wird die strukturierte Tool-Use-Variante genutzt,
+  // damit die Pflicht-Marker technisch garantiert sind statt von der KI erhofft zu werden.
+  // WICHTIG: Bei kurzen Paketen (2 Teile) muss der LETZTE Teil ALLE Marker abdecken
+  // (Unerlöst+Erlöst+Keynote+Mitnehmen), da es keine weiteren Teile mehr gibt.
+  var SCHEMA_UNERLOEST_ONLY={
+    toolName:'kapitel_teil_unerloest',
+    schema:{type:'object',properties:{
+      polaritaet_absatz:{type:'string',description:'Polaritaet zum gegenüberliegenden Haus mit einem konkreten Alltagsbeispiel, ca. 180-200 Woerter - bewusst kompakt halten, nicht laenger'},
+      unerloest_text:{type:'string',description:'Der Unerlöst-Abschnitt OHNE das Wort "Unerlöst:" davor (wird automatisch ergaenzt) - zwei konkrete Alltagsbeispiele, ca. 180-200 Woerter - bewusst kompakt halten, nicht laenger'}
+    },required:['polaritaet_absatz','unerloest_text']},
+    fieldOrder:['polaritaet_absatz','unerloest_text'],
+    labels:{polaritaet_absatz:'',unerloest_text:'Unerlöst:'}
+  };
+  var SCHEMA_ERLOEST_ONLY={
+    toolName:'kapitel_teil_erloest',
+    schema:{type:'object',properties:{
+      erloest_text:{type:'string',description:'Der Erlöst-Abschnitt OHNE das Wort "Erlöst:" davor (wird automatisch ergaenzt) - zwei konkrete, neue Alltagsbeispiele aus anderen Lebensbereichen als bisher, ca. 480-520 Woerter'}
+    },required:['erloest_text']},
+    fieldOrder:['erloest_text'],
+    labels:{erloest_text:'Erlöst:'}
+  };
+  var SCHEMA_KEYNOTE_MITNEHMEN_ONLY={
+    toolName:'kapitel_teil_abschluss',
+    schema:{type:'object',properties:{
+      vertiefung_falls_noch_nicht:{type:'string',description:'Falls im bisherigen Text noch nicht geschehen: kurzer weiterer Gedanke der das Kapitel abrundet, sonst leer lassen'},
+      keynote_text:{type:'string',description:'Der einpraegsame Kernsatz OHNE das Wort "Keynote:" davor (wird automatisch ergaenzt) - max. 2 Saetze, die Essenz des ganzen Kapitels'},
+      mitnehmen_text:{type:'string',description:'Konkrete Uebung mit Begruendung OHNE "Mitnehmen fuer deinen Weg:" davor (wird automatisch ergaenzt), ca. 80-100 Woerter'}
+    },required:['keynote_text','mitnehmen_text']},
+    fieldOrder:['vertiefung_falls_noch_nicht','keynote_text','mitnehmen_text'],
+    labels:{vertiefung_falls_noch_nicht:'',keynote_text:'Keynote:',mitnehmen_text:'Mitnehmen für deinen Weg:'}
+  };
+  // Kombi-Schema fuer kurze Pakete: der EINE letzte Teil muss Unerlöst+Erlöst+Keynote+Mitnehmen
+  // ALLE zusammen abdecken, da keine weiteren Teile mehr folgen.
+  var SCHEMA_ALLES_KOMBINIERT={
+    toolName:'kapitel_teil_alles',
+    schema:{type:'object',properties:{
+      restlicher_haupttext:{type:'string',description:'Falls die Haupterzaehlung (Herrscherkette, Polaritaet) noch nicht vollstaendig ist: hier fortsetzen, sonst leer lassen'},
+      unerloest_text:{type:'string',description:'Der Unerlöst-Abschnitt OHNE das Wort "Unerlöst:" davor (wird automatisch ergaenzt) - konkretes Alltagsbeispiel'},
+      erloest_text:{type:'string',description:'Der Erlöst-Abschnitt OHNE das Wort "Erlöst:" davor (wird automatisch ergaenzt) - konkretes Alltagsbeispiel'},
+      keynote_text:{type:'string',description:'Der einpraegsame Kernsatz OHNE das Wort "Keynote:" davor (wird automatisch ergaenzt) - max. 2 Saetze'},
+      mitnehmen_text:{type:'string',description:'Konkrete Uebung mit Begruendung OHNE "Mitnehmen fuer deinen Weg:" davor (wird automatisch ergaenzt)'}
+    },required:['unerloest_text','erloest_text','keynote_text','mitnehmen_text']},
+    fieldOrder:['restlicher_haupttext','unerloest_text','erloest_text','keynote_text','mitnehmen_text'],
+    labels:{restlicher_haupttext:'',unerloest_text:'Unerlöst:',erloest_text:'Erlöst:',keynote_text:'Keynote:',mitnehmen_text:'Mitnehmen für deinen Weg:'}
+  };
   function nextPart(idx){
     if(idx>=nParts) return Promise.resolve(partsSoFar.join(' '));
     var instr = PART_INSTRUCTIONS[Math.min(idx,PART_INSTRUCTIONS.length-1)];
@@ -2806,12 +2905,67 @@ function callClaude(areaId,h,fd,isFirst){
     } else {
       prompt += '\n\n'+instr;
     }
-    return callClaudeOnce(prompt).then(function(part){
+    var isLastPart = (idx === nParts-1);
+    var schemaCfg = null;
+    if(nParts>=5){
+      // Volle 5(+)-Teile-Struktur: Marker sauber ueber mehrere Teile verteilt.
+      if(idx===1) schemaCfg = SCHEMA_UNERLOEST_ONLY;
+      else if(idx===2) schemaCfg = SCHEMA_ERLOEST_ONLY;
+      else if(isLastPart) schemaCfg = SCHEMA_KEYNOTE_MITNEHMEN_ONLY;
+    } else {
+      // Kurze Pakete (2 Teile): der letzte Teil MUSS alle vier Marker auf einmal abdecken,
+      // da es sonst keine Gelegenheit mehr dafuer gibt.
+      if(isLastPart) schemaCfg = SCHEMA_ALLES_KOMBINIERT;
+    }
+    var callPromise = schemaCfg
+      ? callClaudeStructured(prompt, schemaCfg.toolName, schemaCfg.schema, schemaCfg.fieldOrder, schemaCfg.labels)
+      : callClaudeOnce(prompt);
+    return callPromise.then(function(part){
       partsSoFar.push(part.trim());
       return nextPart(idx+1);
+    }).catch(function(err){
+      // KRITISCHES SICHERHEITSNETZ: Falls IRGENDEIN Teil mittendrin fehlschlaegt (Netzwerk,
+      // Timeout, API-Fehler), darf das Kapitel NICHT einfach abgeschnitten enden. Statt den
+      // Fehler weiterzureichen, wird der bisherige Text genommen und SOFORT mit der finalen
+      // Absicherung (siehe unten) ergaenzt, damit Erlöst/Unerlöst/Keynote/Mitnehmen trotzdem
+      // erscheinen, egal was in der Mitte schiefging.
+      return Promise.resolve(partsSoFar.join(' '));
     });
   }
-  return nextPart(0);
+  return nextPart(0).then(function(fullText){
+    // FINALE ABSICHERUNG (PFLICHT, kann nicht mehr fehlschlagen): Prueft nach der gesamten
+    // Generierung, ob wirklich ALLE vier Pflicht-Marker vorhanden sind. Falls auch nur einer
+    // fehlt (egal aus welchem Grund - abgebrochene Generierung, Netzwerkfehler, KI-Fehlverhalten),
+    // wird GENAU DAS Fehlende ueber einen dedizierten, strukturierten Tool-Use-Aufruf nachgeliefert
+    // und angehaengt. Das garantiert zu 100%: jedes fertige Kapitel enthaelt am Ende immer
+    // Unerlöst/Erlöst/Keynote/Mitnehmen, unabhaengig davon was in der Generierung davor geschah.
+    var missing = [];
+    if(fullText.indexOf('Unerlöst:')===-1) missing.push('unerloest');
+    if(fullText.indexOf('Erlöst:')===-1) missing.push('erloest');
+    if(fullText.indexOf('Keynote:')===-1) missing.push('keynote');
+    if(fullText.indexOf('Mitnehmen für deinen Weg:')===-1) missing.push('mitnehmen');
+    if(missing.length===0) return fullText;
+    var repairPrompt = basePrompt + '\n\nDu hast bereits folgenden Text zu diesem Kapitel geschrieben:\n---\n'+fullText+'\n---\n\nWICHTIG - REPARATUR: In obigem Text fehlen noch folgende PFLICHT-Abschnitte: '+missing.join(', ')+'. Schreibe JETZT NUR diese fehlenden Abschnitte nach, kurz und praegnant, thematisch passend zum Rest des Kapitels.';
+    return callClaudeStructured(repairPrompt, SCHEMA_ALLES_KOMBINIERT.toolName, SCHEMA_ALLES_KOMBINIERT.schema, SCHEMA_ALLES_KOMBINIERT.fieldOrder, SCHEMA_ALLES_KOMBINIERT.labels)
+      .then(function(repairText){
+        // Nur die tatsaechlich fehlenden Marker aus der Reparatur-Antwort uebernehmen,
+        // um Dopplungen zu vermeiden falls doch schon einzelne Marker vorhanden waren.
+        var repairParts = [];
+        missing.forEach(function(m){
+          var labelMap = {unerloest:'Unerlöst:', erloest:'Erlöst:', keynote:'Keynote:', mitnehmen:'Mitnehmen für deinen Weg:'};
+          var label = labelMap[m];
+          var re = new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'[\\s\\S]*?(?=(?:Unerlöst:|Erlöst:|Keynote:|Mitnehmen für deinen Weg:|$))');
+          var found = repairText.match(re);
+          if(found) repairParts.push(found[0].trim());
+        });
+        return fullText + (repairParts.length ? '\n\n'+repairParts.join('\n\n') : '');
+      })
+      .catch(function(){
+        // Selbst wenn die Reparatur fehlschlaegt: das Kapitel trotzdem zurueckgeben,
+        // damit die Person wenigstens den Haupttext erhaelt, statt eines Totalabsturzes.
+        return fullText;
+      });
+  });
 }
 
 // ── SHOWRESULT ────────────────────────────────────────────────────────────
@@ -3018,6 +3172,13 @@ function renderChapterMD(md,censor,upgradeLabel){
   // typisches deutsches Satzanfangswort auftaucht (gierig = findet die spaeteste,
   // also praezisere Trennstelle, nicht die erste zufaellige Wortdopplung).
   md=md.replace(/^(#{2,3}\s+.{2,110})\s+(?=(?:Es|Der|Die|Das|Du|Dein|Deine|Diese|Dieser|Ein|Eine|In|Bei|Wenn|Was|Hast|Bist|Ist|Wie|Man|Vielleicht|Manchmal|Jede|Jeder|Wer|Genau|Stell|Frag|Nicht|Auch|So|Denn|Doch|Immer|Oft)\b)/gm,'$1\n\n');
+  // KRITISCHER FIX: 'Keynote:', 'Mitnehmen für deinen Weg:', 'Erlöst:', 'Unerlöst:'
+  // werden von der KI manchmal MITTEN im Fliesstext geschrieben, ohne Absatzumbruch
+  // davor (gleiches Problem wie bei '#'-Ueberschriften). Ohne eigenen Absatzanfang
+  // erkennt der Parser diese Schluesselwoerter nicht und sie verschwinden im Fliesstext.
+  // Erzwingt hier einen Absatzumbruch VOR jedem Vorkommen, auch mitten im Satz.
+  md=md.replace(/([.!?])\s+(\**\s*(?:Keynote|Mitnehmen[^:]{0,30}|Erlöst|Erloest|Unerlöst|Unerloest)\s*:)/gi,'$1\n\n$2');
+  md=md.replace(/^(\**\s*(?:Keynote|Mitnehmen[^:]{0,30}|Erlöst|Erloest|Unerlöst|Unerloest)\s*:)\s*/gim,'\n\n$1 ');
   // FALLBACK-FIX: '--- **KAPITEL 1 - Titel** ---' oder einzelne '**Titel**'-Zeilen
   // (falls die KI stattdessen dieses Muster nutzt statt echtem '#'-Markdown).
   md=md.replace(/^\*{2}\s*(?:KAPITEL\s*\d+\s*[–\-—]?\s*)?(.+?)\s*\*{2}\s*$/gim,'## $1');
