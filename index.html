@@ -2888,10 +2888,10 @@ function callClaude(areaId,h,fd,isFirst){
     toolName:'kapitel_teil_alles',
     schema:{type:'object',properties:{
       restlicher_haupttext:{type:'string',description:'Falls die Haupterzaehlung (Herrscherkette, Polaritaet) noch nicht vollstaendig ist: hier fortsetzen, sonst leer lassen'},
-      unerloest_text:{type:'string',description:'Der Unerlöst-Abschnitt OHNE das Wort "Unerlöst:" davor (wird automatisch ergaenzt) - konkretes Alltagsbeispiel'},
-      erloest_text:{type:'string',description:'Der Erlöst-Abschnitt OHNE das Wort "Erlöst:" davor (wird automatisch ergaenzt) - konkretes Alltagsbeispiel'},
-      keynote_text:{type:'string',description:'Der einpraegsame Kernsatz OHNE das Wort "Keynote:" davor (wird automatisch ergaenzt) - max. 2 Saetze'},
-      mitnehmen_text:{type:'string',description:'Konkrete Uebung mit Begruendung OHNE "Mitnehmen fuer deinen Weg:" davor (wird automatisch ergaenzt)'}
+      unerloest_text:{type:'string',description:'Der Unerlöst-Abschnitt OHNE das Wort "Unerlöst:" davor (wird automatisch ergaenzt) - GENAU EIN konkretes Alltagsbeispiel, KURZ UND PRAEGNANT: maximal 60-70 Woerter, nicht laenger'},
+      erloest_text:{type:'string',description:'Der Erlöst-Abschnitt OHNE das Wort "Erlöst:" davor (wird automatisch ergaenzt) - GENAU EIN konkretes Alltagsbeispiel, KURZ UND PRAEGNANT: maximal 60-70 Woerter, nicht laenger'},
+      keynote_text:{type:'string',description:'Der einpraegsame Kernsatz OHNE das Wort "Keynote:" davor (wird automatisch ergaenzt) - GENAU 1 Satz, maximal 20 Woerter'},
+      mitnehmen_text:{type:'string',description:'Konkrete Uebung mit Begruendung OHNE "Mitnehmen fuer deinen Weg:" davor (wird automatisch ergaenzt) - KURZ: maximal 40-50 Woerter'}
     },required:['unerloest_text','erloest_text','keynote_text','mitnehmen_text']},
     fieldOrder:['restlicher_haupttext','unerloest_text','erloest_text','keynote_text','mitnehmen_text'],
     labels:{restlicher_haupttext:'',unerloest_text:'Unerlöst:',erloest_text:'Erlöst:',keynote_text:'Keynote:',mitnehmen_text:'Mitnehmen für deinen Weg:'}
