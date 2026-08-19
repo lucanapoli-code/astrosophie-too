@@ -2887,7 +2887,7 @@ function callClaude(areaId,h,fd,isFirst){
   var SCHEMA_ALLES_KOMBINIERT={
     toolName:'kapitel_teil_alles',
     schema:{type:'object',properties:{
-      restlicher_haupttext:{type:'string',description:'Falls die Haupterzaehlung (Herrscherkette, Polaritaet) noch nicht vollstaendig ist: hier fortsetzen, sonst leer lassen'},
+      restlicher_haupttext:{type:'string',description:'NUR falls die Haupterzaehlung wirklich noch unvollstaendig abgebrochen ist (mitten im Satz o.ae.): hier den Satz kurz zu Ende fuehren, MAXIMAL 20-30 Woerter. Ist die Haupterzaehlung bereits vollstaendig (Normalfall): dieses Feld komplett LEER lassen, NICHTS Neues hinzufuegen, KEINE zusaetzlichen Absaetze oder Themen (z.B. keine weitere Herrscherketten-Vertiefung).'},
       unerloest_text:{type:'string',description:'Der Unerlöst-Abschnitt OHNE das Wort "Unerlöst:" davor (wird automatisch ergaenzt) - GENAU EIN konkretes Alltagsbeispiel, KURZ UND PRAEGNANT: maximal 60-70 Woerter, nicht laenger'},
       erloest_text:{type:'string',description:'Der Erlöst-Abschnitt OHNE das Wort "Erlöst:" davor (wird automatisch ergaenzt) - GENAU EIN konkretes Alltagsbeispiel, KURZ UND PRAEGNANT: maximal 60-70 Woerter, nicht laenger'},
       keynote_text:{type:'string',description:'Der einpraegsame Kernsatz OHNE das Wort "Keynote:" davor (wird automatisch ergaenzt) - GENAU 1 Satz, maximal 20 Woerter'},
