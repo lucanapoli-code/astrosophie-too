@@ -2632,7 +2632,7 @@ function beginGeneration(){
   }
   el('gen-list').innerHTML=listHtml;
   el('gen-err').style.display='none';
-  var durations={gratis:30,individual:90,seelenkompas:240,jahreshoroskop:150};
+  var durations={gratis:55,individual:90,seelenkompas:240,jahreshoroskop:150};
   var totalSec=durations[S.pkg]||90;
   var elapsed=0;
   if(window._genTimer) clearInterval(window._genTimer);
@@ -2896,9 +2896,17 @@ function callClaude(areaId,h,fd,isFirst){
     fieldOrder:['restlicher_haupttext','unerloest_text','erloest_text','keynote_text','mitnehmen_text'],
     labels:{restlicher_haupttext:'',unerloest_text:'Unerlöst:',erloest_text:'Erlöst:',keynote_text:'Keynote:',mitnehmen_text:'Mitnehmen für deinen Weg:'}
   };
+  var PART2_INSTRUCTION_SHORT='WICHTIG - NUR TEIL 2 SCHREIBEN (ca. 300-350 weitere Woerter): Schreibe NAHTLOS DIREKT WEITER mit der Polaritaet zum gegenüberliegenden Haus, MIT einem zweiten konkreten Alltagsbeispiel aus einem ANDEREN Lebensbereich als Teil 1. WICHTIG: Schreibe hier NUR die Haupterzaehlung zu Ende - NICHT die Abschnitte Unerlöst, Erlöst, Keynote oder Mitnehmen, denn diese werden GLEICH DANACH ueber ein SEPARATES, strukturiertes Formular abgefragt. Wenn du diese Abschnitte hier zusaetzlich in Fliesstext schreibst, entsteht eine unerwuenschte Dopplung. Also: hier ausschliesslich die Haupterzaehlung (Polaritaet + Beispiel), kompakt und praegnant, dann aufhoeren.';
   function nextPart(idx){
     if(idx>=nParts) return Promise.resolve(partsSoFar.join(' '));
-    var instr = PART_INSTRUCTIONS[Math.min(idx,PART_INSTRUCTIONS.length-1)];
+    var isLastPart2 = (idx === nParts-1);
+    // Kurze Pakete (2 Teile): Teil 2 braucht eine EIGENE, konfliktfreie Anweisung, da die
+    // Standard-PART_INSTRUCTIONS[1] (fuer die 5-Teile-Struktur gedacht) die KI faelschlich
+    // anweist, Unerlöst/Erlöst zusaetzlich im Fliesstext zu schreiben - was zu einer
+    // sichtbaren Dopplung mit dem separaten Tool-Use-Aufruf fuehrt (Live-Fehler gefunden).
+    var instr = (nParts<5 && isLastPart2)
+      ? PART2_INSTRUCTION_SHORT
+      : PART_INSTRUCTIONS[Math.min(idx,PART_INSTRUCTIONS.length-1)];
     var prompt = basePrompt;
     if(partsSoFar.length>0){
       prompt += '\n\nDu hast bereits folgenden bisherigen Text dieses Kapitels geschrieben:\n---\n'+partsSoFar.join(' ')+'\n---\n\n'+instr;
