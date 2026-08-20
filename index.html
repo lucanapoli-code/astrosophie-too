@@ -2933,6 +2933,16 @@ function callClaude(areaId,h,fd,isFirst){
     });
   }
   return nextPart(0).then(function(fullText){
+    // KRITISCHER FIX: Falls WIRKLICH ALLES fehlgeschlagen ist (jeder einzelne Teil, inkl.
+    // aller Wiederholungsversuche), ist fullText ein leerer String. Das darf NIEMALS als
+    // "erfolgreich" durchgereicht werden - sonst denkt die App faelschlich, das Kapitel sei
+    // fertig, und zeigt eine komplett leere Seite ohne jede Fehlermeldung (das Kapitel-Icon
+    // wuerde trotzdem ein Haekchen zeigen). Stattdessen: hier einen echten Fehler werfen,
+    // damit runGenBatch/runGen ihre BESTEHENDE Fehlerbehandlung ("Verbindungsproblem... Erneut
+    // versuchen"-Button) korrekt auslösen - so wie es vor dem Sicherheitsnetz funktioniert hat.
+    if(!fullText || !fullText.trim()){
+      throw new Error('Kapitel-Generierung komplett fehlgeschlagen (keine Antwort erhalten)');
+    }
     // FINALE ABSICHERUNG (PFLICHT, kann nicht mehr fehlschlagen): Prueft nach der gesamten
     // Generierung, ob wirklich ALLE vier Pflicht-Marker vorhanden sind. Falls auch nur einer
     // fehlt (egal aus welchem Grund - abgebrochene Generierung, Netzwerkfehler, KI-Fehlverhalten),
@@ -2964,6 +2974,19 @@ function callClaude(areaId,h,fd,isFirst){
         // Selbst wenn die Reparatur fehlschlaegt: das Kapitel trotzdem zurueckgeben,
         // damit die Person wenigstens den Haupttext erhaelt, statt eines Totalabsturzes.
         return fullText;
+      })
+      .then(function(finalText){
+        // LETZTE ABSICHERUNG: Falls selbst nach dem Reparaturversuch KEINER der vier
+        // Pflicht-Marker vorhanden ist (z.B. weil sowohl die Haupt-Generierung als auch die
+        // Reparatur komplett fehlgeschlagen sind), dann NICHT stillschweigend ein Kapitel ohne
+        // Erlöst/Unerlöst/Keynote/Mitnehmen anzeigen - das wuerde dem Kunden ein kaputtes,
+        // unfertiges Produkt liefern ohne dass er es merkt. Stattdessen: echten Fehler werfen,
+        // damit die bestehende "Verbindungsproblem... Erneut versuchen"-Anzeige greift.
+        var stillMissing = ['Unerlöst:','Erlöst:','Keynote:','Mitnehmen für deinen Weg:'].filter(function(m){return finalText.indexOf(m)===-1;});
+        if(stillMissing.length===4){
+          throw new Error('Kapitel-Struktur konnte auch nach Reparaturversuch nicht vervollstaendigt werden');
+        }
+        return finalText;
       });
   });
 }
