@@ -2760,10 +2760,10 @@ function runGen(areas,i){
   });
 }
 
-function callClaudeOnce(fullPrompt){
+function callClaudeOnce(fullPrompt, maxTokens){
   return fetch('/.netlify/functions/claude',{
     method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:maxTokens||1000,
       messages:[{role:'user',content:fullPrompt}]})
   }).then(function(r){
     if(!r.ok) return r.json().then(function(e){throw new Error(e.error||'API Fehler');});
@@ -2779,11 +2779,11 @@ function callClaudeOnce(fullPrompt){
 // ("Erlöst:", "Unerlöst:", "Keynote:") werden DANACH von UNS selbst vorangestellt, nicht
 // von der KI erwartet. Das kann technisch nicht mehr fehlschlagen, unabhaengig davon, was
 // die KI inhaltlich schreibt.
-function callClaudeStructured(fullPrompt, toolName, schema, fieldOrder, labels, retriesLeft){
+function callClaudeStructured(fullPrompt, toolName, schema, fieldOrder, labels, retriesLeft, maxTokens){
   if(retriesLeft===undefined) retriesLeft = 1;
   return fetch('/.netlify/functions/claude',{
     method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:2200,
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:maxTokens||2200,
       messages:[{role:'user',content:fullPrompt}],
       tools:[{name:toolName,description:'Strukturierte Kapitelabschnitte zurueckgeben',input_schema:schema}],
       tool_choice:{type:'tool',name:toolName}
@@ -2808,7 +2808,7 @@ function callClaudeStructured(fullPrompt, toolName, schema, fieldOrder, labels, 
     var required = (schema && schema.required) || [];
     var missingField = required.find(function(key){ return !(input[key]||'').trim(); });
     if(missingField && retriesLeft>0){
-      return callClaudeStructured(fullPrompt, toolName, schema, fieldOrder, labels, retriesLeft-1);
+      return callClaudeStructured(fullPrompt, toolName, schema, fieldOrder, labels, retriesLeft-1, maxTokens);
     }
     var parts = fieldOrder.map(function(key){
       var val = (input[key]||'').trim();
@@ -2818,7 +2818,7 @@ function callClaudeStructured(fullPrompt, toolName, schema, fieldOrder, labels, 
     return parts.join('\n\n');
   }).catch(function(err){
     if(retriesLeft>0){
-      return callClaudeStructured(fullPrompt, toolName, schema, fieldOrder, labels, retriesLeft-1);
+      return callClaudeStructured(fullPrompt, toolName, schema, fieldOrder, labels, retriesLeft-1, maxTokens);
     }
     // Bei jedem Fehler (auch Netzwerk/Parsing), der auch nach Wiederholung bestehen bleibt,
     // auf den normalen Freitext-Aufruf zurueckfallen, damit die Generierung NIE komplett
@@ -2927,9 +2927,20 @@ function callClaude(areaId,h,fd,isFirst){
       // da es sonst keine Gelegenheit mehr dafuer gibt.
       if(isLastPart) schemaCfg = SCHEMA_ALLES_KOMBINIERT;
     }
+    // HARTE TECHNISCHE GRENZE (PFLICHT): reine Text-Anweisungen zur Wortzahl wurden von der KI
+    // wiederholt live ignoriert (Live-Test durch Luca bestaetigt: Text blieb trotz "200-250
+    // Woerter"-Anweisung deutlich laenger). Statt uns weiter auf Kooperation zu verlassen, wird
+    // hier das max_tokens-Limit selbst gesenkt - das kann die KI technisch nicht umgehen, egal
+    // was sie inhaltlich vorhat. Nur fuer kurze Pakete (Gratis/Individual, 2 Teile); die 5-Teile-
+    // Struktur (SeelenKompass) bleibt unveraendert bei den bisherigen groesseren Limits.
+    var hardMaxTokens = undefined;
+    if(nParts<5){
+      if(idx===0) hardMaxTokens = 420;   // Teil 1: ca. 200-250 Woerter Ziel, Puffer bis max. ca. 300
+      else if(isLastPart) hardMaxTokens = 950; // Teil 2 (Tool-Use): Haupttext + Erlöst/Unerlöst/Keynote/Mitnehmen kombiniert, alle bereits knapp bemessen
+    }
     var callPromise = schemaCfg
-      ? callClaudeStructured(prompt, schemaCfg.toolName, schemaCfg.schema, schemaCfg.fieldOrder, schemaCfg.labels)
-      : callClaudeOnce(prompt);
+      ? callClaudeStructured(prompt, schemaCfg.toolName, schemaCfg.schema, schemaCfg.fieldOrder, schemaCfg.labels, undefined, hardMaxTokens)
+      : callClaudeOnce(prompt, hardMaxTokens);
     return callPromise.then(function(part){
       partsSoFar.push(part.trim());
       return nextPart(idx+1);
