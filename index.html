@@ -2935,8 +2935,8 @@ function callClaude(areaId,h,fd,isFirst){
     // Struktur (SeelenKompass) bleibt unveraendert bei den bisherigen groesseren Limits.
     var hardMaxTokens = undefined;
     if(nParts<5){
-      if(idx===0) hardMaxTokens = 420;   // Teil 1: ca. 200-250 Woerter Ziel, Puffer bis max. ca. 300
-      else if(isLastPart) hardMaxTokens = 950; // Teil 2 (Tool-Use): Haupttext + Erlöst/Unerlöst/Keynote/Mitnehmen kombiniert, alle bereits knapp bemessen
+      if(idx===0) hardMaxTokens = 240;   // Teil 1: Ziel ca. 150-160 Woerter, harte Obergrenze
+      else if(isLastPart) hardMaxTokens = 440; // Teil 2: Ziel ca. 280-300 Woerter inkl. Erlöst/Unerlöst/Keynote/Mitnehmen
     }
     var callPromise = schemaCfg
       ? callClaudeStructured(prompt, schemaCfg.toolName, schemaCfg.schema, schemaCfg.fieldOrder, schemaCfg.labels, undefined, hardMaxTokens)
