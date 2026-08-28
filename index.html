@@ -1728,13 +1728,13 @@ function mkYearPrompt(id, h, isFirst, yearData){
     var strongMonths=yearData.filter(function(md){return md.topAspect && md.topAspect.orb<2.5;});
     var summary=strongMonths.map(function(md){return md.month+': '+aspectLine(md.topAspect);}).join(' ');
     prompt=base+'\nJAHRESÜBERBLICK 2026: Hier sind die Monate mit den staerksten astrologischen Themen des Jahres 2026 (Transite der langsamen Planeten Jupiter/Saturn/Uranus/Neptun/Pluto gegen das Geburtshoroskop): '+summary+'\n'
-      +'AUFGABE: Schreibe eine einleitende Übersicht für das Jahr 2026 (250-280 Woerter). Beschreibe das Jahr als "Fluss", durch den die Person 2026 hindurchgeht - mit ruhigeren und bewegteren Passagen. Nenne die 2-3 bedeutsamsten Monate konkret und was sie thematisch bedeuten, ohne ins Detail zu gehen (das folgt in den Einzelkapiteln). PFLICHT als letzter Absatz: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten, fuer das ganze Jahr gueltigen Mini-Haltung (1 Satz). Niemals weglassen. Dann PFLICHT ein weiterer, offen formulierter Absatz (50-60 Woerter), der exakt beginnt mit "Energetischer Fokus 2026:" - NICHT als Partner/Beruf-Schema (das ist nur beim SeelenKompass-Paket so), sondern als allgemeine, das ganze Jahr betreffende energetische Ausrichtung: worauf die Person 2026 ihre Aufmerksamkeit, Kraft und Offenheit richten darf, was das Jahr an Energie bereithält und wofür sie besonders empfänglich sein wird - persönlich, warm, konkret auf AC '+ac.sign+' und Sonne '+sun.sign+' bezogen, aber nicht als Partner- oder Berufs-Empfehlung formuliert.';
+      +'AUFGABE: Schreibe eine einleitende Übersicht für das Jahr 2026 (350-400 Woerter, ausfuehrlich). Beschreibe das Jahr als "Fluss", durch den die Person 2026 hindurchgeht - mit ruhigeren und bewegteren Passagen. Nenne die 2-3 bedeutsamsten Monate konkret und was sie thematisch bedeuten, ohne ins Detail zu gehen (das folgt in den Einzelkapiteln). PFLICHT als letzter Absatz: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten, fuer das ganze Jahr gueltigen Mini-Haltung (1 Satz). Niemals weglassen. Dann PFLICHT ein weiterer, offen formulierter Absatz (50-60 Woerter), der exakt beginnt mit "Energetischer Fokus 2026:" - NICHT als Partner/Beruf-Schema (das ist nur beim SeelenKompass-Paket so), sondern als allgemeine, das ganze Jahr betreffende energetische Ausrichtung: worauf die Person 2026 ihre Aufmerksamkeit, Kraft und Offenheit richten darf, was das Jahr an Energie bereithält und wofür sie besonders empfänglich sein wird - persönlich, warm, konkret auf AC '+ac.sign+' und Sonne '+sun.sign+' bezogen, aber nicht als Partner- oder Berufs-Empfehlung formuliert.';
   } else {
     var md=yearData[id-1];
     var topAsps=md.aspects.slice(0,3); // bis zu 3 staerkste Aspekte des Monats
     var aspText = topAsps.length>0 ? topAsps.map(aspectLine).join(' ') : 'Keine engen Aspekte der langsamen Planeten in diesem Monat - eine ruhigere, integrierende Phase.';
     prompt=base+'\nMONAT: '+md.month+' 2026\nTRANSIT-ASPEKTE DIESES MONATS: '+aspText+'\n'
-      +'AUFGABE: Schreibe ein ausführliches Kapitel für diesen Monat (280-320 Woerter, nicht kürzer). Erkläre konkret, was der/die genannte(n) Aspekt(e) bedeuten - welches Thema im Leben der Person diesen Monat staerker hervortritt, welche Spannung oder welcher Fluss entsteht. PFLICHT: zeige sowohl die unerlöste Variante (wie sich die Spannung zeigt, wenn man ihr unbewusst nachgibt, MIT mindestens einem konkreten Alltagsbeispiel - eine Situation, ein Gespräch, eine Entscheidung) als auch direkt danach die erlöste Lösung (wie man bewusst und konstruktiv damit umgeht, ebenfalls MIT konkretem Beispiel). PFLICHT als letzter Absatz: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten, in diesem Monat umsetzbaren Mini-Uebung (1 Satz). Niemals weglassen. Bleibe konkret und alltagsnah, vermeide vage Phrasen. Falls keine engen Aspekte vorliegen, beschreibe den Monat als ruhigere Phase zur Integration des bisherigen Jahres - auch dann mit einem konkreten Beispiel, wie sich diese Ruhe im Alltag zeigen kann.';
+      +'AUFGABE: Schreibe ein ausführliches Kapitel für diesen Monat (500-550 Woerter, nicht kürzer). Erkläre konkret, was der/die genannte(n) Aspekt(e) bedeuten - welches Thema im Leben der Person diesen Monat staerker hervortritt, welche Spannung oder welcher Fluss entsteht. Baue MINDESTENS zwei konkrete Alltagsbeispiele aus unterschiedlichen Lebensbereichen ein (z.B. eine berufliche und eine private Situation). PFLICHT: zeige sowohl die unerlöste Variante (wie sich die Spannung zeigt, wenn man ihr unbewusst nachgibt, MIT mindestens einem konkreten Alltagsbeispiel - eine Situation, ein Gespräch, eine Entscheidung) als auch direkt danach die erlöste Lösung (wie man bewusst und konstruktiv damit umgeht, ebenfalls MIT konkretem Beispiel). PFLICHT als letzter Absatz: "Mitnehmen fuer deinen Weg:" gefolgt von einer konkreten, in diesem Monat umsetzbaren Mini-Uebung (1 Satz). Niemals weglassen. Bleibe konkret und alltagsnah, vermeide vage Phrasen. Falls keine engen Aspekte vorliegen, beschreibe den Monat als ruhigere Phase zur Integration des bisherigen Jahres - auch dann mit einem konkreten Beispiel, wie sich diese Ruhe im Alltag zeigen kann.';
   }
   if(isFirst && prompt){
     prompt='Beginne deine GESAMTE Antwort mit exakt einer Zeile im Format SLOGAN: "..." - ein kurzer, poetischer Leitsatz (max. 12 Woerter) für das Jahr 2026 dieser Person, passend zu ihrem '+ac.sign+'-Wesenskern (z.B. SLOGAN: "2026 ist das Jahr, in dem du lernst, dem Fluss zu vertrauen."). Danach, ab einer neuen Zeile, fahre mit folgendem Kapitel fort:\n'+prompt;
@@ -2747,6 +2747,11 @@ function runGen(areas,i){
       var sm=text.match(/SLOGAN:\s*"([^"]+)"/i);
       if(sm){ S.slogan=sm[1]; text=text.replace(/SLOGAN:\s*"[^"]+"\s*\n?/i,'').trim(); }
     }
+    // KRITISCHER FIX: fixChapterTitle() existierte bereits im Code, wurde aber NIE in diesem
+    // tatsaechlich aktiven Generierungspfad aufgerufen (nur in der ungenutzten runGenBatch-
+    // Funktion) - dadurch konnten fehlerhafte oder doppelte KI-Titel ungefiltert durchrutschen
+    // (Live-Fehler von Luca gemeldet: zwei "Wesenskern"-Titel im selben Kapitel).
+    text = fixChapterTitle(text, areas[i]);
     S.chapters.push(text);
     var q=null;
     for(var j=0;j<QUADS.length;j++) for(var k=0;k<QUADS[j].areas.length;k++) if(QUADS[j].areas[k].id===areas[i].id) q=QUADS[j];
@@ -2898,6 +2903,13 @@ function callClaude(areaId,h,fd,isFirst){
   };
   var PART1_INSTRUCTION_SHORT='WICHTIG - NUR TEIL 1 SCHREIBEN (ca. 130-150 Woerter, WIRKLICH KURZ - dies ist eine kleine Kostprobe, keine vollstaendige Analyse): Ein kurzer poetischer Einstieg (1 rhetorische Frage), dann das Hausthema in 2-3 Saetzen, dann 1 Satz zur Herrscherkette. KEIN ausfuehrliches Beispiel, keine Wiederholung. Schreibe NOCH NICHT Erlöst/Unerlöst/Keynote/Mitnehmen. WICHTIG: bleibe wirklich bei maximal 150 Woertern.';
   var PART2_INSTRUCTION_SHORT='WICHTIG - NUR TEIL 2 SCHREIBEN (ca. 70-90 weitere Woerter, WIRKLICH KURZ - danach kommen noch Erlöst/Unerlöst/Keynote/Mitnehmen in einem separaten Formular und das Gesamtbudget ist knapp): Schreibe NAHTLOS DIREKT WEITER mit EINEM einzigen kurzen Gedanken zur Polaritaet zum gegenüberliegenden Haus. KEIN neues Beispiel, KEINE Wiederholung - nur 2-3 Saetze, dann aufhoeren. Schreibe hier NICHT die Abschnitte Unerlöst, Erlöst, Keynote oder Mitnehmen, diese werden GLEICH DANACH separat abgefragt.';
+  // Eigene Anweisungen fuer Jahreshoroskop (ebenfalls 2 Teile, aber ANDERES Wortzahl-Ziel als
+  // Gratis/Individual - 280-320 Woerter pro Monat gemaess mkYearPrompt, nicht die knappe
+  // Gratis-Kuerze). Ohne diese eigenen Anweisungen wuerde die PART1/2_INSTRUCTION_SHORT
+  // (fuer Gratis gedacht) faelschlich auch hier verwendet und den Text widerspruechlich
+  // verkuerzen (Fehler gefunden: Jahreshoroskop lief faelschlich durch die Gratis-Bedingung).
+  var PART1_INSTRUCTION_JAHR='WICHTIG - NUR TEIL 1 SCHREIBEN (ca. 250-270 Woerter): Beginne die Antwort wie im Auftrag oben beschrieben (Einstieg zum Monat/Jahr und Transit-Deutung), MIT einem ersten konkreten Alltagsbeispiel. Schreibe NOCH NICHT die Abschnitte Unerlöst, Erlöst oder Mitnehmen fuer deinen Weg.';
+  var PART2_INSTRUCTION_JAHR='WICHTIG - NUR TEIL 2 SCHREIBEN (ca. 220-250 weitere Woerter): Schreibe NAHTLOS DIREKT WEITER und schliesse die Deutung ab, MIT einem zweiten konkreten Alltagsbeispiel aus einem ANDEREN Lebensbereich als Teil 1. Schreibe hier NICHT die Abschnitte Unerlöst, Erlöst, Keynote oder Mitnehmen, diese werden GLEICH DANACH ueber ein separates Formular abgefragt.';
   function nextPart(idx){
     if(idx>=nParts) return Promise.resolve(partsSoFar.join(' '));
     var isLastPart2 = (idx === nParts-1);
@@ -2906,7 +2918,9 @@ function callClaude(areaId,h,fd,isFirst){
     // PRO Teil) und fuehren bei nur 2 Teilen zu viel zu langem Gratis/Individual-Text.
     // Ausserdem verhindert die eigene Teil-2-Anweisung eine Dopplung mit dem Tool-Use-Aufruf.
     var instr;
-    if(nParts<5 && idx===0) instr = PART1_INSTRUCTION_SHORT;
+    if(S.pkg==='jahreshoroskop'){
+      instr = (idx===0) ? PART1_INSTRUCTION_JAHR : PART2_INSTRUCTION_JAHR;
+    } else if(nParts<5 && idx===0) instr = PART1_INSTRUCTION_SHORT;
     else if(nParts<5 && isLastPart2) instr = PART2_INSTRUCTION_SHORT;
     else instr = PART_INSTRUCTIONS[Math.min(idx,PART_INSTRUCTIONS.length-1)];
     var prompt = basePrompt;
@@ -2931,12 +2945,21 @@ function callClaude(areaId,h,fd,isFirst){
     // wiederholt live ignoriert (Live-Test durch Luca bestaetigt: Text blieb trotz "200-250
     // Woerter"-Anweisung deutlich laenger). Statt uns weiter auf Kooperation zu verlassen, wird
     // hier das max_tokens-Limit selbst gesenkt - das kann die KI technisch nicht umgehen, egal
-    // was sie inhaltlich vorhat. Nur fuer kurze Pakete (Gratis/Individual, 2 Teile); die 5-Teile-
-    // Struktur (SeelenKompass) bleibt unveraendert bei den bisherigen groesseren Limits.
+    // was sie inhaltlich vorhat.
+    // WICHTIG: Diese harte Kuerzung gilt AUSSCHLIESSLICH fuer Gratis und Individual (kurze
+    // Teaser-Pakete). Jahreshoroskop nutzt zwar ebenfalls nParts=2, ist aber ein bezahltes
+    // Paket mit eigenem Tiefen-Anspruch (280-320 Woerter pro Monat) - es darf NICHT
+    // versehentlich auf die Gratis-Kuerze zusammengestaucht werden (Fehler gefunden und hier
+    // behoben: vorher liefen Gratis UND Jahreshoroskop faelschlich durch dieselbe Bedingung
+    // "nParts<5", weil beide 2 Teile haben). SeelenKompass (5 Teile) bleibt sowieso unberuehrt.
     var hardMaxTokens = undefined;
-    if(nParts<5){
+    if(nParts<5 && (S.pkg==='gratis' || S.pkg==='individual')){
       if(idx===0) hardMaxTokens = 240;   // Teil 1: Ziel ca. 150-160 Woerter, harte Obergrenze
       else if(isLastPart) hardMaxTokens = 440; // Teil 2: Ziel ca. 280-300 Woerter inkl. Erlöst/Unerlöst/Keynote/Mitnehmen
+    } else if(S.pkg==='jahreshoroskop'){
+      // Jahreshoroskop-Monatskapitel: eigenes, grosszuegigeres Budget passend zum
+      // dokumentierten Ziel von 280-320 Woertern pro Monat plus Erlöst/Unerlöst/Mitnehmen.
+      if(isLastPart) hardMaxTokens = 900;
     }
     var callPromise = schemaCfg
       ? callClaudeStructured(prompt, schemaCfg.toolName, schemaCfg.schema, schemaCfg.fieldOrder, schemaCfg.labels, undefined, hardMaxTokens)
@@ -3198,6 +3221,24 @@ function fixChapterTitle(text,area){
     // falls die KI direkt mit Fliesstext ohne jede Ueberschrift begonnen hat.
     if(!/^##?\s+/.test(t)) t='## '+area.t+'\n\n'+t;
   }
+  // ZWEITE ABSICHERUNG (PFLICHT): Bei der Mehrteil-Generierung (mehrere KI-Anfragen die
+  // aneinandergehaengt werden) kann es vorkommen, dass ein SPAETERER Teil versehentlich
+  // nochmal eine Ueberschrift mit dem Kapiteltitel einfuegt - z.B. wenn die KI "NAHTLOS
+  // WEITERSCHREIBEN" falsch versteht und nochmal '## Dein Wesenskern' schreibt. Die obige
+  // Reparatur erfasst nur den ALLERERSTEN Titel am Textanfang, nicht spaetere Wiederholungen
+  // (Live-Fehler von Luca gemeldet: "zwei Titel mit Wesenskern" im selben Kapitel). Hier wird
+  // JEDE weitere '##'-Zeile, die (fast) identisch mit dem Kapiteltitel ist, in normalen
+  // Fliesstext umgewandelt, ausser sie steht ganz am Anfang (die haben wir oben bereits gesetzt).
+  var escTitle=area.t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  // Findet JEDE weitere Ueberschrift mit dem Kapiteltitel, unabhaengig davon ob davor ein
+  // sauberer Zeilenumbruch steht oder die KI alles in einem durchlaufenden Satz geschrieben
+  // hat (z.B. "...normal. ## Dein Wesenskern Zweiter Absatz..." ohne Absatzwechsel).
+  var titleHeadingRe=new RegExp('#{1,3}\\s*'+escTitle+'\\s*','gi');
+  var firstMatch=true;
+  t=t.replace(titleHeadingRe,function(match,offset){
+    if(offset<5){ firstMatch=false; return match; } // ganz am Anfang: das ist der (bereits korrekte) echte Titel, unveraendert lassen
+    return '\n\n'; // jede spaetere Wiederholung wird zu einem einfachen Absatzwechsel
+  });
   return t;
 }
 
