@@ -69,14 +69,14 @@ module.exports = async (req, res) => {
 
     const session = await stripe.checkout.sessions.create({
       mode: isRecurring ? 'subscription' : 'payment',
-      // TWINT nur bei Einmalzahlungen anbieten: bei Abos (Monatshoroskop) braucht TWINT ein
-      // separates Mandat-Verfahren, das komplexer ist und hier bewusst nicht eingebaut wird,
-      // um die Zuverlaessigkeit des Abo-Kaufs nicht zu gefaehrden. Karte bleibt bei Abos immer.
+      // TWINT ist seit Mai 2026 offiziell auch fuer Abos/wiederkehrende Zahlungen von Stripe
+      // freigegeben (Checkout Sessions im subscription-Modus) - daher hier fuer beide Faelle
+      // gleich behandelt, kein Sonderfall mehr fuer isRecurring noetig.
       // PFLICHT: NUR Karte und TWINT. NIEMALS 'klarna' oder andere "Rechnung"/"Pay Later"-
       // Zahlungsarten hinzufuegen - das wurde von Luca ausdruecklich ausgeschlossen.
       // 'card' deckt automatisch auch Apple Pay und Google Pay ab (auf unterstuetzten
       // Geraeten/Browsern), ohne dass dafuer ein eigener Eintrag noetig ist.
-      payment_method_types: isRecurring ? ['card'] : ['card', 'twint'],
+      payment_method_types: ['card', 'twint'],
       line_items: [lineItem],
       success_url: returnUrl + (returnUrl.indexOf('?') > -1 ? '&' : '?') + 'paid=1&session_id={CHECKOUT_SESSION_ID}',
       cancel_url: returnUrl + (returnUrl.indexOf('?') > -1 ? '&' : '?') + 'paid=0'
