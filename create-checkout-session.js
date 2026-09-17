@@ -1,71 +1,91 @@
-// /api/create-checkout-session.js
-// Vercel Serverless Function (Node.js). Erstellt eine Stripe-Checkout-Session
-// serverseitig. Der Stripe SECRET KEY wird NIE im Frontend-Code verwendet,
-// sondern nur hier über eine Umgebungsvariable (siehe Setup-Anleitung).
-//
-// Preise werden HIER serverseitig festgelegt (nicht vom Client übernommen!),
-// damit niemand über die Browser-Konsole einen anderen Preis erzwingen kann.
+// api/create-checkout-session.js
+// Vercel Serverless Function — startet eine Stripe-Checkout-Session für ein Paket.
+// Benoetigt die Umgebungsvariable STRIPE_SECRET_KEY in den Vercel-Projekteinstellungen
+// (Settings -> Environment Variables), NICHT im Code selbst.
 
 const Stripe = require('stripe');
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Preise in Rappen (kleinste Einheit für CHF bei Stripe)
+// Feste Preise in Rappen (CHF), passend zur bestehenden App-Logik.
+// WICHTIG: diese Zahlen muessen exakt mit dem uebereinstimmen, was auf der Website steht.
 const PRICES = {
-  individual: { amount: 4900, name: 'Individual-Analyse · Astrosophie' },
-  seelenkompas: { amount: 9900, name: 'SeelenKompass · Astrosophie' },
-  jahreshoroskop_once: { amount: 9900, name: 'Jahreshoroskop 2026 · Astrosophie' },
-  jahreshoroskop_monthly: { amount: 900, name: 'Jahreshoroskop 2026 · Monatsabo · Astrosophie' }
+  individual:      { amount: 4900, name: 'Individual-Analyse',   desc: 'Alle 3 Lebensbereiche eines Quadranten. Dein persönlicher Slogan inklusive.' },
+  seelenkompas:    { amount: 9900, name: 'SeelenKompass',        desc: 'Alle 12 Lebensbereiche. Das vollständige Bild deines Seelenmusters.' },
+  jahreshoroskop_once: { amount: 9900, name: 'Jahreshoroskop 2026', desc: 'Das ganze Jahr 2026 sofort — alle 12 Monate direkt lesbar.' },
+  jahreshoroskop_monthly: { amount: 900, name: 'Monatshoroskop', desc: 'Jeden Monat neu — dein Horoskop begleitet dich fortlaufend.' },
+  // Kombi-Pakete
+  ind_jahr:              { amount: 13100, name: 'Individual + Jahreshoroskop' },
+  seele_jahr:            { amount: 17900, name: 'SeelenKompass + Jahreshoroskop' },
+  ind_jahr_coaching:     { amount: 42000, name: 'Individual + Jahreshoroskop + 1:1 Coaching' },
+  seele_jahr_coaching:   { amount: 45000, name: 'SeelenKompass + Jahreshoroskop + 1:1 Coaching' }
 };
 
 module.exports = async (req, res) => {
-  // CORS: nur nötig falls die Seite von einer anderen Domain aus aufruft
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') { res.status(200).end(); return; }
-  if (req.method !== 'POST') { res.status(405).json({ error: 'Method not allowed' }); return; }
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Nur POST erlaubt' });
+  }
 
   try {
-    const { pkg, payMode, returnUrl } = req.body || {};
-    if (!pkg || !returnUrl) { res.status(400).json({ error: 'pkg und returnUrl sind erforderlich' }); return; }
+    const { pkg, payMode, returnUrl, combo } = req.body;
 
-    let priceInfo, isRecurring = false;
-    if (pkg === 'individual') { priceInfo = PRICES.individual; }
-    else if (pkg === 'seelenkompas') { priceInfo = PRICES.seelenkompas; }
-    else if (pkg === 'jahreshoroskop') {
-      isRecurring = (payMode === 'monthly');
-      priceInfo = isRecurring ? PRICES.jahreshoroskop_monthly : PRICES.jahreshoroskop_once;
-    } else {
-      res.status(400).json({ error: 'Unbekanntes Paket: ' + pkg });
-      return;
+    if (!returnUrl) {
+      return res.status(400).json({ error: 'returnUrl fehlt' });
     }
 
-    const priceData = {
-      currency: 'chf',
-      unit_amount: priceInfo.amount,
-      product_data: { name: priceInfo.name }
-    };
-    if (isRecurring) { priceData.recurring = { interval: 'month' }; }
+    // Kombi-Paket hat Vorrang, falls vorhanden
+    let priceInfo;
+    let isRecurring = false;
 
-    // returnUrl kommt vom Client OHNE die paid/session_id-Parameter -
-    // die hängen wir hier serverseitig an, damit der Client sie nicht fälschen kann.
-    const successUrl = returnUrl + (returnUrl.indexOf('?') > -1 ? '&' : '?') + 'paid=1&session_id={CHECKOUT_SESSION_ID}';
-    const cancelUrl = returnUrl + (returnUrl.indexOf('?') > -1 ? '&' : '?') + 'paid=0';
+    if (combo && combo.id && PRICES[combo.id]) {
+      priceInfo = PRICES[combo.id];
+    } else if (pkg === 'jahreshoroskop') {
+      if (payMode === 'monthly') {
+        priceInfo = PRICES.jahreshoroskop_monthly;
+        isRecurring = true;
+      } else {
+        priceInfo = PRICES.jahreshoroskop_once;
+      }
+    } else if (PRICES[pkg]) {
+      priceInfo = PRICES[pkg];
+    } else {
+      return res.status(400).json({ error: 'Unbekanntes Paket: ' + pkg });
+    }
+
+    const lineItem = {
+      price_data: {
+        currency: 'chf',
+        product_data: {
+          name: priceInfo.name,
+          description: priceInfo.desc || undefined
+        },
+        unit_amount: priceInfo.amount
+      },
+      quantity: 1
+    };
+
+    if (isRecurring) {
+      lineItem.price_data.recurring = { interval: 'month' };
+    }
 
     const session = await stripe.checkout.sessions.create({
       mode: isRecurring ? 'subscription' : 'payment',
+      // TWINT ist seit Mai 2026 offiziell auch fuer Abos/wiederkehrende Zahlungen von Stripe
+      // freigegeben (Checkout Sessions im subscription-Modus) - daher hier fuer beide Faelle
+      // gleich behandelt, kein Sonderfall mehr fuer isRecurring noetig.
+      // PFLICHT: NUR Karte und TWINT. NIEMALS 'klarna' oder andere "Rechnung"/"Pay Later"-
+      // Zahlungsarten hinzufuegen - das wurde von Luca ausdruecklich ausgeschlossen.
+      // 'card' deckt automatisch auch Apple Pay und Google Pay ab (auf unterstuetzten
+      // Geraeten/Browsern), ohne dass dafuer ein eigener Eintrag noetig ist.
       payment_method_types: ['card', 'twint'],
-      line_items: [{ price_data: priceData, quantity: 1 }],
-      success_url: successUrl,
-      cancel_url: cancelUrl,
-      // Erlaubt Kündigung durch Kunden selbst über den Stripe Customer Portal,
-      // falls Portal aktiviert ist (empfohlen bei Abos, siehe Setup-Hinweise).
-      ...(isRecurring ? {} : {})
+      line_items: [lineItem],
+      success_url: returnUrl + (returnUrl.indexOf('?') > -1 ? '&' : '?') + 'paid=1&session_id={CHECKOUT_SESSION_ID}',
+      cancel_url: returnUrl + (returnUrl.indexOf('?') > -1 ? '&' : '?') + 'paid=0'
     });
 
-    res.status(200).json({ url: session.url });
+    return res.status(200).json({ url: session.url });
+
   } catch (err) {
-    console.error('Stripe-Fehler:', err);
-    res.status(500).json({ error: err.message || 'Unbekannter Stripe-Fehler' });
+    console.error('Stripe Checkout Fehler:', err);
+    return res.status(500).json({ error: err.message || 'Interner Fehler beim Starten der Zahlung' });
   }
 };
