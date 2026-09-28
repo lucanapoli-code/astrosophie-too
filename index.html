@@ -12,6 +12,25 @@ document.addEventListener('DOMContentLoaded',function(){
   };
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  if(typeof getAreas!=='function') return;
+  if(typeof calcYearTransits==='function'){
+    var _origCalcYearTransits=calcYearTransits;
+    calcYearTransits=function(year, natal, lat, lon){
+      var echtesJahr=new Date().getFullYear();
+      return _origCalcYearTransits(echtesJahr, natal, lat, lon);
+    };
+  }
+  var _origGetAreas2=getAreas;
+  getAreas=function(){
+    var echtesJahr=new Date().getFullYear();
+    var ya=_origGetAreas2();
+    for(var k=0;k<ya.length;k++){ ya[k].t = ya[k].t.replace(/2026/, echtesJahr); }
+    return ya;
+  };
+});
+</script>
 <html lang="de" style="color-scheme:only light!important;background:#fdfaf5!important" data-force-light="1">
 <head>
 <script>
