@@ -1,3 +1,17 @@
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  if(typeof getAreas!=='function') return;
+  var _origGetAreas=getAreas;
+  getAreas=function(){
+    if(S.pkg==='jahreshoroskop' && S.payMode==='monthly' && !S.combo){
+      var months=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+      var i=new Date().getMonth();
+      return [{id:i+1,t:months[i]+' 2026',ic:'🌊'}];
+    }
+    return _origGetAreas();
+  };
+});
+</script>
 <!DOCTYPE html>
 <html lang="de" style="color-scheme:only light!important;background:#fdfaf5!important" data-force-light="1">
 <head>
