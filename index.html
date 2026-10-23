@@ -2362,8 +2362,7 @@ var _geoCache={}, _geoTimer=null, _geoLast='';
 function showHoro(coords,place){
   var date=el('f-date').value,time=el('f-time').value;
   var note=el('place-note'),box=el('horo-box');
-  var pp=place.split(',').map(function(x){return x.trim();});
-  var shortName=pp.length>2?(pp[0]+', '+pp[pp.length-1]):pp[0];
+  var shortName=geoLabel(place);
   note.textContent='\u2713 '+shortName+' ('+coords.lat.toFixed(4)+'\u00b0N, '+coords.lon.toFixed(4)+'\u00b0O)';
   note.className='fnote ok';
   if(!date||!time){box.style.display='none';return;}
@@ -2432,25 +2431,105 @@ function ianaZoneFor(cc,lat,lon){
   return null;
 }
 
+// Anzeige-Name: "Dornach, Bezirk Dorneck, Solothurn, 4143, Schweiz" -> "Dornach, Solothurn, Schweiz"
+function geoLabel(display){
+  var p=String(display||'').split(',').map(function(x){return x.trim();}).filter(function(x){return x&&!/^[0-9 -]+$/.test(x);});
+  if(!p.length) return String(display||'');
+  if(p.length<=2) return p.join(', ');
+  return p[0]+', '+p[p.length-2]+', '+p[p.length-1];
+}
+
+function geocodeNominatimOnly(place,cb){
+  if(_geoCache[place]){cb(null,_geoCache[place]);return;}
+  var base='https://nominatim.openstreetmap.org/search?format=json&limit=6&addressdetails=1&accept-language=de&q='+encodeURIComponent(place);
+  function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim();}
+  var q0=norm(place.split(',')[0]);
+  function pickList(data){
+    var out=[],seen={};
+    for(var i=0;i<data.length;i++){
+      var d=data[i],cc=(d.address&&d.address.country_code)||'';
+      if(seen[d.display_name]) continue; seen[d.display_name]=1;
+      out.push({lat:parseFloat(d.lat),lon:parseFloat(d.lon),display:d.display_name,cc:cc,type:d.type||'',idx:i,
+        tz:ianaZoneFor(cc,parseFloat(d.lat),parseFloat(d.lon))});
+    }
+    return out;
+  }
+  function rank(c){var r={ch:0,li:1,de:2,at:3}[c.cc]; if(r===undefined) r=9; return r*10+((c.type==='city'||c.type==='town')?0:1);}
+  function finish(list){
+    list.sort(function(a,b){return rank(a)-rank(b)||a.idx-b.idx;});
+    var r=list[0]; r.alts=list.slice(1,5);
+    _geoCache[place]=r; cb(null,r);
+  }
+  function fetchJ(u){return fetch(u,{headers:{'Accept-Language':'de,en'}}).then(function(r){return r.json();});}
+  // Stufe 1: Schweiz, Liechtenstein, Deutschland, Österreich - nur Treffer, deren Name dem Suchbegriff wirklich entspricht
+  fetchJ(base+'&countrycodes=ch,li,de,at').then(function(data){
+    var list=pickList(data||[]).filter(function(c){
+      var n=norm(String(c.display).split(',')[0]);
+      return n===q0||n.indexOf(q0)===0||q0.indexOf(n+' ')===0;
+    });
+    if(list.length){ finish(list); return; }
+    // Stufe 2: weltweit
+    return fetchJ(base).then(function(d2){
+      var l2=pickList(d2||[]);
+      if(!l2.length){ cb('not found',null); return; }
+      finish(l2);
+    });
+  }).catch(function(){ cb('error',null); });
+}
+
+// Hauptsuche: Open-Meteo (GeoNames, weltweit, mit Zeitzone) - Reserve: Nominatim
 function geocodeNominatim(place,cb){
   if(_geoCache[place]){cb(null,_geoCache[place]);return;}
-  var url='https://nominatim.openstreetmap.org/search?format=json&limit=3&addressdetails=1&q='+encodeURIComponent(place);
-  fetch(url,{headers:{'Accept-Language':'de,en','User-Agent':'MentalSpiritual-Astrosophie/1.0'}})
-    .then(function(r){return r.json();})
-    .then(function(data){
-      if(!data||!data.length){cb('not found',null);return;}
-      // Priorität: Stadt > Dorf > alles andere
-      var best=data[0];
-      for(var i=0;i<data.length;i++){
-        var t=data[i].type||'';
-        if(t==='city'||t==='town'){best=data[i];break;}
-      }
-      var cc=(best.address&&best.address.country_code)||'';
-      var r={lat:parseFloat(best.lat),lon:parseFloat(best.lon),display:best.display_name,cc:cc,tz:ianaZoneFor(cc,parseFloat(best.lat),parseFloat(best.lon))};
-      _geoCache[place]=r;
-      cb(null,r);
-    })
-    .catch(function(e){cb('error',null);});
+  var nm=place.split(',')[0].trim();
+  var url='https://geocoding-api.open-meteo.com/v1/search?count=10&language=de&format=json&name='+encodeURIComponent(nm);
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    var res=(d&&d.results)||[];
+    var list=[],seen={};
+    res.forEach(function(x){
+      if(typeof x.latitude!=='number'||typeof x.longitude!=='number') return;
+      var parts=[x.name,x.admin1,x.admin2&&x.admin2!==x.admin1?x.admin2:'',x.country].filter(Boolean);
+      var key=parts.join('|'); if(seen[key]) return; seen[key]=1;
+      var disp=[x.name,x.admin1,x.country].filter(Boolean).join(', ');
+      var cc=String(x.country_code||'').toLowerCase();
+      list.push({lat:x.latitude,lon:x.longitude,display:disp,label:parts.join(', '),
+        cc:cc,tz:x.timezone||ianaZoneFor(cc,x.latitude,x.longitude)});
+    });
+    if(!list.length){ geocodeNominatimOnly(place,cb); return; }
+    var r=list[0]; r.alts=list.slice(1,8);
+    _geoCache[place]=r; cb(null,r);
+  }).catch(function(){ geocodeNominatimOnly(place,cb); });
+}
+
+// Auswahl: sind mehrere Orte mit diesem Namen vorhanden, kann der Kunde den richtigen anklicken
+function renderGeoAlts(result,place){
+  var old=el('geo-alts'); if(old&&old.parentNode) old.parentNode.removeChild(old);
+  if(!result||!result.alts||!result.alts.length) return;
+  var note=el('place-note'); if(!note||!note.parentNode) return;
+  var all=[result].concat(result.alts);
+  var wrap=document.createElement('div');
+  wrap.id='geo-alts';
+  wrap.style.cssText='margin-top:.55rem;padding:.7rem .8rem;border:1px solid #d9cfba;border-radius:12px;background:#fbf8f1';
+  var t=document.createElement('div');
+  t.style.cssText='font-size:.78rem;color:#5b5240;margin-bottom:.45rem;font-weight:600';
+  t.textContent='Es gibt mehrere Orte mit diesem Namen – bitte wähle Deinen Geburtsort:';
+  wrap.appendChild(t);
+  all.forEach(function(a){
+    var b=document.createElement('button');
+    b.type='button';
+    var cur=(a===result);
+    b.textContent=(cur?'✓ ':'')+(a.label||geoLabel(a.display));
+    b.style.cssText='display:block;width:100%;text-align:left;margin:0 0 .3rem 0;padding:.45rem .7rem;border-radius:8px;font-size:.78rem;cursor:pointer;'+
+      (cur?'border:1.5px solid #b8933f;background:#f3e9cf;color:#3d3322;font-weight:600':'border:1px solid #d9cfba;background:#fff;color:#5b5240');
+    b.onclick=function(){
+      if(cur) return;
+      a.alts=all.filter(function(x){return x!==a;});
+      _geoCache[place]=a;
+      showHoro(a,a.display||place);
+      renderGeoAlts(a,place);
+    };
+    wrap.appendChild(b);
+  });
+  note.parentNode.insertBefore(wrap,note.nextSibling);
 }
 
 function tryHoro(){
@@ -2459,12 +2538,15 @@ function tryHoro(){
   var note=el('place-note'),box=el('horo-box');
   if(!place){note.textContent='';box.style.display='none';S.horo=null;return;}
 
+  var oldAlts=el('geo-alts');
+  if(oldAlts&&oldAlts.parentNode&&_geoLast!==place) oldAlts.parentNode.removeChild(oldAlts);
   // 1. Lokale Datenbank (sofort, kein Netzwerk)
   var coords=getCoords(place);
-  if(coords){showHoro(coords,place);return;}
+  if(coords){ if(oldAlts&&oldAlts.parentNode) oldAlts.parentNode.removeChild(oldAlts); showHoro(coords,place);return;}
+  // Ort schon gefunden: bei geänderter Zeit/Datum NEU rechnen (sonst bliebe ein veraltetes Horoskop stehen)
+  if(_geoCache[place]){ showHoro(_geoCache[place],_geoCache[place].display||place); return; }
 
   // 2. Nominatim Live-Geocoding mit 500ms Debounce
-  if(_geoLast===place&&S.horo) return;
   note.innerHTML='<span style="opacity:.6">\u23f3 Ort wird gesucht\u2026</span>';
   note.className='fnote';
   box.style.display='none'; S.horo=null;
@@ -2478,6 +2560,7 @@ function tryHoro(){
         return;
       }
       showHoro(result,result.display||place);
+      renderGeoAlts(result,place);
     });
   },500);
 }
