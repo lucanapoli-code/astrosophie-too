@@ -718,7 +718,7 @@ html {
   </div>
   <iframe id="pdf-frame" class="pdf-frame" title="Dein Seelenmuster"></iframe>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js" onerror="window._noAstro=true"></script>
+<script src="/astronomy.min.js" onerror="(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js';s.onerror=function(){var u=document.createElement('script');u.src='https://unpkg.com/astronomy-engine@2.1.19/astronomy.min.js';u.onerror=function(){window._noAstro=true;};u.onload=function(){try{if(typeof tryHoro==='function')tryHoro();}catch(e){}};document.head.appendChild(u);};s.onload=function(){try{if(typeof tryHoro==='function')tryHoro();}catch(e){}};document.head.appendChild(s);})()"></script>
 
 
 <script>
@@ -1088,11 +1088,116 @@ function ianaOffsetHours(iana,y,mo,dy,hh,mm){
 function getCoords(place){
   var k=place.toLowerCase().replace(/,.*$/,'').trim();
   if(CITIES[k]) return {lat:CITIES[k][0],lon:CITIES[k][1],tz:CITY_TZ[k]||null};
-  // Fuzzy-Suche: enthält den Suchbegriff
+  // Nur GANZE Wörter zählen ("bern schweiz" -> bern). Teilstrings NICHT (Wildegg != Wil, Ulmiz != Ulm):
+  // im Zweifel lieber die Online-Suche fragen als still eine falsche Stadt nehmen.
+  var padded=' '+k.replace(/[-_.\/]+/g,' ').replace(/\s+/g,' ')+' ';
   for(var n in CITIES){
-    if(n.indexOf(k)>=0||k.indexOf(n)>=0) return {lat:CITIES[n][0],lon:CITIES[n][1],tz:CITY_TZ[n]||null};
+    if(padded.indexOf(' '+n.replace(/\./g,'')+' ')>=0 && k.length<=n.length+12) return {lat:CITIES[n][0],lon:CITIES[n][1],tz:CITY_TZ[n]||null};
   }
   return null;
+}
+
+// ── PRÄZISIONS-ERGÄNZUNGEN FÜR DEN NOTFALL-RECHNER (calcFB) ───────────────────
+// Ziel: Auch ohne Astronomie-Bibliothek Planeten, Mond und Transite auf Bogenminuten genau.
+// Quellen: Meeus "Astronomical Algorithms" 2. Aufl. (Kap. 47 Mond, Kap. 22/25 Nutation/Aberration),
+//          Espenak/Meeus ΔT-Polynome, Standish/JPL Kepler-Elemente (ORBELEM).
+
+// ΔT = TT − UT in Sekunden (Espenak/Meeus), y = Jahr als Dezimalzahl
+function fbDeltaT(y){
+  var t,u;
+  if(y<1860){ u=(y-1820)/100; return -20+32*u*u; }
+  if(y<1900){ t=y-1860; return 7.62+0.5737*t-0.251754*t*t+0.01680668*t*t*t-0.0004473624*t*t*t*t+t*t*t*t*t/233174; }
+  if(y<1920){ t=y-1900; return -2.79+1.494119*t-0.0598939*t*t+0.0061966*t*t*t-0.000197*t*t*t*t; }
+  if(y<1941){ t=y-1920; return 21.20+0.84493*t-0.076100*t*t+0.0020936*t*t*t; }
+  if(y<1961){ t=y-1950; return 29.07+0.407*t-t*t/233+t*t*t/2547; }
+  if(y<1986){ t=y-1975; return 45.45+1.067*t-t*t/260-t*t*t/718; }
+  if(y<2005){ t=y-2000; return 63.86+0.3345*t-0.060374*t*t+0.0017275*t*t*t+0.000651814*t*t*t*t+0.00002373599*t*t*t*t*t; }
+  if(y<2050){ t=y-2000; return 62.92+0.32217*t+0.005589*t*t; }
+  if(y<2150){ return -20+32*Math.pow((y-1820)/100,2)-0.5628*(2150-y); }
+  u=(y-1820)/100; return -20+32*u*u;
+}
+
+// Mond: geozentrische ekliptikale Länge (mittleres Äquinoktium des Datums), Meeus Kap. 47,
+// alle 60 Längen-Terme. Tt = Jahrhunderte seit J2000 in TT.
+var FB_MOON_TERMS=[
+ [0,0,1,0,6288774],[2,0,-1,0,1274027],[2,0,0,0,658314],[0,0,2,0,213618],[0,1,0,0,-185116],
+ [0,0,0,2,-114332],[2,0,-2,0,58793],[2,-1,-1,0,57066],[2,0,1,0,53322],[2,-1,0,0,45758],
+ [0,1,-1,0,-40923],[1,0,0,0,-34720],[0,1,1,0,-30383],[2,0,0,-2,15327],[0,0,1,2,-12528],
+ [0,0,1,-2,10980],[4,0,-1,0,10675],[0,0,3,0,10034],[4,0,-2,0,8548],[2,1,-1,0,-7888],
+ [2,1,0,0,-6766],[1,0,-1,0,-5163],[1,1,0,0,4987],[2,-1,1,0,4036],[2,0,2,0,3994],
+ [4,0,0,0,3861],[2,0,-3,0,3665],[0,1,-2,0,-2689],[2,0,-1,2,-2602],[2,-1,-2,0,2390],
+ [1,0,1,0,-2348],[2,-2,0,0,2236],[0,1,2,0,-2120],[0,2,0,0,-2069],[2,-2,-1,0,2048],
+ [2,0,1,-2,-1773],[2,0,0,2,-1595],[4,-1,-1,0,1215],[0,0,2,2,-1110],[3,0,-1,0,-892],
+ [2,1,1,0,-810],[4,-1,-2,0,759],[0,2,-1,0,-713],[2,2,-1,0,-700],[2,1,-2,0,691],
+ [2,-1,0,-2,596],[4,0,1,0,549],[0,0,4,0,537],[4,-1,0,0,520],[1,0,-2,0,-487],
+ [2,1,0,-2,-399],[0,0,2,-2,-381],[1,1,1,0,351],[3,0,-2,0,-340],[4,0,-3,0,330],
+ [2,-1,2,0,327],[0,2,1,0,-323],[1,1,-1,0,299],[2,0,3,0,294],[2,0,-1,-2,0]
+];
+function fbMoonLon(T){
+  var T2=T*T,T3=T2*T,T4=T3*T;
+  var Lp=nor(218.3164477+481267.88123421*T-0.0015786*T2+T3/538841-T4/65194000);
+  var D =nor(297.8501921+445267.1114034*T-0.0018819*T2+T3/545868-T4/113065000);
+  var M =nor(357.5291092+35999.0502909*T-0.0001536*T2+T3/24490000);
+  var Mp=nor(134.9633964+477198.8675055*T+0.0087414*T2+T3/69699-T4/14712000);
+  var F =nor(93.2720950+483202.0175233*T-0.0036539*T2-T3/3526000+T4/863310000);
+  var A1=nor(119.75+131.849*T), A2=nor(53.09+479264.290*T);
+  var E=1-0.002516*T-0.0000074*T2;
+  var sum=0;
+  for(var i=0;i<FB_MOON_TERMS.length;i++){
+    var q=FB_MOON_TERMS[i]; if(!q[4]) continue;
+    var arg=toR(q[0]*D+q[1]*M+q[2]*Mp+q[3]*F);
+    var f=(q[1]===0)?1:(Math.abs(q[1])===1?E:E*E);
+    sum+=q[4]*f*Math.sin(arg);
+  }
+  sum+=3958*Math.sin(toR(A1))+1962*Math.sin(toR(Lp-F))+318*Math.sin(toR(A2));
+  return nor(Lp+sum/1e6);
+}
+
+// Heliozentrische Position (J2000-Ekliptik, AE) aus den Kepler-Elementen
+function fbHelio(name,T){
+  var el=ORBELEM[name];
+  var a=el.a+el.aD*T, e=el.e+el.eD*T, ic=el.i+el.iD*T;
+  var O=el.O+el.OD*T, wB=el.w+el.wD*T, L=el.L+el.LD*T;
+  var w=wB-O, M=nor(L-wB);
+  var Mr=toR(M), Er=Mr;
+  for(var k=0;k<20;k++){
+    var dE=(Er-e*Math.sin(Er)-Mr)/(1-e*Math.cos(Er));
+    Er-=dE; if(Math.abs(dE)<1e-12) break;
+  }
+  var nu=2*Math.atan2(Math.sqrt(1+e)*Math.sin(Er/2),Math.sqrt(1-e)*Math.cos(Er/2));
+  var r=a*(1-e*Math.cos(Er));
+  var xo=r*Math.cos(nu), yo=r*Math.sin(nu);
+  var wr=toR(w), Or=toR(O), ir=toR(ic);
+  return {
+    x:(Math.cos(Or)*Math.cos(wr)-Math.sin(Or)*Math.sin(wr)*Math.cos(ir))*xo+(-Math.cos(Or)*Math.sin(wr)-Math.sin(Or)*Math.cos(wr)*Math.cos(ir))*yo,
+    y:(Math.sin(Or)*Math.cos(wr)+Math.cos(Or)*Math.sin(wr)*Math.cos(ir))*xo+(-Math.sin(Or)*Math.sin(wr)+Math.cos(Or)*Math.cos(wr)*Math.cos(ir))*yo,
+    z:(Math.sin(wr)*xo+Math.cos(wr)*yo)*Math.sin(ir)
+  };
+}
+
+// Scheinbare geozentrische Länge eines Planeten (ekliptikal, wahres Äquinoktium des Datums):
+// Lichtlaufzeit + Erde-Mond-Schwerpunkt-Korrektur + Präzession + Aberration + Nutation.
+function fbPlanetApparent(name,Tt,dpsi,moonLonDate){
+  var E=fbHelio('Erde',Tt);
+  var pa=(5028.796195*Tt+1.1054348*Tt*Tt)/3600; // allgemeine Präzession in Länge (Grad)
+  // Erde = Schwerpunkt Erde/Mond − (1/82.30)*Mond-Vektor
+  var mLon=toR((moonLonDate!=null?moonLonDate:fbMoonLon(Tt))-pa), mR=0.00257;
+  var k=0.01215058;
+  E={x:E.x-k*mR*Math.cos(mLon), y:E.y-k*mR*Math.sin(mLon), z:E.z};
+  var tau=0,P,dx,dy,dz,dist=1;
+  for(var i=0;i<4;i++){
+    P=fbHelio(name,Tt-tau/36525);
+    dx=P.x-E.x; dy=P.y-E.y; dz=P.z-E.z;
+    dist=Math.sqrt(dx*dx+dy*dy+dz*dz);
+    tau=0.0057755183*dist; // Tage
+  }
+  var lon0=toD(Math.atan2(dy,dx));
+  var beta=Math.asin(dz/dist);
+  var lam=lon0+pa;
+  // Jährliche Aberration (κ = 20.4955")
+  var sunLon=toD(Math.atan2(-E.y,-E.x))+pa;
+  var ab=-(20.4955/3600)*Math.cos(toR(sunLon-lam))/Math.cos(beta);
+  return nor(lam+ab+dpsi);
 }
 
 // ── HAUPTBERECHNUNG (Meeus + IAU 2000B Nutation) ──────────────────
@@ -1135,56 +1240,14 @@ function calcFB(yr,mo,dy,hL,mn,lat,lon,tz){
        +0.00029*Math.sin(toR(3*Ms));
   var sun=nor(L0+C-0.00569+nut.dpsi);
 
-  // 10. MOND (Meeus Kap.47, 15 Terme)
-  var E=1-0.002516*T-0.0000074*T*T;
-  var Lm=nor(218.3165+481267.8813*T-0.0013268*T*T);
-  var Mm=nor(134.9634+477198.8676*T+0.0089970*T*T);
-  var Dm=nor(297.8502+445267.1115*T-0.0018819*T*T);
-  var Fm=nor(93.2721 +483202.0175*T-0.0034029*T*T);
-  var dL=6.289*Math.sin(toR(Mm))
-        +1.274*Math.sin(toR(2*Dm-Mm))
-        +0.658*Math.sin(toR(2*Dm))
-        +0.214*Math.sin(toR(2*Mm))
-        -0.186*E*Math.sin(toR(Ms))
-        -0.114*Math.sin(toR(2*Fm))
-        +0.059*Math.sin(toR(2*Dm-2*Mm))
-        -0.057*E*Math.sin(toR(2*Dm-Ms-Mm))
-        +0.053*Math.sin(toR(2*Dm+Mm))
-        +0.046*E*Math.sin(toR(2*Dm-Ms))
-        +0.041*Math.sin(toR(Mm-Ms))
-        -0.035*Math.sin(toR(Dm))
-        -0.031*Math.sin(toR(Mm+Ms))
-        -0.015*Math.sin(toR(2*Fm-2*Dm))
-        +0.011*Math.sin(toR(2*Dm-2*Mm+Mm));
-  var moon=nor(Lm+dL);
+  // 10. MOND (Meeus Kap.47, alle Längen-Terme, in TT gerechnet)
+  var dT=fbDeltaT(yU+(mU-0.5)/12);          // ΔT in Sekunden
+  var Tt=T+dT/86400/36525;                  // Jahrhunderte seit J2000 in TT
+  var moonDate=fbMoonLon(Tt);
+  var moon=nor(moonDate+nut.dpsi);
 
-  // 11. PLANETEN (Kepler-Bahnelemente J2000 + Centennial Rates, mit Exzentrizitäts-Korrektur)
-  function planetLon(name){
-    var el=ORBELEM[name];
-    var a=el.a+el.aD*T, e=el.e+el.eD*T, ic=el.i+el.iD*T;
-    var O=el.O+el.OD*T, wB=el.w+el.wD*T, L=el.L+el.LD*T;
-    var w=wB-O, M=nor(L-wB);
-    var Mr=toR(M), Er=Mr;
-    for(var k=0;k<10;k++){
-      var dE=(Er-e*Math.sin(Er)-Mr)/(1-e*Math.cos(Er));
-      Er-=dE; if(Math.abs(dE)<1e-9) break;
-    }
-    var nu=2*Math.atan2(Math.sqrt(1+e)*Math.sin(Er/2),Math.sqrt(1-e)*Math.cos(Er/2));
-    var r=a*(1-e*Math.cos(Er));
-    var xOrb=r*Math.cos(nu), yOrb=r*Math.sin(nu);
-    var wr=toR(w), Or=toR(O), ir=toR(ic);
-    var x=(Math.cos(Or)*Math.cos(wr)-Math.sin(Or)*Math.sin(wr)*Math.cos(ir))*xOrb
-        +(-Math.cos(Or)*Math.sin(wr)-Math.sin(Or)*Math.cos(wr)*Math.cos(ir))*yOrb;
-    var y=(Math.sin(Or)*Math.cos(wr)+Math.cos(Or)*Math.sin(wr)*Math.cos(ir))*xOrb
-        +(-Math.sin(Or)*Math.sin(wr)+Math.cos(Or)*Math.cos(wr)*Math.cos(ir))*yOrb;
-    return {x:x,y:y};
-  }
-  var earthPos=planetLon('Erde');
-  function pl(name){
-    var p=planetLon(name);
-    var lon=nor(toD(Math.atan2(p.y-earthPos.y,p.x-earthPos.x)));
-    return sOf(lon);
-  }
+  // 11. PLANETEN (Kepler-Elemente + Lichtlaufzeit + Präzession + Aberration + Nutation)
+  function pl(name){ return sOf(fbPlanetApparent(name,Tt,nut.dpsi,moonDate)); }
 
   // 12. PLACIDUS HÄUSER (Cusps 1-12, Iteration nach Munkasey/Standard-Formel)
   var houses=calcPlacidus(LAST,eps,lat,MC,AC);
@@ -1357,7 +1420,7 @@ function calcYearTransits(year, natal, lat, lon){
   var slowPlanets=['Jupiter','Saturn','Uranus','Neptun','Pluto'];
   var yearData=[];
   for(var m=1;m<=12;m++){
-    var t=calcFB(year,m,15,12,0,lat,lon,0); // Monatsmitte, 12:00 UTC als Referenzpunkt
+    var t=calcHoro(year,m,15,12,0,lat,lon,0); // Monatsmitte, 12:00 UTC als Referenzpunkt
     var monthAspects=[];
     for(var p=0;p<slowPlanets.length;p++){
       var asps=findTransitAspects(t[slowPlanets[p]].raw, slowPlanets[p], natal);
@@ -1370,7 +1433,35 @@ function calcYearTransits(year, natal, lat, lon){
 }
 
 // ── ASTRONOMY ENGINE (wenn verfügbar, noch präziser) ──────────────
+// ── GEGENPRÜFUNG: zwei unabhängige Rechner müssen übereinstimmen ──────────────
+// Läuft die Astronomie-Bibliothek, wird zusätzlich der eingebaute Rechner (calcFB) gerechnet.
+// Weichen beide bei einem Planeten um mehr als 0.25° (oder beim Aszendenten um mehr als 0.1°) ab,
+// stimmt irgendwo etwas nicht (z.B. falsches Koordinatensystem) -> es gilt der eingebaute Rechner,
+// der gegen Signum-Semita-Ausdrucke geprüft ist. Ergebnis steht in window._calcEngine / _calcDev.
+function angDiff(a,b){var d=Math.abs(a-b)%360;return d>180?360-d:d;}
 function calcHoro(yr,mo,dy,hL,mn,lat,lon,tz){
+  var fb=calcFB(yr,mo,dy,hL,mn,lat,lon,tz);
+  if(typeof Astronomy==='undefined'||window._noAstro){ window._calcEngine='fallback'; window._calcDev=0; return fb; }
+  var live=null;
+  try{ live=calcHoroLive(yr,mo,dy,hL,mn,lat,lon,tz); }catch(e){ live=null; }
+  if(!live||!live.Sonne){ window._calcEngine='fallback'; window._calcDev=0; return fb; }
+  var keys=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+  var maxDev=0;
+  for(var i=0;i<keys.length;i++){ maxDev=Math.max(maxDev,angDiff(live[keys[i]].raw,fb[keys[i]].raw)); }
+  var acDev=angDiff(live.AC.raw,fb.AC.raw);
+  acDev=Math.max(acDev,angDiff(live.MC.raw,fb.MC.raw));
+  if(live.houses&&fb.houses){ for(var hh=1;hh<=12;hh++){ if(live.houses[hh]&&fb.houses[hh]) acDev=Math.max(acDev,angDiff(live.houses[hh].raw,fb.houses[hh].raw)); } }
+  window._calcDev=maxDev;
+  if((maxDev>0.25||acDev>0.1)&&yr>=1900&&yr<=2100){
+    try{ console.warn('Astro-Gegenprüfung: Abweichung '+maxDev.toFixed(3)+'° (AC '+acDev.toFixed(3)+'°) -> eingebauter Rechner gilt'); }catch(e){}
+    window._calcEngine='fallback-mismatch';
+    return fb;
+  }
+  window._calcEngine='live';
+  return live;
+}
+
+function calcHoroLive(yr,mo,dy,hL,mn,lat,lon,tz){
   if(typeof Astronomy==='undefined'||window._noAstro) return calcFB(yr,mo,dy,hL,mn,lat,lon,tz);
   try{
     var hUT=hL+mn/60-tz,dU=dy,mU=mo,yU=yr;
@@ -1380,11 +1471,12 @@ function calcHoro(yr,mo,dy,hL,mn,lat,lon,tz){
     var JD=time.tt+2451545, T2=(JD-2451545)/36525;
     var nut2=nutIAU(T2), eps2=epsObl(T2,nut2.deps);
     // GAST via Astronomy Engine sidereal time (präziser)
-    var gast2=nor(Astronomy.SiderealTime(time)*15+nut2.dpsi*Math.cos(toR(eps2)));
+    var Tut=time.ut/36525;
+    var gast2=nor(280.46061837+360.98564736629*time.ut+0.000387933*Tut*Tut-Tut*Tut*Tut/38710000+nut2.dpsi*Math.cos(toR(eps2)));
     var LAST2=nor(gast2+lon);
     var Lr2=toR(LAST2),er2=toR(eps2),latr2=toR(lat);
     var AC2=nor(toD(Math.atan2(-Math.cos(Lr2),Math.sin(Lr2)*Math.cos(er2)+Math.tan(latr2)*Math.sin(er2)))+180);
-    var MC2=nor(toD(Math.atan2(Math.sin(Lr2)*Math.cos(er2),Math.cos(Lr2))));
+    var MC2=nor(toD(Math.atan2(Math.sin(Lr2),Math.cos(Lr2)*Math.cos(er2))));
     function pl2(name){try{return nor(Astronomy.Ecliptic(Astronomy.GeoVector(name,time,true)).elon);}catch(e){return 0;}}
     var houses2=calcPlacidus(LAST2,eps2,lat,MC2,AC2);
     // Mondknoten berechnen (wahrer Nordknoten)
@@ -2094,10 +2186,10 @@ function renderPkgs(){
 }
 function startCombo(combo){
   var combos={
-    ind_jahr:{label:'Individual + Jahreshoroskop',price:'CHF 131.–',pkgs:['individual','jahreshoroskop'],coaching:false},
-    seele_jahr:{label:'SeelenKompass + Jahreshoroskop',price:'CHF 179.–',pkgs:['seelenkompas','jahreshoroskop'],coaching:false},
-    ind_jahr_coaching:{label:'Individual + Jahreshoroskop + 1:1',price:'CHF 420.–',pkgs:['individual','jahreshoroskop'],coaching:true},
-    seele_jahr_coaching:{label:'SeelenKompass + Jahreshoroskop + 1:1',price:'CHF 450.–',pkgs:['seelenkompas','jahreshoroskop'],coaching:true}
+    ind_jahr:{id:'ind_jahr',label:'Individual + Jahreshoroskop',price:'CHF 131.–',pkgs:['individual','jahreshoroskop'],coaching:false},
+    seele_jahr:{id:'seele_jahr',label:'SeelenKompass + Jahreshoroskop',price:'CHF 179.–',pkgs:['seelenkompas','jahreshoroskop'],coaching:false},
+    ind_jahr_coaching:{id:'ind_jahr_coaching',label:'Individual + Jahreshoroskop + 1:1',price:'CHF 420.–',pkgs:['individual','jahreshoroskop'],coaching:true},
+    seele_jahr_coaching:{id:'seele_jahr_coaching',label:'SeelenKompass + Jahreshoroskop + 1:1',price:'CHF 450.–',pkgs:['seelenkompas','jahreshoroskop'],coaching:true}
   };
   var c=combos[combo];if(!c)return;
   S.combo=c;
@@ -2270,7 +2362,8 @@ var _geoCache={}, _geoTimer=null, _geoLast='';
 function showHoro(coords,place){
   var date=el('f-date').value,time=el('f-time').value;
   var note=el('place-note'),box=el('horo-box');
-  var shortName=place.split(',')[0].trim();
+  var pp=place.split(',').map(function(x){return x.trim();});
+  var shortName=pp.length>2?(pp[0]+', '+pp[pp.length-1]):pp[0];
   note.textContent='\u2713 '+shortName+' ('+coords.lat.toFixed(4)+'\u00b0N, '+coords.lon.toFixed(4)+'\u00b0O)';
   note.className='fnote ok';
   if(!date||!time){box.style.display='none';return;}
@@ -2294,6 +2387,17 @@ function showHoro(coords,place){
   }
   el('horo-grid').innerHTML=html;
   box.style.display='block';
+  var engEl=el('horo-engine-note');
+  if(String(window._calcEngine||'').indexOf('fallback')===0){
+    if(!engEl){
+      engEl=document.createElement('p');
+      engEl.id='horo-engine-note';
+      engEl.style.cssText='font-size:.65rem;color:#b08a3e;margin-top:.5rem;line-height:1.5';
+      box.appendChild(engEl);
+    }
+    engEl.textContent='\u26a0 Vereinfachte Berechnung aktiv (Genauigkeit ca. 0.15\u00b0). Bitte lade die Seite neu, damit die Astronomie-Bibliothek geladen wird.';
+    engEl.style.display='block';
+  } else if(engEl){ engEl.style.display='none'; }
   var noteEl=el('horo-fallback-note');
   if(h.houses&&h.houses.fallback){
     if(!noteEl){
@@ -2309,6 +2413,25 @@ function showHoro(coords,place){
   }
 }
 
+// Land (ISO-Code) + Koordinaten -> IANA-Zone (für die historische Sommerzeit). Unbekannt -> null (dann greift die alte Heuristik).
+function ianaZoneFor(cc,lat,lon){
+  cc=(cc||'').toLowerCase();
+  var M={ch:'Europe/Zurich',li:'Europe/Vaduz',de:'Europe/Berlin',at:'Europe/Vienna',it:'Europe/Rome',fr:'Europe/Paris',
+    es:'Europe/Madrid',pt:'Europe/Lisbon',nl:'Europe/Amsterdam',be:'Europe/Brussels',lu:'Europe/Luxembourg',
+    gb:'Europe/London',ie:'Europe/Dublin',dk:'Europe/Copenhagen',se:'Europe/Stockholm',no:'Europe/Oslo',fi:'Europe/Helsinki',
+    pl:'Europe/Warsaw',cz:'Europe/Prague',sk:'Europe/Bratislava',hu:'Europe/Budapest',si:'Europe/Ljubljana',hr:'Europe/Zagreb',
+    rs:'Europe/Belgrade',ba:'Europe/Sarajevo',ro:'Europe/Bucharest',bg:'Europe/Sofia',gr:'Europe/Athens',tr:'Europe/Istanbul',
+    ua:'Europe/Kyiv',il:'Asia/Jerusalem',eg:'Africa/Cairo',ma:'Africa/Casablanca',tn:'Africa/Tunis',in:'Asia/Kolkata',
+    jp:'Asia/Tokyo',cn:'Asia/Shanghai',th:'Asia/Bangkok',ae:'Asia/Dubai',za:'Africa/Johannesburg',ar:'America/Argentina/Buenos_Aires',
+    nz:'Pacific/Auckland',mx:'America/Mexico_City',br:'America/Sao_Paulo',al:'Europe/Tirane',mk:'Europe/Skopje',me:'Europe/Podgorica',
+    mt:'Europe/Malta',cy:'Asia/Nicosia',is:'Atlantic/Reykjavik',ee:'Europe/Tallinn',lv:'Europe/Riga',lt:'Europe/Vilnius'};
+  if(M[cc]) return M[cc];
+  if(cc==='us') return lon>-85?'America/New_York':(lon>-102?'America/Chicago':(lon>-114?'America/Denver':'America/Los_Angeles'));
+  if(cc==='ca') return lon>-85?'America/Toronto':(lon>-102?'America/Winnipeg':(lon>-114?'America/Edmonton':'America/Vancouver'));
+  if(cc==='au') return lon>141?'Australia/Sydney':(lon>129?'Australia/Adelaide':'Australia/Perth');
+  return null;
+}
+
 function geocodeNominatim(place,cb){
   if(_geoCache[place]){cb(null,_geoCache[place]);return;}
   var url='https://nominatim.openstreetmap.org/search?format=json&limit=3&addressdetails=1&q='+encodeURIComponent(place);
@@ -2322,7 +2445,8 @@ function geocodeNominatim(place,cb){
         var t=data[i].type||'';
         if(t==='city'||t==='town'){best=data[i];break;}
       }
-      var r={lat:parseFloat(best.lat),lon:parseFloat(best.lon),display:best.display_name};
+      var cc=(best.address&&best.address.country_code)||'';
+      var r={lat:parseFloat(best.lat),lon:parseFloat(best.lon),display:best.display_name,cc:cc,tz:ianaZoneFor(cc,parseFloat(best.lat),parseFloat(best.lon))};
       _geoCache[place]=r;
       cb(null,r);
     })
@@ -2624,7 +2748,7 @@ function startGen(){
   fetch('/api/create-checkout-session', {
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ pkg:S.pkg, payMode:S.payMode, returnUrl:returnUrl })
+    body: JSON.stringify({ pkg:S.pkg, payMode:S.payMode, returnUrl:returnUrl, combo:S.combo })
   })
   .then(function(r){ return r.json(); })
   .then(function(data){
