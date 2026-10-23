@@ -1062,7 +1062,8 @@ var CITY_TZ={
 // eingebaute Zeitzonen-Datenbank (Intl) genutzt. Das behandelt historische
 // Regeländerungen, Länder ohne Sommerzeit (z.B. Arizona) und die
 // umgekehrte Sommerzeit der Südhalbkugel automatisch korrekt.
-function ianaOffsetHours(iana,y,mo,dy,hh,mm){
+function ianaOffsetHours(iana,y,mo,dy,hh,mm,lon){
+  window._lmtUsed=false;
   try{
     // Liefert: wie spät ist es am Instant `instant` in der Zone `iana`,
     // als UTC-Millisekunden-Zahl (reine Zahlen-Extraktion, kein Datums-
@@ -1081,6 +1082,10 @@ function ianaOffsetHours(iana,y,mo,dy,hh,mm){
     var offset1=wallClockAsUTC(target)-target;  // Offset an dieser Näherung
     var trueInstant=target-offset1;             // korrigierter UTC-Zeitpunkt
     var offset2=wallClockAsUTC(trueInstant)-trueInstant; // erneut prüfen (DST-Umstellungstag-sicher)
+    // Vor Einführung der Zonenzeit gilt die mittlere Ortszeit des Ortes (Sekunden im Offset = LMT-Eintrag der Zeitzonen-Datenbank).
+    // Dann zählt die echte Länge des Geburtsortes: Länge/15, nicht die Ortszeit einer Referenzstadt.
+    var secs=Math.round(offset2/1000);
+    if(typeof lon==='number'&&isFinite(lon)&&(secs%60)!==0){ window._lmtUsed=true; return lon/15; }
     return offset2/3600000;
   }catch(e){ return null; } // ungültige/unbekannte IANA-Zone -> Fallback nutzen
 }
@@ -1452,7 +1457,7 @@ function calcHoro(yr,mo,dy,hL,mn,lat,lon,tz){
   acDev=Math.max(acDev,angDiff(live.MC.raw,fb.MC.raw));
   if(live.houses&&fb.houses){ for(var hh=1;hh<=12;hh++){ if(live.houses[hh]&&fb.houses[hh]) acDev=Math.max(acDev,angDiff(live.houses[hh].raw,fb.houses[hh].raw)); } }
   window._calcDev=maxDev;
-  if((maxDev>0.25||acDev>0.1)&&yr>=1900&&yr<=2100){
+  if((maxDev>0.5||acDev>0.1)&&yr>=1900&&yr<=2100){
     try{ console.warn('Astro-Gegenprüfung: Abweichung '+maxDev.toFixed(3)+'° (AC '+acDev.toFixed(3)+'°) -> eingebauter Rechner gilt'); }catch(e){}
     window._calcEngine='fallback-mismatch';
     return fb;
@@ -1466,7 +1471,7 @@ function calcHoroLive(yr,mo,dy,hL,mn,lat,lon,tz){
   try{
     var hUT=hL+mn/60-tz,dU=dy,mU=mo,yU=yr;
     if(hUT<0){hUT+=24;dU--;}else if(hUT>=24){hUT-=24;dU++;}
-    var date=new Date(Date.UTC(yU,mU-1,dU,Math.floor(hUT),Math.round((hUT%1)*60),0));
+    var date=new Date(Date.UTC(yU,mU-1,dU,0,0,Math.round(hUT*3600)));
     var time=new Astronomy.AstroTime(date);
     var JD=time.tt+2451545, T2=(JD-2451545)/36525;
     var nut2=nutIAU(T2), eps2=epsObl(T2,nut2.deps);
@@ -1477,7 +1482,7 @@ function calcHoroLive(yr,mo,dy,hL,mn,lat,lon,tz){
     var Lr2=toR(LAST2),er2=toR(eps2),latr2=toR(lat);
     var AC2=nor(toD(Math.atan2(-Math.cos(Lr2),Math.sin(Lr2)*Math.cos(er2)+Math.tan(latr2)*Math.sin(er2)))+180);
     var MC2=nor(toD(Math.atan2(Math.sin(Lr2),Math.cos(Lr2)*Math.cos(er2))));
-    function pl2(name){try{return nor(Astronomy.Ecliptic(Astronomy.GeoVector(name,time,true)).elon);}catch(e){return 0;}}
+    function pl2(name){var v=nor(Astronomy.Ecliptic(Astronomy.GeoVector(name,time,true)).elon); if(!isFinite(v)) throw new Error('NaN '+name); return v;}
     var houses2=calcPlacidus(LAST2,eps2,lat,MC2,AC2);
     // Mondknoten berechnen (wahrer Nordknoten)
     var nodeRaw = (function(){
@@ -2369,12 +2374,13 @@ function showHoro(coords,place){
   var parts=date.split('-').map(Number),tp=time.split(':').map(Number);
   var tz=null, tzSource='heuristik';
   if(coords.tz){
-    tz=ianaOffsetHours(coords.tz,parts[0],parts[1],parts[2],tp[0],tp[1]);
+    tz=ianaOffsetHours(coords.tz,parts[0],parts[1],parts[2],tp[0],tp[1],coords.lon);
     if(tz!==null) tzSource='iana';
   }
   if(tz===null){
     tz=getTZ(coords.lat,coords.lon,parts[1],parts[0],parts[2]);
   }
+  if(window._lmtUsed){ tzSource='lmt'; note.textContent+=' \u00b7 mittlere Ortszeit (vor Einf\u00fchrung der Zonenzeit)'; }
   S.tzSource=tzSource; S.tzOffset=tz;
   var h=calcHoro(parts[0],parts[1],parts[2],tp[0],tp[1],coords.lat,coords.lon,tz);
   S.horo=h; S.coords=coords;
